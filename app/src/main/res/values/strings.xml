@@ -1,6 +1,10 @@
 <resources>
   <string name="app_name">Info Center</string>
   <string name="title_activity_main">Info Center</string>
+  <string name="title_news">News</string>
+  <string name="title_report">Report News</string>
+  <string name="title_contact">Contacts</string>
+  <string name="title_add_contact">Add New Contact</string>
 
   <string name="str_latest_news">News</string>
   <string name="str_alert_level">Alert Level</string>
