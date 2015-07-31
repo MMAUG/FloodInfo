@@ -6,29 +6,30 @@ import java.io.Serializable;
  * @author SH (swanhtet@nexlabs.co)
  */
 public class Contact implements Serializable {
-  private String name;
-  private String phone;
+  private String title;
+  private String phone_numbers;
   private String description;
-  private String fbUrl;
+  private String facebook_url;
+  private String donation_location;
 
-  public Contact(String name) {
-    this.name = name;
+  public Contact(String title) {
+    this.title = title;
   }
 
-  public String getName() {
-    return name;
+  public String getTitle() {
+    return title;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setTitle(String title) {
+    this.title = title;
   }
 
   public String getPhone() {
-    return phone;
+    return phone_numbers;
   }
 
   public void setPhone(String phone) {
-    this.phone = phone;
+    this.phone_numbers = phone;
   }
 
   public String getDescription() {
@@ -40,10 +41,10 @@ public class Contact implements Serializable {
   }
 
   public String getFbUrl() {
-    return fbUrl;
+    return facebook_url;
   }
 
-  public void setFbUrl(String fbUrl) {
-    this.fbUrl = fbUrl;
+  public void setFbUrl(String facebook_url) {
+    this.facebook_url = facebook_url;
   }
 }

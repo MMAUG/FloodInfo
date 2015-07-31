@@ -44,7 +44,7 @@ public class ContactAdapter extends BaseAdapter<ContactHolder> {
   @Override public void onBindViewHolder(ContactHolder holder, int position) {
     final Contact Contact = mContacts.get(position);
 
-    holder.setContactName(Contact.getName());
+    holder.setContactName(Contact.getTitle());
   }
 
   @Override public int getItemCount() {

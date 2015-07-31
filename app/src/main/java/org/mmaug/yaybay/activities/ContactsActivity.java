@@ -4,14 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ItemDecoration;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import java.util.ArrayList;
-import java.util.List;
 import org.mmaug.yaybay.adapter.ContactAdapter;
 import org.mmaug.yaybay.base.BaseListActivity;
 import org.mmaug.yaybay.model.Contact;
-import org.mmaug.yaybay.utils.DividerDecoration;
+import org.mmaug.yaybay.rest.client.RESTClient;
+import org.mmaug.yaybay.utils.ConnectionManager;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * @author SH (swanhtet@nexlabs.co)
@@ -19,6 +23,7 @@ import org.mmaug.yaybay.utils.DividerDecoration;
 public class ContactsActivity extends BaseListActivity {
 
   ArrayList<Contact> mContacts = new ArrayList<>();
+  private ContactAdapter mAdapter = null;
 
   /**
    * Implement this with the Custom Adapters of your choice.
@@ -26,23 +31,12 @@ public class ContactsActivity extends BaseListActivity {
    * @return custom RecyclerView.Adapter
    */
   @Override protected Adapter getAdapter() {
-    final ContactAdapter adapter = new ContactAdapter();
-    adapter.setOnItemClickListener(this);    //This is the code to provide a sectioned grid
+    mAdapter = new ContactAdapter();
+    mAdapter.setOnItemClickListener(this);    //This is the code to provide a sectioned grid
 
-    //todo replace with real data list
-    mContacts.addAll(generateDummyData(10));
-    adapter.setContacts(mContacts);
+    loadData();
 
-    return adapter;
-  }
-
-  private List<Contact> generateDummyData(int count) {
-    ArrayList<Contact> items = new ArrayList<>();
-
-    for (int i = 0; i < count; i++) {
-      items.add(new Contact("Contact " + i));
-    }
-    return items;
+    return mAdapter;
   }
 
   /**
@@ -52,7 +46,29 @@ public class ContactsActivity extends BaseListActivity {
    * else @return ItemDecoration
    */
   @Override protected ItemDecoration getItemDecoration() {
-    return new DividerDecoration(this);
+    return null;
+  }
+
+  private void loadData() {
+    if (ConnectionManager.isConnected(this)) {
+      getProgressBar().setVisibility(View.VISIBLE);
+      getRecyclerView().setVisibility(View.GONE);
+      RESTClient.getInstance().getService().getContacts(new Callback<ArrayList<Contact>>() {
+        @Override public void success(ArrayList<Contact> contacts, Response response) {
+          getProgressBar().setVisibility(View.GONE);
+          getRecyclerView().setVisibility(View.VISIBLE);
+          mContacts.addAll(contacts);
+
+          Log.e("", "Contacts: " + mContacts.get(0).getTitle());
+
+          mAdapter.setContacts(mContacts);
+        }
+
+        @Override public void failure(RetrofitError error) {
+
+        }
+      });
+    }
   }
 
   /**

@@ -13,7 +13,7 @@ public class RESTClient {
 
   public RESTClient() {
     //todo replace with real endpoint
-    final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint("").build();
+    final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint("http://floodinfo-myanmar.herokuapp.com/api/").build();
     mService = restAdapter.create(RESTService.class);
   }
 

@@ -11,6 +11,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ItemDecoration;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ProgressBar;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import mmaug.org.yaybay.R;
 
 /**
@@ -18,13 +21,13 @@ import mmaug.org.yaybay.R;
  */
 public abstract class BaseListActivity extends AppCompatActivity implements OnItemClickListener {
 
-  private RecyclerView mRecyclerView;
+  @Bind(R.id.recycler_root) RecyclerView mRecyclerView;
+  @Bind(R.id.progress) ProgressBar mProgressBar;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(getContentViewLayoutId());
-
-    mRecyclerView = (RecyclerView) findViewById(R.id.recycler_root);
+    ButterKnife.bind(this);
 
     if (mRecyclerView != null) {
       mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -57,6 +60,10 @@ public abstract class BaseListActivity extends AppCompatActivity implements OnIt
 
   protected RecyclerView getRecyclerView() {
     return mRecyclerView;
+  }
+
+  protected ProgressBar getProgressBar() {
+    return mProgressBar;
   }
 }
 
