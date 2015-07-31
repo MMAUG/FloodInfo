@@ -2,7 +2,8 @@
   <string name="app_name">Yaybay</string>
   <string name="title_activity_main">MainActivity</string>
 
-  <string name="str_latest_news">သတင္း</string>
-  <string name="str_report">သတင္းပို႕ရန္</string>
-  <string name="str_donation">လွဴဒါန္းရန္အသင္းမ်ား</string>
+  <string name="str_latest_news">News</string>
+  <string name="str_alert_level">Alert Level</string>
+  <string name="str_report">Report</string>
+  <string name="str_donation">Contacts</string>
 </resources>

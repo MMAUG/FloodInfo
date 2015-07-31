@@ -5,4 +5,13 @@
     <!-- Customize your theme here. -->
   </style>
 
+  <style name="Button">
+    <item name="android:width">150dp</item>
+    <item name="android:height">150dp</item>
+    <item name="android:gravity">center</item>
+    <item name="android:textSize">25sp</item>
+    <item name="android:layout_margin">@dimen/activity_horizontal_margin</item>
+    <item name="android:textColor">@color/primary_text_inverse</item>
+  </style>
+
 </resources>

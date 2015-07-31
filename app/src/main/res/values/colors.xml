@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="primary_dark">#1976D2</color>
+  <color name="primary">#2196F3</color>
+  <color name="primary_light">#BBDEFB</color>
+  <color name="accent">#FF5252</color>
+
+  <color name="primary_text">#212121</color>
+  <color name="primary_text_inverse">#ffffff</color>
+  <color name="secondary_text">#727272</color>
+
+  <color name="divider_color">#B6B6B6</color>
+
+  <!-- Random Colors -->
+  <color name="red">#F44336</color>
+  <color name="green">#4caf50</color>
+  <color name="blue">@color/primary</color>
+  <color name="purple">#673AB7</color>
+</resources>
