@@ -1,4 +1,4 @@
-package mmaug.org.yaybay;
+package org.mmaug.yaybay;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
