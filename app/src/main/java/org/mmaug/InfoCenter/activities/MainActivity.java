@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 import mmaug.org.yaybay.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,5 +33,9 @@ public class MainActivity extends AppCompatActivity {
     i.setClass(this, ReportActivity.class);
 
     startActivity(i);
+  }
+
+  public void alertLevel(View view) {
+    Toast.makeText(this, "We will implement it tonight...", Toast.LENGTH_SHORT).show();
   }
 }

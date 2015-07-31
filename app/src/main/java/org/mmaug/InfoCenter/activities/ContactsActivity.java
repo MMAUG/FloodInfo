@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ItemDecoration;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import java.util.ArrayList;
+import mmaug.org.yaybay.R;
 import org.mmaug.InfoCenter.adapter.ContactAdapter;
 import org.mmaug.InfoCenter.base.BaseListActivity;
 import org.mmaug.InfoCenter.model.Contact;
@@ -94,5 +97,24 @@ public class ContactsActivity extends BaseListActivity {
     i.putExtras(bundle);
 
     startActivity(i);
+  }
+
+  @Override public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.menu_contact, menu);
+    return true;
+  }
+
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
+    int id = item.getItemId();
+
+    if (id == R.id.action_add) {
+      Intent i = new Intent();
+      i.setClass(this, AddContactActivity.class);
+
+      startActivity(i);
+      return true;
+    }
+
+    return super.onOptionsItemSelected(item);
   }
 }

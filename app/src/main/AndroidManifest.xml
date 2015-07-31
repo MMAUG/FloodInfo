@@ -30,6 +30,8 @@
     <activity android:name="org.mmaug.InfoCenter.activities.NewsDetailActivity" />
 
     <activity android:name="org.mmaug.InfoCenter.activities.ReportActivity" />
+
+    <activity android:name="org.mmaug.InfoCenter.activities.AddContactActivity" />
   </application>
 
 </manifest>

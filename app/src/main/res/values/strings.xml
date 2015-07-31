@@ -9,5 +9,14 @@
 
   <string name="hint_title">Title</string>
   <string name="hint_content">Content</string>
+  <string name="hint_fb_url">Facebook URL</string>
+  <string name="hint_contact_numbers">Contact Phone Numbers</string>
+  <string name="hint_detail">Detail</string>
+  <string name="hint_location">Donation Location</string>
+
   <string name="btn_submit">Submit</string>
+  <string name="title_activity_main2">Main2Activity</string>
+
+  <string name="hello_world">Hello world!</string>
+  <string name="action_settings">Settings</string>
 </resources>

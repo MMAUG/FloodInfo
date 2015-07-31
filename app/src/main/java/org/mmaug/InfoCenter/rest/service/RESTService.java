@@ -19,4 +19,9 @@ public interface RESTService {
 
   @FormUrlEncoded @POST("/newsfeeds") void submitNews(@Field("title") String title,
       @Field("description") String description, Callback<News> callback);
+
+  @FormUrlEncoded @POST("/donation_groups") void submitContact(@Field("title") String title,
+      @Field("description") String description, @Field("facebook_url") String fb,
+      @Field("donation_location") String location, @Field("phone_numbers") String phone,
+      Callback<News> callback);
 }
