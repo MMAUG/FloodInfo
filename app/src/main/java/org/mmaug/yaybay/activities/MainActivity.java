@@ -19,4 +19,11 @@ public class MainActivity extends AppCompatActivity {
 
     startActivity(i);
   }
+
+  public void newsClick(View view) {
+    Intent i = new Intent();
+    i.setClass(this, NewsActivity.class);
+
+    startActivity(i);
+  }
 }
