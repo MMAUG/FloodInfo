@@ -12,13 +12,15 @@
       android:id="@+id/edt_title"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
-      android:hint="@string/hint_title" />
+      android:hint="@string/hint_title"
+      android:minLines="3" />
 
     <EditText
       android:id="@+id/edt_content"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
-      android:hint="@string/hint_content" />
+      android:hint="@string/hint_content"
+      android:minLines="5" />
 
     <Button
       android:layout_width="wrap_content"
