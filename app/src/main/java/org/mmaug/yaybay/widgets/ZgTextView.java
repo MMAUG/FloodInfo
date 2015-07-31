@@ -1,4 +1,4 @@
-package org.mmaug.yaybay;
+package org.mmaug.yaybay.widgets;
 
 import android.annotation.TargetApi;
 import android.content.Context;

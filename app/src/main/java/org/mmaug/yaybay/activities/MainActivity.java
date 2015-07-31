@@ -1,4 +1,4 @@
-package org.mmaug.yaybay;
+package org.mmaug.yaybay.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
