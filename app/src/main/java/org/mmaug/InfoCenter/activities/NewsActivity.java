@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import java.util.ArrayList;
 import org.mmaug.InfoCenter.adapter.NewsAdapter;
 import org.mmaug.InfoCenter.base.BaseListActivity;
+import org.mmaug.InfoCenter.fragment.HeadlessStateFragment;
 import org.mmaug.InfoCenter.model.News;
 import org.mmaug.InfoCenter.rest.client.RESTClient;
 import org.mmaug.InfoCenter.utils.ConnectionManager;
@@ -22,8 +23,23 @@ import retrofit.client.Response;
  */
 public class NewsActivity extends BaseListActivity {
 
+  private static final String LIST_STATE_FRAGEMENT = "org.mmaug.infocetner.activities.newsactivity";
   ArrayList<News> mNews = new ArrayList<>();
   private NewsAdapter mAdapter = null;
+  private HeadlessStateFragment stateFragment;
+
+  @Override public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    stateFragment =
+        (HeadlessStateFragment) getSupportFragmentManager().findFragmentByTag(LIST_STATE_FRAGEMENT);
+    if (stateFragment == null) {
+      stateFragment = new HeadlessStateFragment();
+      getSupportFragmentManager().beginTransaction()
+          .add(stateFragment, LIST_STATE_FRAGEMENT)
+          .commit();
+    }
+    loadData();
+  }
 
   /**
    * Implement this with the Custom Adapters of your choice.
@@ -34,7 +50,7 @@ public class NewsActivity extends BaseListActivity {
     mAdapter = new NewsAdapter();
     mAdapter.setOnItemClickListener(this);    //This is the code to provide a sectioned grid
 
-    loadData();
+
 
     return mAdapter;
   }
@@ -50,22 +66,28 @@ public class NewsActivity extends BaseListActivity {
   }
 
   private void loadData() {
-    if (ConnectionManager.isConnected(this)) {
-      getProgressBar().setVisibility(View.VISIBLE);
-      getRecyclerView().setVisibility(View.GONE);
-      RESTClient.getInstance().getService().getNews(new Callback<ArrayList<News>>() {
-        @Override public void success(ArrayList<News> contacts, Response response) {
-          getProgressBar().setVisibility(View.GONE);
-          getRecyclerView().setVisibility(View.VISIBLE);
-          mNews.addAll(contacts);
+    if (stateFragment != null && stateFragment.news != null) {
+      mNews = stateFragment.news;
+      stateFragment.news = null; //To make sure multiple call of load data method will not get only the saved contacts
+      mAdapter.setNews(mNews);
+    }else {
+      if (ConnectionManager.isConnected(this)) {
+        getProgressBar().setVisibility(View.VISIBLE);
+        getRecyclerView().setVisibility(View.GONE);
+        RESTClient.getInstance().getService().getNews(new Callback<ArrayList<News>>() {
+          @Override public void success(ArrayList<News> contacts, Response response) {
+            getProgressBar().setVisibility(View.GONE);
+            getRecyclerView().setVisibility(View.VISIBLE);
+            mNews.addAll(contacts);
 
-          mAdapter.setNews(mNews);
-        }
+            mAdapter.setNews(mNews);
+          }
 
-        @Override public void failure(RetrofitError error) {
+          @Override public void failure(RetrofitError error) {
 
-        }
-      });
+          }
+        });
+      }
     }
   }
 
@@ -91,5 +113,10 @@ public class NewsActivity extends BaseListActivity {
     i.putExtras(bundle);
 
     startActivity(i);
+  }
+
+  @Override protected void onPause() {
+    super.onPause();
+    stateFragment.news = mNews;
   }
 }

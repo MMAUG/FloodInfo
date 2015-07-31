@@ -27,7 +27,7 @@ import retrofit.client.Response;
  */
 public class ContactsActivity extends BaseListActivity {
 
-  private static final String LIST_STATE_FRAGEMENT = "org.mmaug.InfoCenter";
+  private static final String LIST_STATE_FRAGEMENT = "org.mmaug.InfoCenter.activitites.infocenter";
   ArrayList<Contact> mContacts = new ArrayList<>();
   private ContactAdapter mAdapter = null;
   private HeadlessStateFragment stateFragment;
@@ -70,7 +70,7 @@ public class ContactsActivity extends BaseListActivity {
   private void loadData() {
     if (stateFragment != null && stateFragment.contacts != null) {
       mContacts = stateFragment.contacts;
-      //stateFragment.contacts = null; //To make sure multiple call of load data method will not get only the saved contacts
+      stateFragment.contacts = null; //To make sure multiple call of load data method will not get only the saved contacts
       mAdapter.setContacts(mContacts);
     } else {
       if (ConnectionManager.isConnected(this)) {
@@ -83,7 +83,6 @@ public class ContactsActivity extends BaseListActivity {
             mContacts.addAll(contacts);
             Log.e("", "Contacts: " + mContacts.get(0).getTitle());
             mAdapter.setContacts(mContacts);
-            stateFragment.contacts= mContacts;
           }
 
           @Override public void failure(RetrofitError error) {
