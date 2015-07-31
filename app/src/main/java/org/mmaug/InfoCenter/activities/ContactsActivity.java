@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import mmaug.org.yaybay.R;
 import org.mmaug.InfoCenter.adapter.ContactAdapter;
 import org.mmaug.InfoCenter.base.BaseListActivity;
+import org.mmaug.InfoCenter.fragment.HeadlessStateFragment;
 import org.mmaug.InfoCenter.model.Contact;
 import org.mmaug.InfoCenter.rest.client.RESTClient;
 import org.mmaug.InfoCenter.utils.ConnectionManager;
@@ -26,8 +27,24 @@ import retrofit.client.Response;
  */
 public class ContactsActivity extends BaseListActivity {
 
+  private static final String LIST_STATE_FRAGEMENT = "org.mmaug.InfoCenter";
   ArrayList<Contact> mContacts = new ArrayList<>();
   private ContactAdapter mAdapter = null;
+  private HeadlessStateFragment stateFragment;
+
+  @Override public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    stateFragment =
+        (HeadlessStateFragment) getSupportFragmentManager().findFragmentByTag(LIST_STATE_FRAGEMENT);
+    if (stateFragment == null) {
+      stateFragment = new HeadlessStateFragment();
+      getSupportFragmentManager().beginTransaction()
+          .add(stateFragment, LIST_STATE_FRAGEMENT)
+          .commit();
+    }
+    loadData();
+
+  }
 
   /**
    * Implement this with the Custom Adapters of your choice.
@@ -37,9 +54,6 @@ public class ContactsActivity extends BaseListActivity {
   @Override protected Adapter getAdapter() {
     mAdapter = new ContactAdapter();
     mAdapter.setOnItemClickListener(this);    //This is the code to provide a sectioned grid
-
-    loadData();
-
     return mAdapter;
   }
 
@@ -54,24 +68,29 @@ public class ContactsActivity extends BaseListActivity {
   }
 
   private void loadData() {
-    if (ConnectionManager.isConnected(this)) {
-      getProgressBar().setVisibility(View.VISIBLE);
-      getRecyclerView().setVisibility(View.GONE);
-      RESTClient.getInstance().getService().getContacts(new Callback<ArrayList<Contact>>() {
-        @Override public void success(ArrayList<Contact> contacts, Response response) {
-          getProgressBar().setVisibility(View.GONE);
-          getRecyclerView().setVisibility(View.VISIBLE);
-          mContacts.addAll(contacts);
+    if (stateFragment != null && stateFragment.contacts != null) {
+      mContacts = stateFragment.contacts;
+      //stateFragment.contacts = null; //To make sure multiple call of load data method will not get only the saved contacts
+      mAdapter.setContacts(mContacts);
+    } else {
+      if (ConnectionManager.isConnected(this)) {
+        getProgressBar().setVisibility(View.VISIBLE);
+        getRecyclerView().setVisibility(View.GONE);
+        RESTClient.getInstance().getService().getContacts(new Callback<ArrayList<Contact>>() {
+          @Override public void success(ArrayList<Contact> contacts, Response response) {
+            getProgressBar().setVisibility(View.GONE);
+            getRecyclerView().setVisibility(View.VISIBLE);
+            mContacts.addAll(contacts);
+            Log.e("", "Contacts: " + mContacts.get(0).getTitle());
+            mAdapter.setContacts(mContacts);
+            stateFragment.contacts= mContacts;
+          }
 
-          Log.e("", "Contacts: " + mContacts.get(0).getTitle());
+          @Override public void failure(RetrofitError error) {
 
-          mAdapter.setContacts(mContacts);
-        }
-
-        @Override public void failure(RetrofitError error) {
-
-        }
-      });
+          }
+        });
+      }
     }
   }
 
@@ -116,5 +135,10 @@ public class ContactsActivity extends BaseListActivity {
     }
 
     return super.onOptionsItemSelected(item);
+  }
+
+  @Override protected void onPause() {
+    super.onPause();
+    stateFragment.contacts=mContacts;
   }
 }
