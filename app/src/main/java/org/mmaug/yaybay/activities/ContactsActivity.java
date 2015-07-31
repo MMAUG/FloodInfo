@@ -1,5 +1,7 @@
 package org.mmaug.yaybay.activities;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ItemDecoration;
 import android.view.View;
@@ -16,6 +18,8 @@ import org.mmaug.yaybay.utils.DividerDecoration;
  */
 public class ContactsActivity extends BaseListActivity {
 
+  ArrayList<Contact> mContacts = new ArrayList<>();
+
   /**
    * Implement this with the Custom Adapters of your choice.
    *
@@ -25,10 +29,9 @@ public class ContactsActivity extends BaseListActivity {
     final ContactAdapter adapter = new ContactAdapter();
     adapter.setOnItemClickListener(this);    //This is the code to provide a sectioned grid
 
-    ArrayList<Contact> Contacts = new ArrayList<Contact>();
     //todo replace with real data list
-    Contacts.addAll(generateDummyData(10));
-    adapter.setContacts(Contacts);
+    mContacts.addAll(generateDummyData(10));
+    adapter.setContacts(mContacts);
 
     return adapter;
   }
@@ -66,6 +69,13 @@ public class ContactsActivity extends BaseListActivity {
    * @param id       The row id of the item that was clicked.
    */
   @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    Intent i = new Intent();
+    i.setClass(this, ContactDetailActivity.class);
 
+    Bundle bundle = new Bundle();
+    bundle.putSerializable("contact", mContacts.get(position));
+    i.putExtras(bundle);
+
+    startActivity(i);
   }
 }

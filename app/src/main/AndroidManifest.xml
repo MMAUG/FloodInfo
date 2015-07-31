@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="mmaug.org.yaybay"
+<manifest
+  package="mmaug.org.yaybay"
   xmlns:android="http://schemas.android.com/apk/res/android">
 
   <application
@@ -18,6 +19,8 @@
     </activity>
 
     <activity android:name="org.mmaug.yaybay.activities.ContactsActivity" />
+
+    <activity android:name="org.mmaug.yaybay.activities.ContactDetailActivity" />
   </application>
 
 </manifest>
