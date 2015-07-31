@@ -9,7 +9,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 import mmaug.org.yaybay.R;
 import org.mmaug.InfoCenter.adapter.ContactAdapter;
 import org.mmaug.InfoCenter.base.BaseListActivity;
@@ -18,6 +22,7 @@ import org.mmaug.InfoCenter.model.Contact;
 import org.mmaug.InfoCenter.rest.client.RESTClient;
 import org.mmaug.InfoCenter.utils.ConnectionManager;
 import org.mmaug.InfoCenter.utils.DividerDecoration;
+import org.mmaug.InfoCenter.utils.FileUtils;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -28,6 +33,7 @@ import retrofit.client.Response;
 public class ContactsActivity extends BaseListActivity {
 
   private static final String LIST_STATE_FRAGEMENT = "org.mmaug.InfoCenter.activitites.infocenter";
+  private static final String CONTACT_FILE = "contacts.dat";
   ArrayList<Contact> mContacts = new ArrayList<>();
   private ContactAdapter mAdapter = null;
   private HeadlessStateFragment stateFragment;
@@ -73,6 +79,7 @@ public class ContactsActivity extends BaseListActivity {
       stateFragment.contacts = null; //To make sure multiple call of load data method will not get only the saved contacts
       mAdapter.setContacts(mContacts);
     } else {
+      final Type type = new TypeToken<List<Contact>>(){}.getType();
       if (ConnectionManager.isConnected(this)) {
         getProgressBar().setVisibility(View.VISIBLE);
         getRecyclerView().setVisibility(View.GONE);
@@ -83,12 +90,24 @@ public class ContactsActivity extends BaseListActivity {
             mContacts.addAll(contacts);
             Log.e("", "Contacts: " + mContacts.get(0).getTitle());
             mAdapter.setContacts(mContacts);
+            FileUtils.saveData(ContactsActivity.this,FileUtils.convertToJson(mContacts),CONTACT_FILE);
           }
 
           @Override public void failure(RetrofitError error) {
-
+            String contactString = FileUtils.loadData(ContactsActivity.this,CONTACT_FILE);
+            if(contactString!=null){
+              mContacts.addAll(FileUtils.convertToJava(contactString,type));
+              mAdapter.setContacts(mContacts);
+            }
           }
         });
+      }else{
+        String contactString = FileUtils.loadData(ContactsActivity.this,CONTACT_FILE);
+        if(contactString!=null) {
+          mContacts.addAll(FileUtils.convertToJava(contactString,type));
+          mAdapter.setContacts(mContacts);
+        }
+        Toast.makeText(ContactsActivity.this, R.string.no_internet,Toast.LENGTH_SHORT).show();
       }
     }
   }

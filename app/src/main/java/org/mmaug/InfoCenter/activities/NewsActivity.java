@@ -6,7 +6,12 @@ import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ItemDecoration;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
+import mmaug.org.yaybay.R;
 import org.mmaug.InfoCenter.adapter.NewsAdapter;
 import org.mmaug.InfoCenter.base.BaseListActivity;
 import org.mmaug.InfoCenter.fragment.HeadlessStateFragment;
@@ -14,6 +19,7 @@ import org.mmaug.InfoCenter.model.News;
 import org.mmaug.InfoCenter.rest.client.RESTClient;
 import org.mmaug.InfoCenter.utils.ConnectionManager;
 import org.mmaug.InfoCenter.utils.DividerDecoration;
+import org.mmaug.InfoCenter.utils.FileUtils;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -24,6 +30,7 @@ import retrofit.client.Response;
 public class NewsActivity extends BaseListActivity {
 
   private static final String LIST_STATE_FRAGEMENT = "org.mmaug.infocetner.activities.newsactivity";
+  private static final String NEWS_FILE = "news.json";
   ArrayList<News> mNews = new ArrayList<>();
   private NewsAdapter mAdapter = null;
   private HeadlessStateFragment stateFragment;
@@ -71,6 +78,7 @@ public class NewsActivity extends BaseListActivity {
       stateFragment.news = null; //To make sure multiple call of load data method will not get only the saved contacts
       mAdapter.setNews(mNews);
     }else {
+      final Type type = new TypeToken<List<News>>(){}.getType();
       if (ConnectionManager.isConnected(this)) {
         getProgressBar().setVisibility(View.VISIBLE);
         getRecyclerView().setVisibility(View.GONE);
@@ -79,14 +87,26 @@ public class NewsActivity extends BaseListActivity {
             getProgressBar().setVisibility(View.GONE);
             getRecyclerView().setVisibility(View.VISIBLE);
             mNews.addAll(contacts);
-
             mAdapter.setNews(mNews);
+            FileUtils.saveData(NewsActivity.this, FileUtils.convertToJson(mNews),
+                NEWS_FILE);
           }
 
           @Override public void failure(RetrofitError error) {
-
+            String contactString = FileUtils.loadData(NewsActivity.this,NEWS_FILE);
+            if(contactString!=null){
+              mNews.addAll(FileUtils.convertToJava(contactString,type));
+              mAdapter.setNews(mNews);
+            }
           }
         });
+      }else{
+        String contactString = FileUtils.loadData(NewsActivity.this,NEWS_FILE);
+        if(contactString!=null){
+          mNews.addAll(FileUtils.convertToJava(contactString,type));
+          mAdapter.setNews(mNews);
+        }
+        Toast.makeText(NewsActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
       }
     }
   }
