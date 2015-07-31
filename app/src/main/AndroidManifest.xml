@@ -21,17 +21,29 @@
       </intent-filter>
     </activity>
 
-    <activity android:name="org.mmaug.InfoCenter.activities.ContactsActivity" />
+    <activity
+      android:name="org.mmaug.InfoCenter.activities.ContactsActivity"
+      android:label="@string/title_contact" />
 
-    <activity android:name="org.mmaug.InfoCenter.activities.ContactDetailActivity" />
+    <activity
+      android:name="org.mmaug.InfoCenter.activities.ContactDetailActivity"
+      android:label="@string/title_contact" />
 
-    <activity android:name="org.mmaug.InfoCenter.activities.NewsActivity" />
+    <activity
+      android:name="org.mmaug.InfoCenter.activities.NewsActivity"
+      android:label="@string/title_news" />
 
-    <activity android:name="org.mmaug.InfoCenter.activities.NewsDetailActivity" />
+    <activity
+      android:name="org.mmaug.InfoCenter.activities.NewsDetailActivity"
+      android:label="@string/title_news" />
 
-    <activity android:name="org.mmaug.InfoCenter.activities.ReportActivity" />
+    <activity
+      android:name="org.mmaug.InfoCenter.activities.ReportActivity"
+      android:label="@string/title_report" />
 
-    <activity android:name="org.mmaug.InfoCenter.activities.AddContactActivity" />
+    <activity
+      android:name="org.mmaug.InfoCenter.activities.AddContactActivity"
+      android:label="@string/title_add_contact" />
   </application>
 
 </manifest>
