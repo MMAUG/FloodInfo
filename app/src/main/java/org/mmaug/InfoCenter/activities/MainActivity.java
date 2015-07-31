@@ -26,4 +26,11 @@ public class MainActivity extends AppCompatActivity {
 
     startActivity(i);
   }
+
+  public void reportClick(View view) {
+    Intent i = new Intent();
+    i.setClass(this, ReportActivity.class);
+
+    startActivity(i);
+  }
 }

@@ -6,4 +6,8 @@
   <string name="str_alert_level">Alert Level</string>
   <string name="str_report">Report</string>
   <string name="str_donation">Contacts</string>
+
+  <string name="hint_title">Title</string>
+  <string name="hint_content">Content</string>
+  <string name="btn_submit">Submit</string>
 </resources>
