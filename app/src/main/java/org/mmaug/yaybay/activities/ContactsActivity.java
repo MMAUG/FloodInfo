@@ -13,6 +13,7 @@ import org.mmaug.yaybay.base.BaseListActivity;
 import org.mmaug.yaybay.model.Contact;
 import org.mmaug.yaybay.rest.client.RESTClient;
 import org.mmaug.yaybay.utils.ConnectionManager;
+import org.mmaug.yaybay.utils.DividerDecoration;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -46,7 +47,7 @@ public class ContactsActivity extends BaseListActivity {
    * else @return ItemDecoration
    */
   @Override protected ItemDecoration getItemDecoration() {
-    return null;
+    return new DividerDecoration(this, DividerDecoration.VERTICAL_LIST);
   }
 
   private void loadData() {
