@@ -26,4 +26,5 @@ dependencies {
   compile 'com.android.support:recyclerview-v7:22.2.0'
   compile 'com.parse.bolts:bolts-android:1.2.0'
   compile 'com.jakewharton:butterknife:7.0.1'
+  compile 'com.google.code.gson:gson:2.3.1'
 }
