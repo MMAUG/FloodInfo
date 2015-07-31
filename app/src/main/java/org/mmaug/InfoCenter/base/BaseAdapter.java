@@ -2,14 +2,14 @@
  * Copyright (c) 2015. Nex
  */
 
-package org.mmaug.yaybay.base;
+package org.mmaug.InfoCenter.base;
 
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView.OnItemClickListener;
-import org.mmaug.yaybay.base.BaseAdapter.BaseViewHolder;
+import org.mmaug.InfoCenter.base.BaseAdapter.BaseViewHolder;
 
 /**
  * @author SH (swanhtet@nexlabs.co)

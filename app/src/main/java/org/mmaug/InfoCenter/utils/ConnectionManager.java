@@ -2,7 +2,7 @@
  * Copyright (c) 2015. Nex
  */
 
-package org.mmaug.yaybay.utils;
+package org.mmaug.InfoCenter.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

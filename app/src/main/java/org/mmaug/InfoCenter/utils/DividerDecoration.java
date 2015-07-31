@@ -1,4 +1,4 @@
-package org.mmaug.yaybay.utils;
+package org.mmaug.InfoCenter.utils;
 
 import android.content.Context;
 import android.content.res.TypedArray;

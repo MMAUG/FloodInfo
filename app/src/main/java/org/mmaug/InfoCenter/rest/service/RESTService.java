@@ -1,8 +1,8 @@
-package org.mmaug.yaybay.rest.service;
+package org.mmaug.InfoCenter.rest.service;
 
 import java.util.ArrayList;
-import org.mmaug.yaybay.model.Contact;
-import org.mmaug.yaybay.model.News;
+import org.mmaug.InfoCenter.model.Contact;
+import org.mmaug.InfoCenter.model.News;
 import retrofit.Callback;
 import retrofit.http.GET;
 

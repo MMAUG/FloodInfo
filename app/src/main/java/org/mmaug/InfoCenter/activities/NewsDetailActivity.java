@@ -1,12 +1,12 @@
-package org.mmaug.yaybay.activities;
+package org.mmaug.InfoCenter.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mmaug.org.yaybay.R;
-import org.mmaug.yaybay.model.News;
-import org.mmaug.yaybay.widgets.ZgTextView;
+import org.mmaug.InfoCenter.model.News;
+import org.mmaug.InfoCenter.widgets.ZgTextView;
 
 /**
  * @author SH (swanhtet@nexlabs.co)

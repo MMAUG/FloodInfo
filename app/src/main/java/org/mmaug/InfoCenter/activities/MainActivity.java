@@ -1,4 +1,4 @@
-package org.mmaug.yaybay.activities;
+package org.mmaug.InfoCenter.activities;
 
 import android.content.Intent;
 import android.os.Bundle;

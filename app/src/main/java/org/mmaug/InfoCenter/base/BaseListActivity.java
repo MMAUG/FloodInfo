@@ -2,7 +2,7 @@
  * Copyright (c) 2014. Nex
  */
 
-package org.mmaug.yaybay.base;
+package org.mmaug.InfoCenter.base;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

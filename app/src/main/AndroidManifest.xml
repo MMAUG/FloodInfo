@@ -12,7 +12,7 @@
     android:label="@string/app_name"
     android:theme="@style/AppTheme">
     <activity
-      android:name="org.mmaug.yaybay.activities.MainActivity"
+      android:name="org.mmaug.InfoCenter.activities.MainActivity"
       android:label="@string/title_activity_main">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -21,13 +21,13 @@
       </intent-filter>
     </activity>
 
-    <activity android:name="org.mmaug.yaybay.activities.ContactsActivity" />
+    <activity android:name="org.mmaug.InfoCenter.activities.ContactsActivity" />
 
-    <activity android:name="org.mmaug.yaybay.activities.ContactDetailActivity" />
+    <activity android:name="org.mmaug.InfoCenter.activities.ContactDetailActivity" />
 
-    <activity android:name="org.mmaug.yaybay.activities.NewsActivity" />
+    <activity android:name="org.mmaug.InfoCenter.activities.NewsActivity" />
 
-    <activity android:name="org.mmaug.yaybay.activities.NewsDetailActivity" />
+    <activity android:name="org.mmaug.InfoCenter.activities.NewsDetailActivity" />
   </application>
 
 </manifest>

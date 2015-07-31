@@ -1,4 +1,4 @@
-package org.mmaug.yaybay.utils;
+package org.mmaug.InfoCenter.utils;
 
 import android.content.Context;
 import android.util.Log;
@@ -14,7 +14,7 @@ import java.io.OutputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import org.mmaug.yaybay.model.Contact;
+import org.mmaug.InfoCenter.model.Contact;
 
 /**
  * Created by yemyatthu on 5/5/15.

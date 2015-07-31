@@ -1,6 +1,6 @@
-package org.mmaug.yaybay.rest.client;
+package org.mmaug.InfoCenter.rest.client;
 
-import org.mmaug.yaybay.rest.service.RESTService;
+import org.mmaug.InfoCenter.rest.service.RESTService;
 import retrofit.RestAdapter;
 
 /**

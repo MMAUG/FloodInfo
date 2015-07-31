@@ -2,7 +2,7 @@
  * Copyright (c) 2014. Nex
  */
 
-package org.mmaug.yaybay.adapter;
+package org.mmaug.InfoCenter.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +12,10 @@ import butterknife.ButterKnife;
 import java.util.ArrayList;
 import java.util.List;
 import mmaug.org.yaybay.R;
-import org.mmaug.yaybay.widgets.ZgTextView;
-import org.mmaug.yaybay.adapter.ContactAdapter.ContactHolder;
-import org.mmaug.yaybay.base.BaseAdapter;
-import org.mmaug.yaybay.model.Contact;
+import org.mmaug.InfoCenter.widgets.ZgTextView;
+import org.mmaug.InfoCenter.adapter.ContactAdapter.ContactHolder;
+import org.mmaug.InfoCenter.base.BaseAdapter;
+import org.mmaug.InfoCenter.model.Contact;
 
 /**
  * @author SH (swanhtet@nexlabs.co)

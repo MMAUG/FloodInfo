@@ -1,4 +1,4 @@
-package org.mmaug.yaybay.model;
+package org.mmaug.InfoCenter.model;
 
 import java.io.Serializable;
 

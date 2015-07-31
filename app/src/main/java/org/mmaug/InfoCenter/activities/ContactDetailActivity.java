@@ -1,4 +1,4 @@
-package org.mmaug.yaybay.activities;
+package org.mmaug.InfoCenter.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,8 +6,8 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mmaug.org.yaybay.R;
-import org.mmaug.yaybay.model.Contact;
-import org.mmaug.yaybay.widgets.ZgTextView;
+import org.mmaug.InfoCenter.model.Contact;
+import org.mmaug.InfoCenter.widgets.ZgTextView;
 
 /**
  * @author SH (swanhtet@nexlabs.co)
