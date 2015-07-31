@@ -4,8 +4,8 @@
 
 package org.mmaug.yaybay.base;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
@@ -16,7 +16,7 @@ import mmaug.org.yaybay.R;
 /**
  * @author SH (swanhtet@nexlabs.co)
  */
-public abstract class BaseListActivity extends Activity implements OnItemClickListener {
+public abstract class BaseListActivity extends AppCompatActivity implements OnItemClickListener {
 
   private RecyclerView mRecyclerView;
 

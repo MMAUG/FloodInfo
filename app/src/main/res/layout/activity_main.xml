@@ -33,6 +33,7 @@
     style="@style/Button"
     android:layout_column="1"
     android:layout_row="1"
+    android:onClick="contactClick"
     android:background="@color/purple"
     android:text="@string/str_donation" />
 

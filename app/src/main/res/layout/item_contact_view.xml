@@ -7,6 +7,7 @@
   <org.mmaug.yaybay.widgets.ZgTextView
     android:id="@+id/tv_contact_name"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content" />
+    android:layout_height="wrap_content"
+    android:padding="@dimen/activity_vertical_margin" />
 
 </LinearLayout>

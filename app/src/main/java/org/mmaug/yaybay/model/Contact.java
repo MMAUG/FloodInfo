@@ -9,6 +9,10 @@ public class Contact {
   private String description;
   private String fbUrl;
 
+  public Contact(String name) {
+    this.name = name;
+  }
+
   public String getName() {
     return name;
   }

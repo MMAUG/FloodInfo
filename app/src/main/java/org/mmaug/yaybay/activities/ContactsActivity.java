@@ -1,23 +1,20 @@
 package org.mmaug.yaybay.activities;
 
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ItemDecoration;
 import android.view.View;
 import android.widget.AdapterView;
 import java.util.ArrayList;
+import java.util.List;
 import org.mmaug.yaybay.adapter.ContactAdapter;
 import org.mmaug.yaybay.base.BaseListActivity;
 import org.mmaug.yaybay.model.Contact;
+import org.mmaug.yaybay.utils.DividerDecoration;
 
 /**
  * @author SH (swanhtet@nexlabs.co)
  */
 public class ContactsActivity extends BaseListActivity {
-
-  @Override public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-  }
 
   /**
    * Implement this with the Custom Adapters of your choice.
@@ -30,10 +27,19 @@ public class ContactsActivity extends BaseListActivity {
 
     ArrayList<Contact> Contacts = new ArrayList<Contact>();
     //todo replace with real data list
-    // Contacts.addAll(insert real data here);
+    Contacts.addAll(generateDummyData(10));
     adapter.setContacts(Contacts);
 
     return adapter;
+  }
+
+  private List<Contact> generateDummyData(int count) {
+    ArrayList<Contact> items = new ArrayList<>();
+
+    for (int i = 0; i < count; i++) {
+      items.add(new Contact("Contact " + i));
+    }
+    return items;
   }
 
   /**
@@ -43,7 +49,7 @@ public class ContactsActivity extends BaseListActivity {
    * else @return ItemDecoration
    */
   @Override protected ItemDecoration getItemDecoration() {
-    return null;
+    return new DividerDecoration(this);
   }
 
   /**
