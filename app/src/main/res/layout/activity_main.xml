@@ -1,0 +1,32 @@
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:layout_margin="@dimen/activity_horizontal_margin"
+  android:columnCount="2"
+  android:rowCount="2">
+
+  <org.mmaug.mmfont.ZG
+    android:id="@+id/tv_latest_news"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/str_latest_news"
+    android:textSize="25sp" />
+
+  <org.mmaug.mmfont.ZG
+    android:id="@+id/tv_report"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/str_report"
+    android:textSize="25sp" />
+
+  <org.mmaug.mmfont.ZG
+    android:id="@+id/tv_donation_team"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_column="0"
+    android:layout_row="1"
+    android:text="@string/str_donation"
+    android:textSize="25sp" />
+
+</GridLayout>
+
