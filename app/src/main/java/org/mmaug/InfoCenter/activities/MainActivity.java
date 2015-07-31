@@ -10,7 +10,6 @@ import butterknife.OnClick;
 import mmaug.org.yaybay.R;
 
 public class MainActivity extends AppCompatActivity {
-
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
@@ -21,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
   public void contactClick(View view) {
     Intent i = new Intent();
     i.setClass(this, ContactsActivity.class);
-
     startActivity(i);
   }
 
@@ -29,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
   public void newsClick(View view) {
     Intent i = new Intent();
     i.setClass(this, NewsActivity.class);
-
     startActivity(i);
   }
 
@@ -37,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
   public void reportClick(View view) {
     Intent i = new Intent();
     i.setClass(this, ReportActivity.class);
-
     startActivity(i);
   }
 
