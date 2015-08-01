@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class News implements Serializable {
   private String title;
   private String description;
+  private int id;
 
   public String getTitle() {
     return title;
@@ -23,5 +24,12 @@ public class News implements Serializable {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public int getId() {
+    return id;
+  }
+  public void setId(int id) {
+    this.id = id;
   }
 }
