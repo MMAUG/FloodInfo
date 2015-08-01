@@ -3,10 +3,12 @@ package org.mmaug.InfoCenter.activities;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.util.Linkify;
 import android.view.MenuItem;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import java.util.regex.Pattern;
 import mmaug.org.yaybay.R;
 import org.mmaug.InfoCenter.model.Contact;
 import org.mmaug.InfoCenter.widgets.ZgTextView;
@@ -33,8 +35,10 @@ public class ContactDetailActivity extends AppCompatActivity {
       tvContactName.setText(c.getTitle());
       tvFbUrl.setText(c.getFbUrl());
       tvFbUrl.setLinksClickable(true);
-      tvContactPhone.setText(c.getPhone());
       tvDescription.setText(c.getDescription());
+      tvContactPhone.setText(c.getPhone());
+      Pattern phonePattern = Pattern.compile("\\d+");
+      Linkify.addLinks(tvContactPhone, phonePattern, "tel: ");
     }
   }
 
