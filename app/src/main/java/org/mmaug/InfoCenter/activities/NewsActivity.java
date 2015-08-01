@@ -49,6 +49,7 @@ public class NewsActivity extends BaseListActivity {
           .add(stateFragment, LIST_STATE_FRAGEMENT)
           .commit();
     }
+    loadFromDisk();
     loadData();
     onFabClick();
   }
@@ -91,11 +92,8 @@ public class NewsActivity extends BaseListActivity {
           null; //To make sure multiple call of load data method will not get only the saved contacts
       mAdapter.setNews(mNews);
     } else {
-      final Type type = new TypeToken<List<News>>() {
-      }.getType();
       if (ConnectionManager.isConnected(this)) {
         getProgressBar().setVisibility(View.VISIBLE);
-        getRecyclerView().setVisibility(View.GONE);
         RESTClient.getInstance().getService().getNews(new Callback<ArrayList<News>>() {
           @Override public void success(ArrayList<News> contacts, Response response) {
             getProgressBar().setVisibility(View.GONE);
@@ -107,19 +105,11 @@ public class NewsActivity extends BaseListActivity {
           }
 
           @Override public void failure(RetrofitError error) {
-            String contactString = FileUtils.loadData(NewsActivity.this, NEWS_FILE);
-            if (contactString != null) {
-              mNews = (ArrayList<News>) FileUtils.convertToJava(contactString, type);
-              mAdapter.setNews(mNews);
-            }
+           loadFromDisk();
           }
         });
       } else {
-        String contactString = FileUtils.loadData(NewsActivity.this, NEWS_FILE);
-        if (contactString != null) {
-          mNews.addAll(FileUtils.convertToJava(contactString, type));
-          mAdapter.setNews(mNews);
-        }
+        loadFromDisk();
         Toast.makeText(NewsActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
       }
     }
@@ -171,5 +161,15 @@ public class NewsActivity extends BaseListActivity {
     }
 
     return super.onOptionsItemSelected(item);
+  }
+
+  private void loadFromDisk(){
+    Type type = new TypeToken<List<News>>() {
+    }.getType();
+    String contactString = FileUtils.loadData(NewsActivity.this, NEWS_FILE);
+    if (contactString != null) {
+      mNews.addAll(FileUtils.convertToJava(contactString, type));
+      mAdapter.setNews(mNews);
+    }
   }
 }
