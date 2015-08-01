@@ -13,7 +13,11 @@
 
   <!-- Random Colors -->
   <color name="red">#F44336</color>
+  <color name="red_pressed">#BA322C</color>
   <color name="green">#4caf50</color>
-  <color name="blue">@color/primary</color>
+  <color name="green_pressed">#3E8040</color>
+  <color name="blue">#2196F3</color>
+  <color name="blue_pressed">#1565A0</color>
   <color name="purple">#673AB7</color>
+  <color name="purple_pressed">#412674</color>
 </resources>
