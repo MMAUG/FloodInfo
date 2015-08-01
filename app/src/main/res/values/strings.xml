@@ -24,4 +24,10 @@
   <string name="hello_world">Hello world!</string>
   <string name="action_settings">Settings</string>
   <string name="no_internet">No internet connection!</string>
+
+  <string name="water_level_condtion_normal">Normal</string>
+  <string name="water_level_condtion_warning">Warning</string>
+  <string name="water_level_condtion_important">Floading Point</string>
+  <string name="river_level">River Condition</string>
+  <string name="dam_level">Dam Condition</string>
 </resources>
