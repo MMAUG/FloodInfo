@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mmaug.org.yaybay.R;
@@ -35,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
   }
 
   @OnClick(R.id.tv_alert_level) public void alertLevel(View view) {
-    Toast.makeText(this, "We will implement it tonight...", Toast.LENGTH_SHORT).show();
+    Intent i = new Intent();
+    i.setClass(this, AlertActivity.class);
+    startActivity(i);
   }
 }
