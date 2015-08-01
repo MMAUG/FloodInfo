@@ -35,11 +35,27 @@ public class ContactDetailActivity extends AppCompatActivity {
       tvContactName.setText(c.getTitle());
       tvFbUrl.setText(c.getFbUrl());
       tvFbUrl.setLinksClickable(true);
-      tvDescription.setText(c.getDescription());
-      tvContactPhone.setText(c.getPhone());
+      tvDescription.setText(convertToEnglishNo(c.getDescription()));
+      tvContactPhone.setText(convertToEnglishNo(c.getPhone()));
       Pattern phonePattern = Pattern.compile("\\d+");
       Linkify.addLinks(tvContactPhone, phonePattern, "tel: ");
+      Linkify.addLinks(tvDescription, Linkify.WEB_URLS);
+      Linkify.addLinks(tvDescription, phonePattern, "tel: ");
     }
+  }
+
+  private String convertToEnglishNo(String input) {
+    input = input.replaceAll("[\u1040]", "0");
+    input = input.replaceAll("[\u1041]", "1");
+    input = input.replaceAll("[\u1042]", "2");
+    input = input.replaceAll("[\u1043]", "3");
+    input = input.replaceAll("[\u1044]", "4");
+    input = input.replaceAll("[\u1045]", "5");
+    input = input.replaceAll("[\u1046]", "6");
+    input = input.replaceAll("[\u1047]", "7");
+    input = input.replaceAll("[\u1048]", "8");
+    input = input.replaceAll("[\u1049]", "9");
+    return input;
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {

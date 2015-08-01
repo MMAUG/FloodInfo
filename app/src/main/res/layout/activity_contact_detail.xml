@@ -64,7 +64,6 @@
     <org.mmaug.InfoCenter.widgets.ZgTextView
       android:id="@+id/tv_contact_description"
       android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-      android:autoLink="all"/>
+        android:layout_height="wrap_content"/>
   </LinearLayout>
 </ScrollView>
