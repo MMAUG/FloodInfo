@@ -75,10 +75,12 @@ public class ContactsActivity extends BaseListActivity {
   private void loadData() {
     if (stateFragment != null && stateFragment.contacts != null) {
       mContacts = stateFragment.contacts;
-      stateFragment.contacts = null; //To make sure multiple call of load data method will not get only the saved contacts
+      stateFragment.contacts =
+          null; //To make sure multiple call of load data method will not get only the saved contacts
       mAdapter.setContacts(mContacts);
     } else {
-      final Type type = new TypeToken<List<Contact>>(){}.getType();
+      final Type type = new TypeToken<List<Contact>>() {
+      }.getType();
       if (ConnectionManager.isConnected(this)) {
         getProgressBar().setVisibility(View.VISIBLE);
         getRecyclerView().setVisibility(View.GONE);
@@ -89,24 +91,25 @@ public class ContactsActivity extends BaseListActivity {
             mContacts = contacts;
             Log.e("", "Contacts: " + mContacts.get(0).getTitle());
             mAdapter.setContacts(mContacts);
-            FileUtils.saveData(ContactsActivity.this,FileUtils.convertToJson(mContacts),CONTACT_FILE);
+            FileUtils.saveData(ContactsActivity.this, FileUtils.convertToJson(mContacts),
+                CONTACT_FILE);
           }
 
           @Override public void failure(RetrofitError error) {
-            String contactString = FileUtils.loadData(ContactsActivity.this,CONTACT_FILE);
-            if(contactString!=null){
+            String contactString = FileUtils.loadData(ContactsActivity.this, CONTACT_FILE);
+            if (contactString != null) {
               mContacts = (ArrayList<Contact>) FileUtils.convertToJava(contactString, type);
               mAdapter.setContacts(mContacts);
             }
           }
         });
-      }else{
-        String contactString = FileUtils.loadData(ContactsActivity.this,CONTACT_FILE);
-        if(contactString!=null) {
+      } else {
+        String contactString = FileUtils.loadData(ContactsActivity.this, CONTACT_FILE);
+        if (contactString != null) {
           mContacts = (ArrayList<Contact>) FileUtils.convertToJava(contactString, type);
           mAdapter.setContacts(mContacts);
         }
-        Toast.makeText(ContactsActivity.this, R.string.no_internet,Toast.LENGTH_SHORT).show();
+        Toast.makeText(ContactsActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
       }
     }
   }
@@ -118,11 +121,11 @@ public class ContactsActivity extends BaseListActivity {
    * Implementers can call getItemAtPosition(position) if they need
    * to access the data associated with the selected item.
    *
-   * @param parent   The AdapterView where the click happened.
-   * @param view     The view within the AdapterView that was clicked (this
-   *                 will be a view provided by the adapter)
+   * @param parent The AdapterView where the click happened.
+   * @param view The view within the AdapterView that was clicked (this
+   * will be a view provided by the adapter)
    * @param position The position of the view in the adapter.
-   * @param id       The row id of the item that was clicked.
+   * @param id The row id of the item that was clicked.
    */
   @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     Intent i = new Intent();
@@ -161,6 +164,6 @@ public class ContactsActivity extends BaseListActivity {
 
   @Override protected void onPause() {
     super.onPause();
-    stateFragment.contacts=mContacts;
+    stateFragment.contacts = mContacts;
   }
 }

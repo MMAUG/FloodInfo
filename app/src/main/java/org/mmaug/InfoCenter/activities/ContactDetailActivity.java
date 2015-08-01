@@ -27,6 +27,7 @@ public class ContactDetailActivity extends AppCompatActivity {
       Contact c = (Contact) getIntent().getSerializableExtra("contact");
       tvContactName.setText(c.getTitle());
       tvFbUrl.setText(c.getFbUrl());
+      tvFbUrl.setLinksClickable(true);
       tvContactPhone.setText(c.getPhone());
       tvDescription.setText(c.getDescription());
     }

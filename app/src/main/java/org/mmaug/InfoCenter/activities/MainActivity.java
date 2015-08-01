@@ -16,29 +16,25 @@ public class MainActivity extends AppCompatActivity {
     ButterKnife.bind(this);
   }
 
-  @OnClick(R.id.tv_donation_team)
-  public void contactClick(View view) {
+  @OnClick(R.id.tv_donation_team) public void contactClick(View view) {
     Intent i = new Intent();
     i.setClass(this, ContactsActivity.class);
     startActivity(i);
   }
 
-  @OnClick(R.id.tv_latest_news)
-  public void newsClick(View view) {
+  @OnClick(R.id.tv_latest_news) public void newsClick(View view) {
     Intent i = new Intent();
     i.setClass(this, NewsActivity.class);
     startActivity(i);
   }
 
-  @OnClick(R.id.tv_report)
-  public void reportClick(View view) {
+  @OnClick(R.id.tv_report) public void reportClick(View view) {
     Intent i = new Intent();
     i.setClass(this, ReportActivity.class);
     startActivity(i);
   }
 
-  @OnClick(R.id.tv_alert_level)
-  public void alertLevel(View view) {
+  @OnClick(R.id.tv_alert_level) public void alertLevel(View view) {
     Toast.makeText(this, "We will implement it tonight...", Toast.LENGTH_SHORT).show();
   }
 }

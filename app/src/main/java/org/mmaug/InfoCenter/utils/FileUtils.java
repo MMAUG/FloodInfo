@@ -20,11 +20,11 @@ import java.util.List;
 public class FileUtils {
 
   /***
-   Save contact list to storage
-   eg. saveData(this,convertToJson(contactList),"MY_CONTACT.json");
-
-   Load contact list from storage
-   contactList = convertToJava(loadData(this,"MY_CONTACT.json"));
+   * Save contact list to storage
+   * eg. saveData(this,convertToJson(contactList),"MY_CONTACT.json");
+   *
+   * Load contact list from storage
+   * contactList = convertToJava(loadData(this,"MY_CONTACT.json"));
    ***/
 
   //Convert contacts list to string
@@ -34,7 +34,7 @@ public class FileUtils {
   }
 
   //Convert String to contact list
-  public static List convertToJava(String jsonString,Type type) {
+  public static List convertToJava(String jsonString, Type type) {
     List datas = new ArrayList<>();
     GsonBuilder gsonBuilder = new GsonBuilder();
     Gson gson = gsonBuilder.create();
@@ -74,11 +74,10 @@ public class FileUtils {
     } catch (IOException ioException) {
       Log.d("IO Exception", "IO Exception");
     }
-    if(builder!=null) {
+    if (builder != null) {
       return builder.toString();
-    }else{
+    } else {
       return null;
     }
   }
-
 }

@@ -58,9 +58,6 @@ public class NewsActivity extends BaseListActivity {
   @Override protected Adapter getAdapter() {
     mAdapter = new NewsAdapter();
     mAdapter.setOnItemClickListener(this);    //This is the code to provide a sectioned grid
-
-
-
     return mAdapter;
   }
 
@@ -77,10 +74,12 @@ public class NewsActivity extends BaseListActivity {
   private void loadData() {
     if (stateFragment != null && stateFragment.news != null) {
       mNews = stateFragment.news;
-      stateFragment.news = null; //To make sure multiple call of load data method will not get only the saved contacts
+      stateFragment.news =
+          null; //To make sure multiple call of load data method will not get only the saved contacts
       mAdapter.setNews(mNews);
-    }else {
-      final Type type = new TypeToken<List<News>>(){}.getType();
+    } else {
+      final Type type = new TypeToken<List<News>>() {
+      }.getType();
       if (ConnectionManager.isConnected(this)) {
         getProgressBar().setVisibility(View.VISIBLE);
         getRecyclerView().setVisibility(View.GONE);
@@ -90,22 +89,21 @@ public class NewsActivity extends BaseListActivity {
             getRecyclerView().setVisibility(View.VISIBLE);
             mNews = contacts;
             mAdapter.setNews(mNews);
-            FileUtils.saveData(NewsActivity.this, FileUtils.convertToJson(mNews),
-                NEWS_FILE);
+            FileUtils.saveData(NewsActivity.this, FileUtils.convertToJson(mNews), NEWS_FILE);
           }
 
           @Override public void failure(RetrofitError error) {
-            String contactString = FileUtils.loadData(NewsActivity.this,NEWS_FILE);
-            if(contactString!=null){
+            String contactString = FileUtils.loadData(NewsActivity.this, NEWS_FILE);
+            if (contactString != null) {
               mNews = (ArrayList<News>) FileUtils.convertToJava(contactString, type);
               mAdapter.setNews(mNews);
             }
           }
         });
-      }else{
-        String contactString = FileUtils.loadData(NewsActivity.this,NEWS_FILE);
-        if(contactString!=null){
-          mNews.addAll(FileUtils.convertToJava(contactString,type));
+      } else {
+        String contactString = FileUtils.loadData(NewsActivity.this, NEWS_FILE);
+        if (contactString != null) {
+          mNews.addAll(FileUtils.convertToJava(contactString, type));
           mAdapter.setNews(mNews);
         }
         Toast.makeText(NewsActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
@@ -120,11 +118,11 @@ public class NewsActivity extends BaseListActivity {
    * Implementers can call getItemAtPosition(position) if they need
    * to access the data associated with the selected item.
    *
-   * @param parent   The AdapterView where the click happened.
-   * @param view     The view within the AdapterView that was clicked (this
-   *                 will be a view provided by the adapter)
+   * @param parent The AdapterView where the click happened.
+   * @param view The view within the AdapterView that was clicked (this
+   * will be a view provided by the adapter)
    * @param position The position of the view in the adapter.
-   * @param id       The row id of the item that was clicked.
+   * @param id The row id of the item that was clicked.
    */
   @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     Intent i = new Intent();

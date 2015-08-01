@@ -37,13 +37,11 @@ public class ContactAdapter extends BaseAdapter<ContactHolder> {
   @Override public ContactHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     LayoutInflater inflater = LayoutInflater.from(parent.getContext());
     View view = inflater.inflate(R.layout.item_contact_view, parent, false);
-
     return new ContactHolder(view, this);
   }
 
   @Override public void onBindViewHolder(ContactHolder holder, int position) {
     final Contact Contact = mContacts.get(position);
-
     holder.setContactName(Contact.getTitle());
   }
 
@@ -58,7 +56,6 @@ public class ContactAdapter extends BaseAdapter<ContactHolder> {
       super(itemView);
       ButterKnife.bind(this, itemView);
       itemView.setOnClickListener(this);
-
       mAdapter = adapter;
     }
 
