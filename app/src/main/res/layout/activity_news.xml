@@ -30,6 +30,7 @@
         android:id="@+id/tv_news_description"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:lineSpacingMultiplier="1.5"
         />
   </LinearLayout>
 
