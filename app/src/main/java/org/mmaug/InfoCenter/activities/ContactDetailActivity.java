@@ -38,8 +38,8 @@ public class ContactDetailActivity extends AppCompatActivity {
       tvDescription.setText(c.getDescription());
       tvContactPhone.setText(convertToEnglishNo(c.getPhone()));
       Pattern phonePattern = Pattern.compile("\\d+");
+      Linkify.addLinks(tvContactPhone, Linkify.PHONE_NUMBERS);
       Linkify.addLinks(tvContactPhone, phonePattern, "tel: ");
-      Linkify.addLinks(tvDescription, Linkify.WEB_URLS);
     }
   }
 
