@@ -19,7 +19,7 @@
       style="@style/Button"
       android:layout_column="0"
       android:layout_row="0"
-      android:background="@color/green"
+      android:background="@drawable/blue_btn_bg"
       android:text="@string/str_latest_news"
       />
 
@@ -28,7 +28,7 @@
       style="@style/Button"
       android:layout_column="1"
       android:layout_row="0"
-      android:background="@color/red"
+      android:background="@drawable/red_btn_bg"
       android:text="@string/str_alert_level"
       />
 
@@ -37,7 +37,7 @@
       style="@style/Button"
       android:layout_column="0"
       android:layout_row="1"
-      android:background="@color/blue"
+      android:background="@drawable/green_btn_bg"
       android:text="@string/str_report"
       />
 
@@ -46,7 +46,7 @@
       style="@style/Button"
       android:layout_column="1"
       android:layout_row="1"
-      android:background="@color/purple"
+      android:background="@drawable/purple_btn_bg"
       android:text="@string/str_donation"
       />
 
