@@ -35,12 +35,11 @@ public class ContactDetailActivity extends AppCompatActivity {
       tvContactName.setText(c.getTitle());
       tvFbUrl.setText(c.getFbUrl());
       tvFbUrl.setLinksClickable(true);
-      tvDescription.setText(convertToEnglishNo(c.getDescription()));
+      tvDescription.setText(c.getDescription());
       tvContactPhone.setText(convertToEnglishNo(c.getPhone()));
       Pattern phonePattern = Pattern.compile("\\d+");
       Linkify.addLinks(tvContactPhone, phonePattern, "tel: ");
       Linkify.addLinks(tvDescription, Linkify.WEB_URLS);
-      Linkify.addLinks(tvDescription, phonePattern, "tel: ");
     }
   }
 
