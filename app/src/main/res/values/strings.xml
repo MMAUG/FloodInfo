@@ -28,6 +28,6 @@
   <string name="water_level_condtion_normal">ပုံမွန္</string>
   <string name="water_level_condtion_warning">စိုးရိမ္ေရမွတ္</string>
   <string name="water_level_condtion_important">အေျခအေနဆိုး(Floading Point)</string>
-  <string name="river_level">River Condition</string>
-  <string name="dam_level">Dam Condition</string>
+  <string name="river_level">ျမစ္  အေျခအေန</string>
+  <string name="dam_level">ဆည္ အေျခအေန</string>
 </resources>

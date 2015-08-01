@@ -40,6 +40,7 @@
         android:background="@color/divider_color"
         />
     <TextView
+        android:id="@+id/river_condition"
         android:textStyle="bold"
         android:text="@string/river_level"
         android:layout_width="fill_parent"
@@ -56,6 +57,7 @@
           />
 
       <TextView
+          android:id="@+id/dam_condition"
           android:textStyle="bold"
           android:text="@string/dam_level"
           android:layout_width="fill_parent"

@@ -34,6 +34,8 @@ public class ReportActivity extends AppCompatActivity {
   @Bind(R.id.rbn_dam_normal)RadioButton rbnDamNormal;
   @Bind(R.id.rbn_dam_important)RadioButton rbnDamImportant;
   @Bind(R.id.rbn_dam_fload) RadioButton rbnDamFload;
+  @Bind(R.id.dam_condition) TextView txtDamCondition;
+  @Bind(R.id.river_condition)TextView txtRiverCondition;
   Typeface tf;
 
   @Override public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,8 @@ public class ReportActivity extends AppCompatActivity {
     rbnDamFload.setTypeface(tf);
     rbnDamImportant.setTypeface(tf);
     rbnDamNormal.setTypeface(tf);
+    txtDamCondition.setTypeface(tf);
+    txtRiverCondition.setTypeface(tf);
   }
 
   public void onSubmit(View view) {
