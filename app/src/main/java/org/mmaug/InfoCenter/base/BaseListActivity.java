@@ -5,12 +5,14 @@
 package org.mmaug.InfoCenter.base;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ItemDecoration;
+import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ProgressBar;
 import butterknife.Bind;
@@ -24,6 +26,7 @@ public abstract class BaseListActivity extends AppCompatActivity implements OnIt
 
   @Bind(R.id.recycler_root) RecyclerView mRecyclerView;
   @Bind(R.id.progress) ProgressBar mProgressBar;
+  @Bind(R.id.share_fab) FloatingActionButton mFab;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -33,7 +36,6 @@ public abstract class BaseListActivity extends AppCompatActivity implements OnIt
     if (mRecyclerView != null) {
       mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
       mRecyclerView.setAdapter(getAdapter());
-
       if (getItemDecoration() != null) {
         mRecyclerView.addItemDecoration(getItemDecoration());
       }
@@ -68,6 +70,10 @@ public abstract class BaseListActivity extends AppCompatActivity implements OnIt
 
   protected ProgressBar getProgressBar() {
     return mProgressBar;
+  }
+
+  protected FloatingActionButton getmFab(){
+    return mFab;
   }
 }
 
