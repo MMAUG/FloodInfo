@@ -2,7 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto">
   <item
-    android:id="@+id/action_add"
-    android:title="Add Contact"
-    app:showAsAction="always" />
+      android:id="@+id/action_refresh"
+      android:title="Refresh"
+      app:showAsAction="always"/>
+  <item
+      android:id="@+id/action_add"
+      android:title="Add Contact"
+      app:showAsAction="always"/>
 </menu>

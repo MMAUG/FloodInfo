@@ -87,7 +87,7 @@ public class ContactsActivity extends BaseListActivity {
           @Override public void success(ArrayList<Contact> contacts, Response response) {
             getProgressBar().setVisibility(View.GONE);
             getRecyclerView().setVisibility(View.VISIBLE);
-            mContacts.addAll(contacts);
+            mContacts = contacts;
             Log.e("", "Contacts: " + mContacts.get(0).getTitle());
             mAdapter.setContacts(mContacts);
             FileUtils.saveData(ContactsActivity.this,FileUtils.convertToJson(mContacts),CONTACT_FILE);
@@ -96,7 +96,7 @@ public class ContactsActivity extends BaseListActivity {
           @Override public void failure(RetrofitError error) {
             String contactString = FileUtils.loadData(ContactsActivity.this,CONTACT_FILE);
             if(contactString!=null){
-              mContacts.addAll(FileUtils.convertToJava(contactString,type));
+              mContacts = (ArrayList<Contact>) FileUtils.convertToJava(contactString, type);
               mAdapter.setContacts(mContacts);
             }
           }
@@ -104,7 +104,7 @@ public class ContactsActivity extends BaseListActivity {
       }else{
         String contactString = FileUtils.loadData(ContactsActivity.this,CONTACT_FILE);
         if(contactString!=null) {
-          mContacts.addAll(FileUtils.convertToJava(contactString,type));
+          mContacts = (ArrayList<Contact>) FileUtils.convertToJava(contactString, type);
           mAdapter.setContacts(mContacts);
         }
         Toast.makeText(ContactsActivity.this, R.string.no_internet,Toast.LENGTH_SHORT).show();
@@ -149,6 +149,10 @@ public class ContactsActivity extends BaseListActivity {
       i.setClass(this, AddContactActivity.class);
 
       startActivity(i);
+      return true;
+    }
+    if (id == R.id.action_refresh) {
+      loadData();
       return true;
     }
 

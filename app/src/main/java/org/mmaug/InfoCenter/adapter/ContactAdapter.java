@@ -12,10 +12,10 @@ import butterknife.ButterKnife;
 import java.util.ArrayList;
 import java.util.List;
 import mmaug.org.yaybay.R;
-import org.mmaug.InfoCenter.widgets.ZgTextView;
 import org.mmaug.InfoCenter.adapter.ContactAdapter.ContactHolder;
 import org.mmaug.InfoCenter.base.BaseAdapter;
 import org.mmaug.InfoCenter.model.Contact;
+import org.mmaug.InfoCenter.widgets.ZgTextView;
 
 /**
  * @author SH (swanhtet@nexlabs.co)
@@ -31,7 +31,7 @@ public class ContactAdapter extends BaseAdapter<ContactHolder> {
   public void setContacts(ArrayList<Contact> Contacts) {
     mContacts.clear();
     mContacts.addAll(Contacts);
-    this.notifyItemRangeInserted(0, mContacts.size() - 1);
+    notifyDataSetChanged();
   }
 
   @Override public ContactHolder onCreateViewHolder(ViewGroup parent, int viewType) {
