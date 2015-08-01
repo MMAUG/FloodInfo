@@ -153,6 +153,9 @@ public class NewsActivity extends BaseListActivity {
     if (id == R.id.action_refresh) {
       loadData();
       return true;
+    } else if (id == android.R.id.home) {
+      onBackPressed();
+      return true;
     }
 
     return super.onOptionsItemSelected(item);

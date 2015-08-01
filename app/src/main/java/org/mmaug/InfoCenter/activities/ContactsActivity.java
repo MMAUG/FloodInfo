@@ -49,7 +49,6 @@ public class ContactsActivity extends BaseListActivity {
           .commit();
     }
     loadData();
-
   }
 
   /**
@@ -150,10 +149,11 @@ public class ContactsActivity extends BaseListActivity {
 
       startActivity(i);
       return true;
-    }
-    if (id == R.id.action_refresh) {
+    } else if (id == R.id.action_refresh) {
       loadData();
       return true;
+    } else if (id == android.R.id.home) {
+      onBackPressed();
     }
 
     return super.onOptionsItemSelected(item);
