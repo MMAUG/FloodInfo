@@ -1,3 +1,8 @@
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
@@ -14,3 +19,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
 </FrameLayout>
+  <android.support.design.widget.FloatingActionButton
+      android:id="@+id/share_fab"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@drawable/ic_add"
+      android:layout_margin="16dp"
+      android:visibility="gone"
+      android:clickable="true"
+      app:layout_anchor="@id/recycler_root"
+      app:layout_anchorGravity="bottom|end"
+      app:pressedTranslationZ="16dp"
+      app:borderWidth="0dp"
+      app:elevation="@dimen/fab_elevation"
+      app:rippleColor="@color/primary_dark" />
+  </android.support.design.widget.CoordinatorLayout>

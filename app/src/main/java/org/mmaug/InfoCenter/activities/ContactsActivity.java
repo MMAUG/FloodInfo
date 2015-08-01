@@ -2,6 +2,7 @@ package org.mmaug.InfoCenter.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ItemDecoration;
 import android.util.Log;
@@ -37,6 +38,7 @@ public class ContactsActivity extends BaseListActivity {
   ArrayList<Contact> mContacts = new ArrayList<>();
   private ContactAdapter mAdapter = null;
   private HeadlessStateFragment stateFragment;
+  FloatingActionButton mFab;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -49,6 +51,17 @@ public class ContactsActivity extends BaseListActivity {
           .commit();
     }
     loadData();
+    onFabClick();
+  }
+
+  private void onFabClick(){
+    mFab = getmFab();
+    mFab.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        Intent intentToAddNews = new Intent(ContactsActivity.this, AddContactActivity.class);
+        startActivity(intentToAddNews);
+      }
+    });
   }
 
   /**
@@ -88,6 +101,7 @@ public class ContactsActivity extends BaseListActivity {
           @Override public void success(ArrayList<Contact> contacts, Response response) {
             getProgressBar().setVisibility(View.GONE);
             getRecyclerView().setVisibility(View.VISIBLE);
+            getmFab().setVisibility(View.VISIBLE);
             mContacts = contacts;
             Log.e("", "Contacts: " + mContacts.get(0).getTitle());
             mAdapter.setContacts(mContacts);
