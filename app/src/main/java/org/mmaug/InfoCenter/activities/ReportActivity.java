@@ -1,7 +1,9 @@
 package org.mmaug.InfoCenter.activities;
 
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -9,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -31,19 +34,19 @@ public class ReportActivity extends AppCompatActivity {
   @Bind(R.id.rbn_dam_normal)RadioButton rbnDamNormal;
   @Bind(R.id.rbn_dam_important)RadioButton rbnDamImportant;
   @Bind(R.id.rbn_dam_fload) RadioButton rbnDamFload;
+  Typeface tf;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_report);
     ButterKnife.bind(this);
-
+     tf = Typeface.createFromAsset(this.getAssets(), "zawgyi.ttf");
     ActionBar actionBar = getSupportActionBar();
     if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
     setTypeFace();
   }
 
   public void setTypeFace(){
-    Typeface tf = Typeface.createFromAsset(this.getAssets(), "zawgyi.ttf");
     rbnWaterImportant.setTypeface(tf);
     rbnWaterNormal.setTypeface(tf);
     rbnWaterFload.setTypeface(tf);
@@ -54,8 +57,18 @@ public class ReportActivity extends AppCompatActivity {
 
   public void onSubmit(View view) {
     if (TextUtils.isEmpty(edtTitle.getText()) || TextUtils.isEmpty(edtContent.getText())) {
-      Toast.makeText(this, "Please write something that is worth sharing...", Toast.LENGTH_LONG)
-          .show();
+
+      Snackbar snackbar = Snackbar
+          .make(view, "အခ်က္အလက္ကိုျပည့္စုံစြာေျဖဆိုေပးပါရန္ ေမတၲာရပ္ခံပါတယ္", Snackbar.LENGTH_LONG);
+      snackbar.setActionTextColor(Color.RED);
+      View snackbarView = snackbar.getView();
+      snackbarView.setBackgroundColor(Color.DKGRAY);
+      TextView textView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+      textView.setTextColor(Color.YELLOW);
+      textView.setTypeface(tf);
+      snackbar.show();
+      /*Toast.makeText(this, "Please write something that is worth sharing...", Toast.LENGTH_LONG)
+          .show();*/
     } else {
       Toast.makeText(getApplicationContext(), "Loading...", Toast.LENGTH_SHORT).show();
       String title = edtTitle.getText().toString();
