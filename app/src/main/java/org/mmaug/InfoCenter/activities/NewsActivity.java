@@ -97,8 +97,6 @@ public class NewsActivity extends BaseListActivity {
         RESTClient.getInstance().getService().getNews(new Callback<ArrayList<News>>() {
           @Override public void success(ArrayList<News> contacts, Response response) {
             getProgressBar().setVisibility(View.GONE);
-            getmFab().setVisibility(View.VISIBLE);
-            getRecyclerView().setVisibility(View.VISIBLE);
             mNews = contacts;
             mAdapter.setNews(mNews);
             FileUtils.saveData(NewsActivity.this, FileUtils.convertToJson(mNews), NEWS_FILE);

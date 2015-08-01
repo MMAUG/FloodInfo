@@ -98,7 +98,6 @@ public class ContactsActivity extends BaseListActivity {
         RESTClient.getInstance().getService().getContacts(new Callback<ArrayList<Contact>>() {
           @Override public void success(ArrayList<Contact> contacts, Response response) {
             getProgressBar().setVisibility(View.GONE);
-            getmFab().setVisibility(View.VISIBLE);
             mContacts = contacts;
             Log.e("", "Contacts: " + mContacts.get(0).getTitle());
             mAdapter.setContacts(mContacts);
