@@ -27,7 +27,7 @@ public class NewsAdapter extends BaseAdapter<NewsHolder> {
   public void setNews(ArrayList<News> News) {
     mNews.clear();
     mNews.addAll(News);
-    this.notifyItemRangeInserted(0, mNews.size() - 1);
+    this.notifyDataSetChanged();
   }
 
   @Override public NewsHolder onCreateViewHolder(ViewGroup parent, int viewType) {

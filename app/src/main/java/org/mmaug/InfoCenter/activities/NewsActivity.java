@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ItemDecoration;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
@@ -86,7 +88,7 @@ public class NewsActivity extends BaseListActivity {
           @Override public void success(ArrayList<News> contacts, Response response) {
             getProgressBar().setVisibility(View.GONE);
             getRecyclerView().setVisibility(View.VISIBLE);
-            mNews.addAll(contacts);
+            mNews = contacts;
             mAdapter.setNews(mNews);
             FileUtils.saveData(NewsActivity.this, FileUtils.convertToJson(mNews),
                 NEWS_FILE);
@@ -95,7 +97,7 @@ public class NewsActivity extends BaseListActivity {
           @Override public void failure(RetrofitError error) {
             String contactString = FileUtils.loadData(NewsActivity.this,NEWS_FILE);
             if(contactString!=null){
-              mNews.addAll(FileUtils.convertToJava(contactString,type));
+              mNews = (ArrayList<News>) FileUtils.convertToJava(contactString, type);
               mAdapter.setNews(mNews);
             }
           }
@@ -138,5 +140,21 @@ public class NewsActivity extends BaseListActivity {
   @Override protected void onPause() {
     super.onPause();
     stateFragment.news = mNews;
+  }
+
+  @Override public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.menu_refresh, menu);
+    return true;
+  }
+
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
+    int id = item.getItemId();
+
+    if (id == R.id.action_refresh) {
+      loadData();
+      return true;
+    }
+
+    return super.onOptionsItemSelected(item);
   }
 }
