@@ -57,7 +57,7 @@
           android:layout_width="fill_parent"
           android:layout_height="wrap_content"
           />
-      <include layout="@layout/water_level"/>
+      <include layout="@layout/dam_waterlevel"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

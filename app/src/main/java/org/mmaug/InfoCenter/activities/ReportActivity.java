@@ -1,5 +1,6 @@
 package org.mmaug.InfoCenter.activities;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -23,6 +25,12 @@ import retrofit.client.Response;
 public class ReportActivity extends AppCompatActivity {
   @Bind(R.id.edt_title) EditText edtTitle;
   @Bind(R.id.edt_content) EditText edtContent;
+  @Bind(R.id.rbn_water_normal)RadioButton rbnWaterNormal;
+  @Bind(R.id.rbn_water_important)RadioButton rbnWaterImportant;
+  @Bind(R.id.rbn_water_fload) RadioButton rbnWaterFload;
+  @Bind(R.id.rbn_dam_normal)RadioButton rbnDamNormal;
+  @Bind(R.id.rbn_dam_important)RadioButton rbnDamImportant;
+  @Bind(R.id.rbn_dam_fload) RadioButton rbnDamFload;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -31,6 +39,17 @@ public class ReportActivity extends AppCompatActivity {
 
     ActionBar actionBar = getSupportActionBar();
     if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
+    setTypeFace();
+  }
+
+  public void setTypeFace(){
+    Typeface tf = Typeface.createFromAsset(this.getAssets(), "zawgyi.ttf");
+    rbnWaterImportant.setTypeface(tf);
+    rbnWaterNormal.setTypeface(tf);
+    rbnWaterFload.setTypeface(tf);
+    rbnDamFload.setTypeface(tf);
+    rbnDamImportant.setTypeface(tf);
+    rbnDamNormal.setTypeface(tf);
   }
 
   public void onSubmit(View view) {

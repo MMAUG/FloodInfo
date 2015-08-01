@@ -10,21 +10,21 @@
         android:layout_height="wrap_content"
         >
         <RadioButton
-            android:id="@+id/rbn_water_normal"
+            android:id="@+id/rbn_dam_normal"
             android:textSize="@dimen/radio_button"
             android:text="@string/water_level_condtion_normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
         <RadioButton
-            android:id="@+id/rbn_water_important"
+            android:id="@+id/rbn_dam_important"
             android:textSize="@dimen/radio_button"
             android:text="@string/water_level_condtion_warning"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
         <RadioButton
-            android:id="@+id/rbn_water_fload"
+            android:id="@+id/rbn_dam_fload"
             android:textSize="@dimen/radio_button"
             android:text="@string/water_level_condtion_important"
             android:layout_width="wrap_content"
