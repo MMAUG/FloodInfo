@@ -1,7 +1,9 @@
 package org.mmaug.InfoCenter.activities;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -23,6 +25,9 @@ public class ContactDetailActivity extends AppCompatActivity {
     setContentView(R.layout.activity_contact_detail);
     ButterKnife.bind(this);
 
+    ActionBar actionBar = getSupportActionBar();
+    if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
+
     if (!getIntent().getExtras().isEmpty()) {
       Contact c = (Contact) getIntent().getSerializableExtra("contact");
       tvContactName.setText(c.getTitle());
@@ -31,5 +36,15 @@ public class ContactDetailActivity extends AppCompatActivity {
       tvContactPhone.setText(c.getPhone());
       tvDescription.setText(c.getDescription());
     }
+  }
+
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
+    int id = item.getItemId();
+    if (id == android.R.id.home) {
+      onBackPressed();
+      return true;
+    }
+
+    return super.onOptionsItemSelected(item);
   }
 }
