@@ -38,6 +38,8 @@ public class NewsDetailActivity extends AppCompatActivity {
       n = (News) getIntent().getSerializableExtra("news");
       tvNewsTitle.setText(n.getTitle());
       tvNewsDescription.setText(n.getDescription());
+      tvNewsTitle.setLinksClickable(true);
+      tvNewsDescription.setLinksClickable(true);
     }
   }
 

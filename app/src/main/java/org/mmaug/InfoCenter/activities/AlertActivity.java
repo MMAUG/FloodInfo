@@ -38,6 +38,7 @@ public class AlertActivity extends BaseListActivity {
   private NewsAdapter mAdapter = null;
   private HeadlessStateFragment stateFragment;
   FloatingActionButton mFab;
+  private int mCurrentpage =0;
 
 
   @Override public void onCreate(Bundle savedInstanceState) {
@@ -95,7 +96,7 @@ public class AlertActivity extends BaseListActivity {
     } else {
       if (ConnectionManager.isConnected(this)) {
         getProgressBar().setVisibility(View.VISIBLE);
-        RESTClient.getInstance().getService().getNews(new Callback<ArrayList<News>>() {
+        RESTClient.getInstance().getService().getNews(mCurrentpage,new Callback<ArrayList<News>>() {
           @Override public void success(ArrayList<News> contacts, Response response) {
             getProgressBar().setVisibility(View.GONE);
             mNews = contacts;

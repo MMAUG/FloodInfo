@@ -3,8 +3,10 @@ package org.mmaug.InfoCenter.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ItemDecoration;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +20,7 @@ import mmaug.org.yaybay.R;
 import org.mmaug.InfoCenter.adapter.NewsAdapter;
 import org.mmaug.InfoCenter.base.BaseListActivity;
 import org.mmaug.InfoCenter.fragment.HeadlessStateFragment;
+import org.mmaug.InfoCenter.listener.EndlessRecyclerOnScrollListener;
 import org.mmaug.InfoCenter.model.News;
 import org.mmaug.InfoCenter.rest.client.RESTClient;
 import org.mmaug.InfoCenter.utils.ConnectionManager;
@@ -38,6 +41,9 @@ public class NewsActivity extends BaseListActivity {
   private NewsAdapter mAdapter = null;
   private HeadlessStateFragment stateFragment;
   FloatingActionButton mFab;
+  private int mCurrentpage=1;
+  LinearLayoutManager mLayoutManager;
+  int totalItemCount;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -49,9 +55,18 @@ public class NewsActivity extends BaseListActivity {
           .add(stateFragment, LIST_STATE_FRAGEMENT)
           .commit();
     }
+    mLayoutManager = new LinearLayoutManager(NewsActivity.this);
+    getRecyclerView().setHasFixedSize(true);
     loadFromDisk();
-    loadData();
+    loadData(mCurrentpage);
     onFabClick();
+    getRecyclerView().addOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager) {
+      @Override public void onLoadMore(int current_page) {
+        Log.e("Current Page", "in scoll" + current_page);
+            loadData(current_page);
+          }
+        });
+
   }
 
   private void onFabClick(){
@@ -85,7 +100,7 @@ public class NewsActivity extends BaseListActivity {
     return new DividerDecoration(this, DividerDecoration.VERTICAL_LIST);
   }
 
-  private void loadData() {
+  private void loadData(final int current_page) {
     if (stateFragment != null && stateFragment.news != null) {
       mNews = stateFragment.news;
       stateFragment.news =
@@ -94,9 +109,11 @@ public class NewsActivity extends BaseListActivity {
     } else {
       if (ConnectionManager.isConnected(this)) {
         getProgressBar().setVisibility(View.VISIBLE);
-        RESTClient.getInstance().getService().getNews(new Callback<ArrayList<News>>() {
+        RESTClient.getInstance().getService().getNews(current_page,new Callback<ArrayList<News>>() {
           @Override public void success(ArrayList<News> contacts, Response response) {
             getProgressBar().setVisibility(View.GONE);
+            //TODO WARNING NEED TO GET TOTAL NEWS COUNT
+            totalItemCount = contacts.size();
             mNews = contacts;
             mAdapter.setNews(mNews);
             FileUtils.saveData(NewsActivity.this, FileUtils.convertToJson(mNews), NEWS_FILE);
@@ -151,7 +168,7 @@ public class NewsActivity extends BaseListActivity {
     int id = item.getItemId();
 
     if (id == R.id.action_refresh) {
-      loadData();
+     // loadData(current_page);
       return true;
     } else if (id == android.R.id.home) {
       onBackPressed();

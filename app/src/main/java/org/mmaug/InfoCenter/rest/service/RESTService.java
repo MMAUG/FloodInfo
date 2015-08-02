@@ -10,6 +10,7 @@ import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
+import retrofit.http.Query;
 
 /**
  * Created by h3r0 on 11/25/14.
@@ -17,7 +18,8 @@ import retrofit.http.Path;
 public interface RESTService {
   @GET("/donation_groups") void getContacts(Callback<ArrayList<Contact>> callback);
 
-  @GET("/newsfeeds") void getNews(Callback<ArrayList<News>> callback);
+
+  @GET("/newsfeeds") void getNews(@Query("page")int page,Callback<ArrayList<News>> callback);
 
   @FormUrlEncoded @POST("/newsfeeds") void submitNews(@Field("title") String title,
       @Field("description") String description,@Field("dam_condition") Integer damcondition,
