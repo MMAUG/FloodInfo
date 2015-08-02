@@ -56,17 +56,18 @@ public class NewsActivity extends BaseListActivity {
           .commit();
     }
     mLayoutManager = new LinearLayoutManager(NewsActivity.this);
+    mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
     getRecyclerView().setHasFixedSize(true);
+    getRecyclerView().setLayoutManager(mLayoutManager);
     loadFromDisk();
     loadData(mCurrentpage);
     onFabClick();
+
     getRecyclerView().addOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager) {
       @Override public void onLoadMore(int current_page) {
-        Log.e("Current Page", "in scoll" + current_page);
-            loadData(current_page);
-          }
-        });
-
+        loadData(current_page);
+      }
+    });
   }
 
   private void onFabClick(){
@@ -113,7 +114,7 @@ public class NewsActivity extends BaseListActivity {
           @Override public void success(ArrayList<News> contacts, Response response) {
             getProgressBar().setVisibility(View.GONE);
             //TODO WARNING NEED TO GET TOTAL NEWS COUNT
-            totalItemCount = contacts.size();
+            totalItemCount = 1000;
             mNews = contacts;
             mAdapter.setNews(mNews);
             FileUtils.saveData(NewsActivity.this, FileUtils.convertToJson(mNews), NEWS_FILE);
@@ -168,7 +169,7 @@ public class NewsActivity extends BaseListActivity {
     int id = item.getItemId();
 
     if (id == R.id.action_refresh) {
-     // loadData(current_page);
+     loadData(mCurrentpage);
       return true;
     } else if (id == android.R.id.home) {
       onBackPressed();
@@ -185,6 +186,7 @@ public class NewsActivity extends BaseListActivity {
     if (contactString != null) {
       mNews.addAll(FileUtils.convertToJava(contactString, type));
       mAdapter.setNews(mNews);
+
     }
   }
 }

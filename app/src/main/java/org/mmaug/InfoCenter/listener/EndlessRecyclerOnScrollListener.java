@@ -6,6 +6,7 @@ package org.mmaug.InfoCenter.listener;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScrollListener {
   public static String TAG = EndlessRecyclerOnScrollListener.class.getSimpleName();
@@ -25,6 +26,7 @@ public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScr
     super.onScrolled(recyclerView, dx, dy);
     visibleItemCount = recyclerView.getChildCount();
     totalItemCount = mLinearLayoutManager.getItemCount();
+    Log.e(TAG,"Total"+totalItemCount);
     firstVisibleItem = mLinearLayoutManager.findFirstVisibleItemPosition();
     if (loading) {
       if (totalItemCount > previousTotal) {
@@ -35,7 +37,8 @@ public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScr
     if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
       // End has been reached
       // Do something
-      current_page = previousTotal;
+      Log.e(TAG,"Reached to the End");
+      current_page=+1;
       onLoadMore(current_page);
       loading = true;
     }
