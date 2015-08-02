@@ -51,15 +51,19 @@ public class NewsDetailActivity extends AppCompatActivity {
       onBackPressed();
       return true;
     }else{
-      RESTClient.getInstance().getService().reportNews(0, new Callback<JsonObject>() {
+      RESTClient.getInstance().getService().reportNews(n.getId(), new Callback<JsonObject>() {
         @Override public void success(JsonObject jsonObject, Response response) {
           if(response.getStatus() !=200){
             Toast.makeText(getApplicationContext(),"Report Fail",Toast.LENGTH_LONG).show();
+          }else{
+            Toast.makeText(getApplicationContext(),"Successfully report",Toast.LENGTH_LONG).show();
           }
         }
 
         @Override public void failure(RetrofitError error) {
-
+          if(error.getResponse().getStatus() !=200){
+            Toast.makeText(getApplicationContext(),"Report Fail",Toast.LENGTH_LONG).show();
+          }
         }
       });
     }

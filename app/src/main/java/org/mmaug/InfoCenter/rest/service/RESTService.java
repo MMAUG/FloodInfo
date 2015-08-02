@@ -28,5 +28,5 @@ public interface RESTService {
       @Field("donation_location") String location, @Field("phone_numbers") String phone,
       Callback<News> callback);
 
-  @GET("/newsfeeds/{id}/report_as_spam")void reportNews(@Path(":id")Integer id,Callback<JsonObject>callback);
+  @GET("/newsfeeds/{id}/report_as_spam")void reportNews(@Path(":id")int id,Callback<JsonObject>callback);
 }
