@@ -14,7 +14,8 @@ public class RESTClient {
   public RESTClient() {
     //todo replace with real endpoint
     final RestAdapter restAdapter =
-        new RestAdapter.Builder().setEndpoint("http://floodinfo-myanmar.herokuapp.com/api/")
+        new RestAdapter.Builder().setEndpoint("http://floodinfo-myanmar.herokuapp.com/api/").setLogLevel(
+            RestAdapter.LogLevel.FULL)
             .build();
     mService = restAdapter.create(RESTService.class);
   }

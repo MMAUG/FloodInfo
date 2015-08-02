@@ -3,6 +3,7 @@ package org.mmaug.InfoCenter.activities;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -53,17 +54,11 @@ public class NewsDetailActivity extends AppCompatActivity {
     }else{
       RESTClient.getInstance().getService().reportNews(n.getId(), new Callback<JsonObject>() {
         @Override public void success(JsonObject jsonObject, Response response) {
-          if(response.getStatus() !=200){
-            Toast.makeText(getApplicationContext(),"Report Fail",Toast.LENGTH_LONG).show();
-          }else{
             Toast.makeText(getApplicationContext(),"Successfully report",Toast.LENGTH_LONG).show();
-          }
         }
 
         @Override public void failure(RetrofitError error) {
-          if(error.getResponse().getStatus() !=200){
-            Toast.makeText(getApplicationContext(),"Report Fail",Toast.LENGTH_LONG).show();
-          }
+          Toast.makeText(getApplicationContext(),"Report Fail",Toast.LENGTH_LONG).show();
         }
       });
     }
