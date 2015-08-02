@@ -50,6 +50,7 @@ public class ContactsActivity extends BaseListActivity {
           .add(stateFragment, LIST_STATE_FRAGEMENT)
           .commit();
     }
+    loadFromDisk();
     loadData();
     onFabClick();
   }
@@ -92,16 +93,11 @@ public class ContactsActivity extends BaseListActivity {
           null; //To make sure multiple call of load data method will not get only the saved contacts
       mAdapter.setContacts(mContacts);
     } else {
-      final Type type = new TypeToken<List<Contact>>() {
-      }.getType();
       if (ConnectionManager.isConnected(this)) {
         getProgressBar().setVisibility(View.VISIBLE);
-        getRecyclerView().setVisibility(View.GONE);
         RESTClient.getInstance().getService().getContacts(new Callback<ArrayList<Contact>>() {
           @Override public void success(ArrayList<Contact> contacts, Response response) {
             getProgressBar().setVisibility(View.GONE);
-            getRecyclerView().setVisibility(View.VISIBLE);
-            getmFab().setVisibility(View.VISIBLE);
             mContacts = contacts;
             Log.e("", "Contacts: " + mContacts.get(0).getTitle());
             mAdapter.setContacts(mContacts);
@@ -110,19 +106,11 @@ public class ContactsActivity extends BaseListActivity {
           }
 
           @Override public void failure(RetrofitError error) {
-            String contactString = FileUtils.loadData(ContactsActivity.this, CONTACT_FILE);
-            if (contactString != null) {
-              mContacts = (ArrayList<Contact>) FileUtils.convertToJava(contactString, type);
-              mAdapter.setContacts(mContacts);
-            }
+           loadFromDisk();
           }
         });
       } else {
-        String contactString = FileUtils.loadData(ContactsActivity.this, CONTACT_FILE);
-        if (contactString != null) {
-          mContacts = (ArrayList<Contact>) FileUtils.convertToJava(contactString, type);
-          mAdapter.setContacts(mContacts);
-        }
+        loadFromDisk();
         Toast.makeText(ContactsActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
       }
     }
@@ -179,5 +167,15 @@ public class ContactsActivity extends BaseListActivity {
   @Override protected void onPause() {
     super.onPause();
     stateFragment.contacts = mContacts;
+  }
+
+  private void loadFromDisk(){
+    Type type = new TypeToken<List<Contact>>() {
+    }.getType();
+    String contactString = FileUtils.loadData(ContactsActivity.this, CONTACT_FILE);
+    if (contactString != null) {
+      mContacts = (ArrayList<Contact>) FileUtils.convertToJava(contactString, type);
+      mAdapter.setContacts(mContacts);
+    }
   }
 }
