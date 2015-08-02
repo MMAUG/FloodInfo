@@ -3,8 +3,7 @@ package org.mmaug.InfoCenter.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,12 +14,12 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import mmaug.org.yaybay.R;
 import org.mmaug.InfoCenter.adapter.NewsAdapter;
 import org.mmaug.InfoCenter.base.BaseListActivity;
 import org.mmaug.InfoCenter.fragment.HeadlessStateFragment;
+import org.mmaug.InfoCenter.listener.EndlessRecyclerOnScrollListener;
 import org.mmaug.InfoCenter.model.News;
 import org.mmaug.InfoCenter.rest.client.RESTClient;
 import org.mmaug.InfoCenter.utils.ConnectionManager;
@@ -39,7 +38,7 @@ public class AlertActivity extends BaseListActivity {
   private HeadlessStateFragment stateFragment;
   FloatingActionButton mFab;
   private int mCurrentpage =0;
-
+  private LinearLayoutManager mLayoutManager;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -51,9 +50,20 @@ public class AlertActivity extends BaseListActivity {
           .add(stateFragment, LIST_STATE_FRAGEMENT)
           .commit();
     }
+
+    mLayoutManager = new LinearLayoutManager(AlertActivity.this);
+    mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+    getRecyclerView().setHasFixedSize(true);
+    getRecyclerView().setLayoutManager(mLayoutManager);
     loadFromDisk();
-    loadData();
+    loadData(mCurrentpage);
     onFabClick();
+
+    getRecyclerView().addOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager) {
+      @Override public void onLoadMore(int current_page) {
+        loadData(current_page);
+      }
+    });
   }
 
   private void onFabClick(){
@@ -87,7 +97,7 @@ public class AlertActivity extends BaseListActivity {
     return new DividerDecoration(this, DividerDecoration.VERTICAL_LIST);
   }
 
-  private void loadData() {
+  private void loadData(int currentpage) {
     if (stateFragment != null && stateFragment.news != null) {
       mNews = stateFragment.news;
       stateFragment.news =
@@ -96,7 +106,7 @@ public class AlertActivity extends BaseListActivity {
     } else {
       if (ConnectionManager.isConnected(this)) {
         getProgressBar().setVisibility(View.VISIBLE);
-        RESTClient.getInstance().getService().getNews(mCurrentpage,new Callback<ArrayList<News>>() {
+        RESTClient.getInstance().getService().getNews(currentpage,new Callback<ArrayList<News>>() {
           @Override public void success(ArrayList<News> contacts, Response response) {
             getProgressBar().setVisibility(View.GONE);
             mNews = contacts;
@@ -154,7 +164,7 @@ public class AlertActivity extends BaseListActivity {
     int id = item.getItemId();
 
     if (id == R.id.action_refresh) {
-      loadData();
+      loadData(mCurrentpage);
       return true;
     } else if (id == android.R.id.home) {
       onBackPressed();
