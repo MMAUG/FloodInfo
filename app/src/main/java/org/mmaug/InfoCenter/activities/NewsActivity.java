@@ -65,6 +65,7 @@ public class NewsActivity extends BaseListActivity {
 
     getRecyclerView().addOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager) {
       @Override public void onLoadMore(int current_page) {
+        Log.d("loading",current_page+"");
         loadData(current_page);
       }
     });
@@ -108,17 +109,29 @@ public class NewsActivity extends BaseListActivity {
           null; //To make sure multiple call of load data method will not get only the saved contacts
       mAdapter.setNews(mNews);
     } else {
+      Log.d("here","here");
       if (ConnectionManager.isConnected(this)) {
-        getProgressBar().setVisibility(View.VISIBLE);
-        Log.e("currentcout",""+current_page);
+        Log.d("current page",current_page+"");
+        if(current_page==1) {
+          getProgressBar().setVisibility(View.VISIBLE);
+        }
         RESTClient.getInstance().getService().getNews(current_page,new Callback<ArrayList<News>>() {
           @Override public void success(ArrayList<News> contacts, Response response) {
             getProgressBar().setVisibility(View.GONE);
             //TODO WARNING NEED TO GET TOTAL NEWS COUNT
-            totalItemCount = 1000;
-            mNews = contacts;
+
+            if(contacts==null || contacts.size() == 0) {
+              mAdapter.hideFooter();
+              return;
+            }
+            Log.d("news count", mNews.size() + "");
+            if(current_page==1){
+              mNews = contacts;
+              FileUtils.saveData(NewsActivity.this, FileUtils.convertToJson(mNews), NEWS_FILE);
+            }else{
+              mNews.addAll(contacts);
+            }
             mAdapter.setNews(mNews);
-            FileUtils.saveData(NewsActivity.this, FileUtils.convertToJson(mNews), NEWS_FILE);
           }
 
           @Override public void failure(RetrofitError error) {
@@ -171,6 +184,12 @@ public class NewsActivity extends BaseListActivity {
 
     if (id == R.id.action_refresh) {
      loadData(mCurrentpage);
+      getRecyclerView().addOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager) {
+        @Override public void onLoadMore(int current_page) {
+          Log.d("loading",current_page+"");
+          loadData(current_page);
+        }
+      });
       return true;
     } else if (id == android.R.id.home) {
       onBackPressed();
@@ -184,6 +203,7 @@ public class NewsActivity extends BaseListActivity {
     Type type = new TypeToken<List<News>>() {
     }.getType();
     String contactString = FileUtils.loadData(NewsActivity.this, NEWS_FILE);
+    System.out.println(contactString+ "xxxxx");
     if (contactString != null) {
       mNews.addAll(FileUtils.convertToJava(contactString, type));
       mAdapter.setNews(mNews);
