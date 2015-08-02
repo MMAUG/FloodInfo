@@ -3,7 +3,6 @@ package org.mmaug.InfoCenter.activities;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -13,7 +12,7 @@ import com.google.gson.JsonObject;
 import mmaug.org.yaybay.R;
 import org.mmaug.InfoCenter.model.News;
 import org.mmaug.InfoCenter.rest.client.RESTClient;
-import org.mmaug.InfoCenter.widgets.ZgTextView;
+import org.mmaug.InfoCenter.widgets.NkTextView;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -22,8 +21,8 @@ import retrofit.client.Response;
  * @author SH (swanhtet@nexlabs.co)
  */
 public class NewsDetailActivity extends AppCompatActivity {
-  @Bind(R.id.tv_news_title) ZgTextView tvNewsTitle;
-  @Bind(R.id.tv_news_description) ZgTextView tvNewsDescription;
+  @Bind(R.id.tv_news_title) NkTextView tvNewsTitle;
+  @Bind(R.id.tv_news_description) NkTextView tvNewsDescription;
   News n;
 
   @Override public void onCreate(Bundle savedInstanceState) {
@@ -53,14 +52,14 @@ public class NewsDetailActivity extends AppCompatActivity {
     if (id == android.R.id.home) {
       onBackPressed();
       return true;
-    }else{
+    } else {
       RESTClient.getInstance().getService().reportNews(n.getId(), new Callback<JsonObject>() {
         @Override public void success(JsonObject jsonObject, Response response) {
-            Toast.makeText(getApplicationContext(),"Successfully report",Toast.LENGTH_LONG).show();
+          Toast.makeText(getApplicationContext(), "Successfully report", Toast.LENGTH_LONG).show();
         }
 
         @Override public void failure(RetrofitError error) {
-          Toast.makeText(getApplicationContext(),"Report Fail",Toast.LENGTH_LONG).show();
+          Toast.makeText(getApplicationContext(), "Report Fail", Toast.LENGTH_LONG).show();
         }
       });
     }

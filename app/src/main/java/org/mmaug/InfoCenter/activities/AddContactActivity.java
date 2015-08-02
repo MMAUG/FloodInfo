@@ -35,7 +35,8 @@ public class AddContactActivity extends AppCompatActivity {
   }
 
   public void onSubmit(View view) {
-    if (TextUtils.isEmpty(edtTitle.getText()) || TextUtils.isEmpty(edtFbUrl.getText())
+    if (TextUtils.isEmpty(edtTitle.getText())
+        || TextUtils.isEmpty(edtFbUrl.getText())
         || TextUtils.isEmpty(edtContactNumber.getText())) {
       Toast.makeText(this, "Please write at least contact number", Toast.LENGTH_LONG).show();
     } else {
@@ -67,7 +68,7 @@ public class AddContactActivity extends AppCompatActivity {
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {
     int id = item.getItemId();
-   if (id == android.R.id.home) {
+    if (id == android.R.id.home) {
       onBackPressed();
       return true;
     }

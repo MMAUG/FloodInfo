@@ -5,16 +5,15 @@
 
   <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="@dimen/activity_vertical_margin"
-    >
+    android:padding="@dimen/activity_vertical_margin">
 
-    <org.mmaug.InfoCenter.widgets.ZgTextView
+    <org.mmaug.InfoCenter.widgets.NkTextView
       android:id="@+id/tv_contact_name"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
-      android:textSize="16sp" />
+      android:textSize="18sp" />
 
     <TextView
       android:id="@+id/tv_fb_url"
@@ -36,14 +35,15 @@
     <View
       android:layout_width="fill_parent"
       android:layout_height="1dp"
-      android:layout_marginTop="@dimen/card_insets"
       android:layout_marginBottom="@dimen/card_insets"
+      android:layout_marginTop="@dimen/card_insets"
       android:background="@color/divider_color" />
 
-    <org.mmaug.InfoCenter.widgets.ZgTextView
+    <org.mmaug.InfoCenter.widgets.NkTextView
       android:id="@+id/tv_contact_phone"
       android:layout_width="fill_parent"
-      android:layout_height="wrap_content" />
+      android:layout_height="wrap_content"
+      android:textSize="16sp" />
 
     <TextView
       android:layout_width="fill_parent"
@@ -57,14 +57,15 @@
     <View
       android:layout_width="fill_parent"
       android:layout_height="1dp"
-      android:layout_marginTop="@dimen/card_insets"
       android:layout_marginBottom="@dimen/card_insets"
+      android:layout_marginTop="@dimen/card_insets"
       android:background="@color/divider_color" />
 
-    <org.mmaug.InfoCenter.widgets.ZgTextView
+    <org.mmaug.InfoCenter.widgets.NkTextView
       android:id="@+id/tv_contact_description"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
-      android:lineSpacingMultiplier="1.5"/>
+      android:lineSpacingMultiplier="1.5"
+      android:textSize="16sp" />
   </LinearLayout>
 </ScrollView>

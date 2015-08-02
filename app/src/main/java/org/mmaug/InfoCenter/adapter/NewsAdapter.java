@@ -12,7 +12,7 @@ import java.util.List;
 import mmaug.org.yaybay.R;
 import org.mmaug.InfoCenter.base.BaseAdapter;
 import org.mmaug.InfoCenter.model.News;
-import org.mmaug.InfoCenter.widgets.ZgTextView;
+import org.mmaug.InfoCenter.widgets.NkTextView;
 
 /**
  * @author SH (swanhtet@nexlabs.co)
@@ -22,16 +22,18 @@ public class NewsAdapter extends BaseAdapter<BaseAdapter.BaseViewHolder> {
   public static final int FOOTER_VIEW_TYPE = 101;
   private List<News> mNews;
   private boolean hideFooter;
+
   public NewsAdapter() {
     mNews = new ArrayList<>();
     hideFooter = false;
   }
+
   public void setNews(ArrayList<News> News) {
     mNews = News;
     this.notifyDataSetChanged();
   }
 
-  public void hideFooter(){
+  public void hideFooter() {
     hideFooter = true;
     notifyDataSetChanged();
   }
@@ -39,12 +41,12 @@ public class NewsAdapter extends BaseAdapter<BaseAdapter.BaseViewHolder> {
   @Override public BaseAdapter.BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     LayoutInflater inflater = LayoutInflater.from(parent.getContext());
     View view;
-    switch (viewType){
+    switch (viewType) {
       case CONTENT_VIEW_TYPE:
         view = inflater.inflate(R.layout.item_news_view, parent, false);
         return new NewsHolder(view, this);
       case FOOTER_VIEW_TYPE:
-        view = inflater.inflate(R.layout.progress_bar,parent,false);
+        view = inflater.inflate(R.layout.progress_bar, parent, false);
         return new ProgressHolder(view);
     }
 
@@ -52,37 +54,37 @@ public class NewsAdapter extends BaseAdapter<BaseAdapter.BaseViewHolder> {
   }
 
   @Override public void onBindViewHolder(BaseAdapter.BaseViewHolder holder, int position) {
-    Log.d("adapter position",position+"");
-    Log.d("view type",holder.getClass()+"");
-    if(holder instanceof NewsHolder) {
-      if(mNews.size()==0){
+    Log.d("adapter position", position + "");
+    Log.d("view type", holder.getClass() + "");
+    if (holder instanceof NewsHolder) {
+      if (mNews.size() == 0) {
         return;
       }
       News News = mNews.get(position);
       ((NewsHolder) holder).setNewsName(News.getTitle());
-    }else if(holder instanceof ProgressHolder){
-      if(!hideFooter){
+    } else if (holder instanceof ProgressHolder) {
+      if (!hideFooter) {
         ((ProgressHolder) holder).progressContainer.setVisibility(View.VISIBLE);
-      }else{
+      } else {
         ((ProgressHolder) holder).progressContainer.setVisibility(View.GONE);
       }
     }
   }
 
   @Override public int getItemViewType(int position) {
-    if(position!=0 && position == getItemCount()-1){
+    if (position != 0 && position == getItemCount() - 1) {
       return FOOTER_VIEW_TYPE;
-    }else{
+    } else {
       return CONTENT_VIEW_TYPE;
     }
   }
 
   @Override public int getItemCount() {
-    return mNews == null ? 0 : mNews.size()+1;
+    return mNews == null ? 0 : mNews.size() + 1;
   }
 
   public static class NewsHolder extends BaseAdapter.BaseViewHolder {
-    @Bind(R.id.tv_news_title) ZgTextView mNewsTitle;
+    @Bind(R.id.tv_news_title) NkTextView mNewsTitle;
 
     public NewsHolder(View itemView, NewsAdapter adapter) {
       super(itemView);
@@ -97,11 +99,12 @@ public class NewsAdapter extends BaseAdapter<BaseAdapter.BaseViewHolder> {
     }
   }
 
-  public static class ProgressHolder extends BaseAdapter.BaseViewHolder{
+  public static class ProgressHolder extends BaseAdapter.BaseViewHolder {
     @Bind(R.id.progress_container) FrameLayout progressContainer;
+
     public ProgressHolder(View itemView) {
       super(itemView);
-      ButterKnife.bind(this,itemView);
+      ButterKnife.bind(this, itemView);
     }
   }
 }

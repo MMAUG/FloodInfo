@@ -18,20 +18,20 @@ import retrofit.RetrofitError.Kind;
 public class ConnectionManager {
 
   /**
+   * Check if there is any connectivity
+   */
+  public static boolean isConnected(Context context) {
+    NetworkInfo info = ConnectionManager.getNetworkInfo(context);
+    return (info != null && info.isConnected());
+  }
+
+  /**
    * Get the network info
    */
   public static NetworkInfo getNetworkInfo(Context context) {
     ConnectivityManager cm =
         (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
     return cm.getActiveNetworkInfo();
-  }
-
-  /**
-   * Check if there is any connectivity
-   */
-  public static boolean isConnected(Context context) {
-    NetworkInfo info = ConnectionManager.getNetworkInfo(context);
-    return (info != null && info.isConnected());
   }
 
   /**
@@ -47,7 +47,8 @@ public class ConnectionManager {
    */
   public static boolean isConnectedMobile(Context context) {
     NetworkInfo info = ConnectionManager.getNetworkInfo(context);
-    return (info != null && info.isConnected()
+    return (info != null
+        && info.isConnected()
         && info.getType() == ConnectivityManager.TYPE_MOBILE);
   }
 

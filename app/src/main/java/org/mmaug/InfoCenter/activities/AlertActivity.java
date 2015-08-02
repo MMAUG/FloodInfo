@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import mmaug.org.yaybay.R;
 import org.mmaug.InfoCenter.adapter.NewsAdapter;
@@ -32,13 +31,14 @@ import retrofit.client.Response;
 
 public class AlertActivity extends BaseListActivity {
 
-  private static final String LIST_STATE_FRAGEMENT = "org.mmaug.infocetner.activities.alertactivity";
+  private static final String LIST_STATE_FRAGEMENT =
+      "org.mmaug.infocetner.activities.alertactivity";
   private static final String NEWS_FILE = "news.json";
   ArrayList<News> mNews = new ArrayList<>();
+  FloatingActionButton mFab;
   private NewsAdapter mAdapter = null;
   private HeadlessStateFragment stateFragment;
-  FloatingActionButton mFab;
-  private int mCurrentpage =0;
+  private int mCurrentpage = 0;
   private LinearLayoutManager mLayoutManager;
 
   @Override public void onCreate(Bundle savedInstanceState) {
@@ -62,18 +62,8 @@ public class AlertActivity extends BaseListActivity {
 
     getRecyclerView().addOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager) {
       @Override public void onLoadMore(int current_page) {
-        Log.d("loading",current_page+"");
+        Log.d("loading", current_page + "");
         loadData(current_page);
-      }
-    });
-  }
-
-  private void onFabClick(){
-    mFab = getmFab();
-    mFab.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        Intent intentToAddNews = new Intent(AlertActivity.this, ReportActivity.class);
-        startActivity(intentToAddNews);
       }
     });
   }
@@ -99,6 +89,16 @@ public class AlertActivity extends BaseListActivity {
     return new DividerDecoration(this, DividerDecoration.VERTICAL_LIST);
   }
 
+  private void loadFromDisk() {
+    Type type = new TypeToken<List<News>>() {
+    }.getType();
+    String contactString = FileUtils.loadData(AlertActivity.this, NEWS_FILE);
+    if (contactString != null) {
+      mNews.addAll(FileUtils.convertToJava(contactString, type));
+      mAdapter.setNews(mNews);
+    }
+  }
+
   private void loadData(final int current_page) {
     if (stateFragment != null && stateFragment.news != null) {
       mNews = stateFragment.news;
@@ -109,37 +109,49 @@ public class AlertActivity extends BaseListActivity {
       Log.d("here", "here");
       if (ConnectionManager.isConnected(this)) {
         Log.d("current page", current_page + "");
-        if(current_page==1) {
+        if (current_page == 1) {
           getProgressBar().setVisibility(View.VISIBLE);
         }
-        RESTClient.getInstance().getService().getNews(current_page,new Callback<ArrayList<News>>() {
-          @Override public void success(ArrayList<News> contacts, Response response) {
-            getProgressBar().setVisibility(View.GONE);
-            //TODO WARNING NEED TO GET TOTAL NEWS COUNT
+        RESTClient.getInstance()
+            .getService()
+            .getNews(current_page, new Callback<ArrayList<News>>() {
+              @Override public void success(ArrayList<News> contacts, Response response) {
+                getProgressBar().setVisibility(View.GONE);
+                //TODO WARNING NEED TO GET TOTAL NEWS COUNT
 
-            if(contacts==null || contacts.size() == 0) {
-              mAdapter.hideFooter();
-              return;
-            }
-            Log.d("news count", mNews.size() + "");
-            if(current_page==1){
-              mNews = contacts;
-              FileUtils.saveData(AlertActivity.this, FileUtils.convertToJson(mNews), NEWS_FILE);
-            }else{
-              mNews.addAll(contacts);
-            }
-            mAdapter.setNews(mNews);
-          }
+                if (contacts == null || contacts.size() == 0) {
+                  mAdapter.hideFooter();
+                  return;
+                }
+                Log.d("news count", mNews.size() + "");
+                if (current_page == 1) {
+                  mNews = contacts;
+                  FileUtils.saveData(AlertActivity.this, FileUtils.convertToJson(mNews), NEWS_FILE);
+                } else {
+                  mNews.addAll(contacts);
+                }
+                mAdapter.setNews(mNews);
+              }
 
-          @Override public void failure(RetrofitError error) {
-            loadFromDisk();
-          }
-        });
+              @Override public void failure(RetrofitError error) {
+                loadFromDisk();
+              }
+            });
       } else {
         loadFromDisk();
         Toast.makeText(AlertActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
       }
     }
+  }
+
+  private void onFabClick() {
+    mFab = getmFab();
+    mFab.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        Intent intentToAddNews = new Intent(AlertActivity.this, ReportActivity.class);
+        startActivity(intentToAddNews);
+      }
+    });
   }
 
   /**
@@ -149,11 +161,11 @@ public class AlertActivity extends BaseListActivity {
    * Implementers can call getItemAtPosition(position) if they need
    * to access the data associated with the selected item.
    *
-   * @param parent The AdapterView where the click happened.
-   * @param view The view within the AdapterView that was clicked (this
-   * will be a view provided by the adapter)
+   * @param parent   The AdapterView where the click happened.
+   * @param view     The view within the AdapterView that was clicked (this
+   *                 will be a view provided by the adapter)
    * @param position The position of the view in the adapter.
-   * @param id The row id of the item that was clicked.
+   * @param id       The row id of the item that was clicked.
    */
   @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     Intent i = new Intent();
@@ -194,15 +206,5 @@ public class AlertActivity extends BaseListActivity {
     }
 
     return super.onOptionsItemSelected(item);
-  }
-
-  private void loadFromDisk(){
-    Type type = new TypeToken<List<News>>() {
-    }.getType();
-    String contactString = FileUtils.loadData(AlertActivity.this, NEWS_FILE);
-    if (contactString != null) {
-      mNews.addAll(FileUtils.convertToJava(contactString, type));
-      mAdapter.setNews(mNews);
-    }
   }
 }

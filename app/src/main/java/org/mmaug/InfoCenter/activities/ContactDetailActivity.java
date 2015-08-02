@@ -11,16 +11,16 @@ import butterknife.ButterKnife;
 import java.util.regex.Pattern;
 import mmaug.org.yaybay.R;
 import org.mmaug.InfoCenter.model.Contact;
-import org.mmaug.InfoCenter.widgets.ZgTextView;
+import org.mmaug.InfoCenter.widgets.NkTextView;
 
 /**
  * @author SH (swanhtet@nexlabs.co)
  */
 public class ContactDetailActivity extends AppCompatActivity {
-  @Bind(R.id.tv_contact_name) ZgTextView tvContactName;
+  @Bind(R.id.tv_contact_name) NkTextView tvContactName;
   @Bind(R.id.tv_fb_url) TextView tvFbUrl;
-  @Bind(R.id.tv_contact_phone) ZgTextView tvContactPhone;
-  @Bind(R.id.tv_contact_description) ZgTextView tvDescription;
+  @Bind(R.id.tv_contact_phone) NkTextView tvContactPhone;
+  @Bind(R.id.tv_contact_description) NkTextView tvDescription;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

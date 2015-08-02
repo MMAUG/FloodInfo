@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ItemDecoration;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,9 +35,9 @@ public class ContactsActivity extends BaseListActivity {
   private static final String LIST_STATE_FRAGEMENT = "org.mmaug.InfoCenter.activitites.infocenter";
   private static final String CONTACT_FILE = "contacts.dat";
   ArrayList<Contact> mContacts = new ArrayList<>();
+  FloatingActionButton mFab;
   private ContactAdapter mAdapter = null;
   private HeadlessStateFragment stateFragment;
-  FloatingActionButton mFab;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -53,16 +52,6 @@ public class ContactsActivity extends BaseListActivity {
     loadFromDisk();
     loadData();
     onFabClick();
-  }
-
-  private void onFabClick(){
-    mFab = getmFab();
-    mFab.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        Intent intentToAddNews = new Intent(ContactsActivity.this, AddContactActivity.class);
-        startActivity(intentToAddNews);
-      }
-    });
   }
 
   /**
@@ -86,6 +75,16 @@ public class ContactsActivity extends BaseListActivity {
     return new DividerDecoration(this, DividerDecoration.VERTICAL_LIST);
   }
 
+  private void loadFromDisk() {
+    Type type = new TypeToken<List<Contact>>() {
+    }.getType();
+    String contactString = FileUtils.loadData(ContactsActivity.this, CONTACT_FILE);
+    if (contactString != null) {
+      mContacts = (ArrayList<Contact>) FileUtils.convertToJava(contactString, type);
+      mAdapter.setContacts(mContacts);
+    }
+  }
+
   private void loadData() {
     if (stateFragment != null && stateFragment.contacts != null) {
       mContacts = stateFragment.contacts;
@@ -99,14 +98,13 @@ public class ContactsActivity extends BaseListActivity {
           @Override public void success(ArrayList<Contact> contacts, Response response) {
             getProgressBar().setVisibility(View.GONE);
             mContacts = contacts;
-            Log.e("", "Contacts: " + mContacts.get(0).getTitle());
             mAdapter.setContacts(mContacts);
             FileUtils.saveData(ContactsActivity.this, FileUtils.convertToJson(mContacts),
                 CONTACT_FILE);
           }
 
           @Override public void failure(RetrofitError error) {
-           loadFromDisk();
+            loadFromDisk();
           }
         });
       } else {
@@ -116,6 +114,16 @@ public class ContactsActivity extends BaseListActivity {
     }
   }
 
+  private void onFabClick() {
+    mFab = getmFab();
+    mFab.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        Intent intentToAddNews = new Intent(ContactsActivity.this, AddContactActivity.class);
+        startActivity(intentToAddNews);
+      }
+    });
+  }
+
   /**
    * Callback method to be invoked when an item in this AdapterView has
    * been clicked.
@@ -123,11 +131,11 @@ public class ContactsActivity extends BaseListActivity {
    * Implementers can call getItemAtPosition(position) if they need
    * to access the data associated with the selected item.
    *
-   * @param parent The AdapterView where the click happened.
-   * @param view The view within the AdapterView that was clicked (this
-   * will be a view provided by the adapter)
+   * @param parent   The AdapterView where the click happened.
+   * @param view     The view within the AdapterView that was clicked (this
+   *                 will be a view provided by the adapter)
    * @param position The position of the view in the adapter.
-   * @param id The row id of the item that was clicked.
+   * @param id       The row id of the item that was clicked.
    */
   @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     Intent i = new Intent();
@@ -167,15 +175,5 @@ public class ContactsActivity extends BaseListActivity {
   @Override protected void onPause() {
     super.onPause();
     stateFragment.contacts = mContacts;
-  }
-
-  private void loadFromDisk(){
-    Type type = new TypeToken<List<Contact>>() {
-    }.getType();
-    String contactString = FileUtils.loadData(ContactsActivity.this, CONTACT_FILE);
-    if (contactString != null) {
-      mContacts = (ArrayList<Contact>) FileUtils.convertToJava(contactString, type);
-      mAdapter.setContacts(mContacts);
-    }
   }
 }
