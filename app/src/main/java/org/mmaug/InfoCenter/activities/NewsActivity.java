@@ -184,6 +184,12 @@ public class NewsActivity extends BaseListActivity {
 
     if (id == R.id.action_refresh) {
      loadData(mCurrentpage);
+      getRecyclerView().addOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager) {
+        @Override public void onLoadMore(int current_page) {
+          Log.d("loading",current_page+"");
+          loadData(current_page);
+        }
+      });
       return true;
     } else if (id == android.R.id.home) {
       onBackPressed();

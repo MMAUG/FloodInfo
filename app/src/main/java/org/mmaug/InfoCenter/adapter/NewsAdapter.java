@@ -26,7 +26,6 @@ public class NewsAdapter extends BaseAdapter<BaseAdapter.BaseViewHolder> {
     mNews = new ArrayList<>();
     hideFooter = false;
   }
-
   public void setNews(ArrayList<News> News) {
     mNews = News;
     this.notifyDataSetChanged();
