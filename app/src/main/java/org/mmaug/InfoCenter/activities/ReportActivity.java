@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import mmaug.org.yaybay.R;
 import org.mmaug.InfoCenter.model.News;
 import org.mmaug.InfoCenter.rest.client.RESTClient;
@@ -37,6 +38,9 @@ public class ReportActivity extends AppCompatActivity {
   @Bind(R.id.dam_condition) TextView txtDamCondition;
   @Bind(R.id.river_condition)TextView txtRiverCondition;
   Typeface tf;
+  //Normal Conditon is Unknown
+  Integer river_condition =0;
+  Integer dam_condition =0;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -46,6 +50,30 @@ public class ReportActivity extends AppCompatActivity {
     ActionBar actionBar = getSupportActionBar();
     if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
     setTypeFace();
+  }
+
+  @OnClick(R.id.rbn_dam_normal)void normalCondition(){
+    dam_condition =1;
+  }
+
+  @OnClick(R.id.rbn_dam_important)void importantCondition(){
+    dam_condition =2;
+  }
+
+  @OnClick(R.id.rbn_dam_important)void floadCondition(){
+    dam_condition =3;
+  }
+
+  @OnClick(R.id.rbn_water_normal)void normalRiverCondition(){
+    river_condition =1;
+  }
+
+  @OnClick(R.id.rbn_water_important)void importantRiverCondition(){
+    river_condition =2;
+  }
+
+  @OnClick(R.id.rbn_water_important)void floadRiverCondition(){
+    river_condition =3;
   }
 
   public void setTypeFace(){
@@ -78,7 +106,7 @@ public class ReportActivity extends AppCompatActivity {
       String title = edtTitle.getText().toString();
       String content = edtContent.getText().toString();
 
-      RESTClient.getInstance().getService().submitNews(title, content, new Callback<News>() {
+      RESTClient.getInstance().getService().submitNews(title, content, dam_condition,river_condition,new Callback<News>() {
         @Override public void success(News news, Response response) {
           Toast.makeText(getApplicationContext(), "Submitted", Toast.LENGTH_SHORT).show();
           finish();

@@ -1,49 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-  package="mmaug.org.yaybay"
-  xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="mmaug.org.yaybay" >
 
-  <uses-permission android:name="android.permission.INTERNET" />
-  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-  <application
-    android:allowBackup="true"
-    android:icon="@mipmap/ic_launcher"
-    android:label="@string/app_name"
-    android:theme="@style/AppTheme">
-    <activity
-      android:name="org.mmaug.InfoCenter.activities.MainActivity"
-      android:label="@string/title_activity_main">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
+    <application
+        android:name="org$mmaug$InfoCenter$InfoCenterApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
 
-        <category android:name="android.intent.category.LAUNCHER" />
-      </intent-filter>
-    </activity>
+      <meta-data
+          android:name="com.google.android.gms.version"
+          android:value="@integer/google_play_services_version" />
 
-    <activity
-      android:name="org.mmaug.InfoCenter.activities.ContactsActivity"
-      android:label="@string/title_contact" />
+      <service
+          android:name="com.google.android.gms.analytics.AnalyticsService"
+          android:enabled="true"
+          android:exported="false" />
 
-    <activity
-      android:name="org.mmaug.InfoCenter.activities.ContactDetailActivity"
-      android:label="@string/title_contact" />
+        <activity
+            android:name="org.mmaug.InfoCenter.activities.MainActivity"
+            android:label="@string/title_activity_main" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-    <activity
-      android:name="org.mmaug.InfoCenter.activities.NewsActivity"
-      android:label="@string/title_news" />
-
-    <activity
-      android:name="org.mmaug.InfoCenter.activities.NewsDetailActivity"
-      android:label="@string/title_news" />
-
-    <activity
-      android:name="org.mmaug.InfoCenter.activities.ReportActivity"
-      android:label="@string/title_report" />
-
-    <activity
-      android:name="org.mmaug.InfoCenter.activities.AddContactActivity"
-      android:label="@string/title_add_contact" />
-  </application>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="org.mmaug.InfoCenter.activities.ContactsActivity"
+            android:label="@string/title_contact" />
+        <activity
+            android:name="org.mmaug.InfoCenter.activities.ContactDetailActivity"
+            android:label="@string/title_contact" />
+        <activity
+            android:name="org.mmaug.InfoCenter.activities.NewsActivity"
+            android:label="@string/title_news" />
+        <activity
+            android:name="org.mmaug.InfoCenter.activities.NewsDetailActivity"
+            android:label="@string/title_news" />
+        <activity
+            android:name="org.mmaug.InfoCenter.activities.ReportActivity"
+            android:label="@string/title_report" />
+        <activity
+            android:name="org.mmaug.InfoCenter.activities.AddContactActivity"
+            android:label="@string/title_add_contact" />
+        <activity
+            android:name="org.mmaug.InfoCenter.activities.AlertActivity"
+            android:label="@string/title_activity_alert" >
+        </activity>
+    </application>
 
 </manifest>

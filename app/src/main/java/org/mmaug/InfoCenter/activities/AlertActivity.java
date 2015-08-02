@@ -3,8 +3,9 @@ package org.mmaug.InfoCenter.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.RecyclerView.Adapter;
-import android.support.v7.widget.RecyclerView.ItemDecoration;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +14,8 @@ import android.widget.Toast;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import mmaug.org.yaybay.R;
 import org.mmaug.InfoCenter.adapter.NewsAdapter;
@@ -27,17 +30,15 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-/**
- * @author SH (swanhtet@nexlabs.co)
- */
-public class NewsActivity extends BaseListActivity {
+public class AlertActivity extends BaseListActivity {
 
-  private static final String LIST_STATE_FRAGEMENT = "org.mmaug.infocetner.activities.newsactivity";
+  private static final String LIST_STATE_FRAGEMENT = "org.mmaug.infocetner.activities.alertactivity";
   private static final String NEWS_FILE = "news.json";
   ArrayList<News> mNews = new ArrayList<>();
   private NewsAdapter mAdapter = null;
   private HeadlessStateFragment stateFragment;
   FloatingActionButton mFab;
+
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -58,7 +59,7 @@ public class NewsActivity extends BaseListActivity {
     mFab = getmFab();
     mFab.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        Intent intentToAddNews = new Intent(NewsActivity.this, ReportActivity.class);
+        Intent intentToAddNews = new Intent(AlertActivity.this, ReportActivity.class);
         startActivity(intentToAddNews);
       }
     });
@@ -69,7 +70,7 @@ public class NewsActivity extends BaseListActivity {
    *
    * @return custom RecyclerView.Adapter
    */
-  @Override protected Adapter getAdapter() {
+  @Override protected RecyclerView.Adapter getAdapter() {
     mAdapter = new NewsAdapter();
     mAdapter.setOnItemClickListener(this);    //This is the code to provide a sectioned grid
     return mAdapter;
@@ -81,7 +82,7 @@ public class NewsActivity extends BaseListActivity {
    * if you don't want decoration, @return null
    * else @return ItemDecoration
    */
-  @Override protected ItemDecoration getItemDecoration() {
+  @Override protected RecyclerView.ItemDecoration getItemDecoration() {
     return new DividerDecoration(this, DividerDecoration.VERTICAL_LIST);
   }
 
@@ -98,17 +99,18 @@ public class NewsActivity extends BaseListActivity {
           @Override public void success(ArrayList<News> contacts, Response response) {
             getProgressBar().setVisibility(View.GONE);
             mNews = contacts;
+            Collections.sort(mNews);
             mAdapter.setNews(mNews);
-            FileUtils.saveData(NewsActivity.this, FileUtils.convertToJson(mNews), NEWS_FILE);
+            FileUtils.saveData(AlertActivity.this, FileUtils.convertToJson(mNews), NEWS_FILE);
           }
 
           @Override public void failure(RetrofitError error) {
-           loadFromDisk();
+            loadFromDisk();
           }
         });
       } else {
         loadFromDisk();
-        Toast.makeText(NewsActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+        Toast.makeText(AlertActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
       }
     }
   }
@@ -164,7 +166,7 @@ public class NewsActivity extends BaseListActivity {
   private void loadFromDisk(){
     Type type = new TypeToken<List<News>>() {
     }.getType();
-    String contactString = FileUtils.loadData(NewsActivity.this, NEWS_FILE);
+    String contactString = FileUtils.loadData(AlertActivity.this, NEWS_FILE);
     if (contactString != null) {
       mNews.addAll(FileUtils.convertToJava(contactString, type));
       mAdapter.setNews(mNews);

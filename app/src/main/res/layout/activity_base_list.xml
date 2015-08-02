@@ -27,7 +27,6 @@
       android:layout_height="wrap_content"
       android:src="@drawable/ic_add"
       android:layout_margin="16dp"
-      android:visibility="gone"
       android:clickable="true"
       app:layout_anchor="@id/recycler_container"
       app:layout_anchorGravity="bottom|end"
