@@ -110,6 +110,7 @@ public class NewsActivity extends BaseListActivity {
     } else {
       if (ConnectionManager.isConnected(this)) {
         getProgressBar().setVisibility(View.VISIBLE);
+        Log.e("currentcout",""+current_page);
         RESTClient.getInstance().getService().getNews(current_page,new Callback<ArrayList<News>>() {
           @Override public void success(ArrayList<News> contacts, Response response) {
             getProgressBar().setVisibility(View.GONE);
