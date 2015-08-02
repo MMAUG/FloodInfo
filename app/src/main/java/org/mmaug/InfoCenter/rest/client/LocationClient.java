@@ -23,7 +23,7 @@ public class LocationClient {
 
     //todo replace with real endpoint
     final RestAdapter restAdapter =
-        new RestAdapter.Builder().setEndpoint("http://kunyi.asia/api/api/")
+        new RestAdapter.Builder().setEndpoint("http://kunyi.asia/api")
             .setLogLevel(RestAdapter.LogLevel.FULL)
             .setClient(new OkClient())
             .build();

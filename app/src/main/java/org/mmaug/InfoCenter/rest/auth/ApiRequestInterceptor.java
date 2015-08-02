@@ -12,11 +12,9 @@ import retrofit.RequestInterceptor;
  * Interceptor used to authorize requests.
  */
 public class ApiRequestInterceptor implements RequestInterceptor {
-
   private AuthUser user;
 
   @Override public void intercept(RequestFacade requestFacade) {
-
     if (user != null) {
       final String authorizationValue = encodeCredentialsForBasicAuthorization();
       requestFacade.addHeader("Authorization", authorizationValue);

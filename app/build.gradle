@@ -29,4 +29,5 @@ dependencies {
   compile 'com.google.android.gms:play-services-analytics:7.5.0'
   compile 'com.squareup.retrofit:retrofit:1.9.0'
   compile 'com.soundcloud.android:android-crop:1.0.0@aar'
+  compile 'com.squareup.okhttp:okhttp:2.4.0'
 }

@@ -21,7 +21,9 @@ import org.mmaug.InfoCenter.adapter.NewsAdapter;
 import org.mmaug.InfoCenter.base.BaseListActivity;
 import org.mmaug.InfoCenter.fragment.HeadlessStateFragment;
 import org.mmaug.InfoCenter.listener.EndlessRecyclerOnScrollListener;
+import org.mmaug.InfoCenter.model.Location;
 import org.mmaug.InfoCenter.model.News;
+import org.mmaug.InfoCenter.rest.client.LocationClient;
 import org.mmaug.InfoCenter.rest.client.RESTClient;
 import org.mmaug.InfoCenter.utils.ConnectionManager;
 import org.mmaug.InfoCenter.utils.DividerDecoration;
@@ -62,6 +64,16 @@ public class NewsActivity extends BaseListActivity {
     loadFromDisk();
     loadData(mCurrentpage);
     onFabClick();
+
+    LocationClient.getInstance().getService().getContacts(new Callback<ArrayList<Location>>() {
+      @Override public void success(ArrayList<Location> locations, Response response) {
+        Log.e("location",locations.toString());
+      }
+
+      @Override public void failure(RetrofitError error) {
+
+      }
+    });
 
     getRecyclerView().addOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager) {
       @Override public void onLoadMore(int current_page) {
