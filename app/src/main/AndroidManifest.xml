@@ -20,8 +20,8 @@
           android:name="com.google.android.gms.analytics.AnalyticsService"
           android:enabled="true"
           android:exported="false" />
-
-        <activity
+      <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
+      <activity
             android:name="org.mmaug.InfoCenter.activities.MainActivity"
             android:label="@string/title_activity_main" >
             <intent-filter>

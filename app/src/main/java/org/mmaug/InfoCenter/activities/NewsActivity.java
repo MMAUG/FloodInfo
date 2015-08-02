@@ -41,7 +41,7 @@ public class NewsActivity extends BaseListActivity {
   private NewsAdapter mAdapter = null;
   private HeadlessStateFragment stateFragment;
   FloatingActionButton mFab;
-  private int mCurrentpage=1;
+  private int mCurrentpage = 1;
   LinearLayoutManager mLayoutManager;
   int totalItemCount;
 
@@ -65,13 +65,13 @@ public class NewsActivity extends BaseListActivity {
 
     getRecyclerView().addOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager) {
       @Override public void onLoadMore(int current_page) {
-        Log.d("loading",current_page+"");
+        Log.d("loading", current_page + "");
         loadData(current_page);
       }
     });
   }
 
-  private void onFabClick(){
+  private void onFabClick() {
     mFab = getmFab();
     mFab.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
@@ -109,35 +109,37 @@ public class NewsActivity extends BaseListActivity {
           null; //To make sure multiple call of load data method will not get only the saved contacts
       mAdapter.setNews(mNews);
     } else {
-      Log.d("here","here");
+      Log.d("here", "here");
       if (ConnectionManager.isConnected(this)) {
-        Log.d("current page",current_page+"");
-        if(current_page==1) {
+        Log.d("current page", current_page + "");
+        if (current_page == 1) {
           getProgressBar().setVisibility(View.VISIBLE);
         }
-        RESTClient.getInstance().getService().getNews(current_page,new Callback<ArrayList<News>>() {
-          @Override public void success(ArrayList<News> contacts, Response response) {
-            getProgressBar().setVisibility(View.GONE);
-            //TODO WARNING NEED TO GET TOTAL NEWS COUNT
+        RESTClient.getInstance()
+            .getService()
+            .getNews(current_page, new Callback<ArrayList<News>>() {
+              @Override public void success(ArrayList<News> contacts, Response response) {
+                getProgressBar().setVisibility(View.GONE);
+                //TODO WARNING NEED TO GET TOTAL NEWS COUNT
 
-            if(contacts==null || contacts.size() == 0) {
-              mAdapter.hideFooter();
-              return;
-            }
-            Log.d("news count", mNews.size() + "");
-            if(current_page==1){
-              mNews = contacts;
-              FileUtils.saveData(NewsActivity.this, FileUtils.convertToJson(mNews), NEWS_FILE);
-            }else{
-              mNews.addAll(contacts);
-            }
-            mAdapter.setNews(mNews);
-          }
+                if (contacts == null || contacts.size() == 0) {
+                  mAdapter.hideFooter();
+                  return;
+                }
+                Log.d("news count", mNews.size() + "");
+                if (current_page == 1) {
+                  mNews = contacts;
+                  FileUtils.saveData(NewsActivity.this, FileUtils.convertToJson(mNews), NEWS_FILE);
+                } else {
+                  mNews.addAll(contacts);
+                }
+                mAdapter.setNews(mNews);
+              }
 
-          @Override public void failure(RetrofitError error) {
-           loadFromDisk();
-          }
-        });
+              @Override public void failure(RetrofitError error) {
+                loadFromDisk();
+              }
+            });
       } else {
         loadFromDisk();
         Toast.makeText(NewsActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
@@ -183,10 +185,10 @@ public class NewsActivity extends BaseListActivity {
     int id = item.getItemId();
 
     if (id == R.id.action_refresh) {
-     loadData(mCurrentpage);
+      loadData(mCurrentpage);
       getRecyclerView().addOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager) {
         @Override public void onLoadMore(int current_page) {
-          Log.d("loading",current_page+"");
+          Log.d("loading", current_page + "");
           loadData(current_page);
         }
       });
@@ -199,15 +201,14 @@ public class NewsActivity extends BaseListActivity {
     return super.onOptionsItemSelected(item);
   }
 
-  private void loadFromDisk(){
+  private void loadFromDisk() {
     Type type = new TypeToken<List<News>>() {
     }.getType();
     String contactString = FileUtils.loadData(NewsActivity.this, NEWS_FILE);
-    System.out.println(contactString+ "xxxxx");
+    System.out.println(contactString + "xxxxx");
     if (contactString != null) {
       mNews.addAll(FileUtils.convertToJava(contactString, type));
       mAdapter.setNews(mNews);
-
     }
   }
 }
