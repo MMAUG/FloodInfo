@@ -18,19 +18,17 @@ import retrofit.http.Query;
 public interface RESTService {
   @GET("/donation_groups") void getContacts(Callback<ArrayList<Contact>> callback);
 
-
-  @GET("/newsfeeds") void getNews(@Query("page")int page,Callback<ArrayList<News>> callback);
+  @GET("/newsfeeds") void getNews(@Query("page") int page, Callback<ArrayList<News>> callback);
 
   @FormUrlEncoded @POST("/newsfeeds") void submitNews(@Field("title") String title,
-      @Field("description") String description,@Field("dam_condition") Integer damcondition,
-      @Field("river_condition")Integer rivercondition, Callback<News> callback);
+      @Field("description") String description, @Field("dam_condition") Integer damcondition,
+      @Field("river_condition") Integer rivercondition, Callback<News> callback);
 
   @FormUrlEncoded @POST("/donation_groups") void submitContact(@Field("title") String title,
       @Field("description") String description, @Field("facebook_url") String fb,
       @Field("donation_location") String location, @Field("phone_numbers") String phone,
       Callback<News> callback);
 
-  @GET("/newsfeeds/{id}/report_as_spam")void reportNews(@Path("id")int id,Callback<JsonObject>callback);
-
-
+  @GET("/newsfeeds/{id}/report_as_spam") void reportNews(@Path("id") int id,
+      Callback<JsonObject> callback);
 }

@@ -16,5 +16,5 @@ import retrofit.http.Query;
  * Created by indexer on 8/3/15.
  */
 public interface LocationService {
-//TODO add kyunyi api base url
+  //TODO add kyunyi api base url
 }
