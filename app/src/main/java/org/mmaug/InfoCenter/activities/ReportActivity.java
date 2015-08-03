@@ -14,16 +14,25 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.google.gson.reflect.TypeToken;
 import com.soundcloud.android.crop.Crop;
 import java.io.File;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 import org.mmaug.InfoCenter.R;
+import org.mmaug.InfoCenter.adapter.LocationsAdapter;
+import org.mmaug.InfoCenter.adapter.NewsAdapter;
+import org.mmaug.InfoCenter.model.Location;
 import org.mmaug.InfoCenter.model.News;
 import org.mmaug.InfoCenter.rest.client.RESTClient;
+import org.mmaug.InfoCenter.utils.FileUtils;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -43,19 +52,36 @@ public class ReportActivity extends AppCompatActivity {
   @Bind(R.id.rbn_dam_fload) RadioButton rbnDamFload;
   @Bind(R.id.dam_condition) TextView txtDamCondition;
   @Bind(R.id.river_condition) TextView txtRiverCondition;
+  @Bind(R.id.spinner_location)Spinner spinner_location;
   Typeface tf;
   //Normal Conditon is Unknown
   Integer river_condition = 0;
   Integer dam_condition = 0;
+  private static final String NEWS_FILE = "location.json";
+  ArrayList<Location> mLocations = new ArrayList<>();
+  private LocationsAdapter mAdapter = null;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_report);
     ButterKnife.bind(this);
+    loadFromDisk();
+    spinner_location.setAdapter(mAdapter);
     tf = Typeface.createFromAsset(this.getAssets(), "namkhone.ttf");
     ActionBar actionBar = getSupportActionBar();
     if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
     setTypeFace();
+  }
+
+  private void loadFromDisk() {
+    Type type = new TypeToken<List<Location>>() {
+    }.getType();
+    String contactString = FileUtils.loadData(ReportActivity.this, NEWS_FILE);
+    if (contactString != null) {
+      mAdapter = new LocationsAdapter(getApplicationContext());
+      mLocations.addAll(FileUtils.convertToJava(contactString, type));
+      mAdapter.setLocations(mLocations);
+    }
   }
 
   public void setTypeFace() {

@@ -65,16 +65,7 @@ public class NewsActivity extends BaseListActivity {
     loadData(mCurrentPage);
     onFabClick();
 
-    LocationClient.getInstance(this).getService().getLocations(new Callback<ArrayList<Location>>() {
-      @Override public void success(ArrayList<Location> locations, Response response) {
-        // NEVER EVER FILL UP THE LOGS WITH THE WHOLE DATA IT'S HARD TO DEBUG >_<
-        Log.i("location", "total " + locations.size());
-      }
 
-      @Override public void failure(RetrofitError error) {
-        Log.e("error ", error.getLocalizedMessage());
-      }
-    });
 
     getRecyclerView().addOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager) {
       @Override public void onLoadMore(int current_page) {
