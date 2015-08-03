@@ -10,15 +10,19 @@ public class AnalyticsManager {
   private static Context sAppContext = null;
   private static Tracker mTracker;
 
-  private static boolean canSend() {
-    return sAppContext != null && mTracker != null;
-  }
-
   public static void sendScreenView(String screenName) {
     if (canSend()) {
       mTracker.setScreenName(screenName);
       mTracker.send(new HitBuilders.AppViewBuilder().build());
     }
+  }
+
+  private static boolean canSend() {
+    return sAppContext != null && mTracker != null;
+  }
+
+  public static void sendEvent(String category, String action, String label) {
+    sendEvent(category, action, label, 0);
   }
 
   public static void sendEvent(String category, String action, String label, long value) {
@@ -29,10 +33,6 @@ public class AnalyticsManager {
           .setValue(value)
           .build());
     }
-  }
-
-  public static void sendEvent(String category, String action, String label) {
-    sendEvent(category, action, label, 0);
   }
 
   public static synchronized void initializeAnalyticsTracker(Context context) {

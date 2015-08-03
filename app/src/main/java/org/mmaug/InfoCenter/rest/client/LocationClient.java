@@ -24,7 +24,6 @@ public class LocationClient {
             .setEndpoint("http://kunyi.asia/api")
             .setLogLevel(RestAdapter.LogLevel.FULL)
             .setRequestInterceptor(apiRequestInterceptor)
-            .setClient(new OkClient(new OkHttpClient()))
             .build();
     mService = restAdapter.create(LocationService.class);
   }

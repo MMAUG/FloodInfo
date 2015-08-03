@@ -41,12 +41,12 @@ public class NewsActivity extends BaseListActivity {
   private static final String LIST_STATE_FRAGEMENT = "org.mmaug.infocetner.activities.newsactivity";
   private static final String NEWS_FILE = "news.json";
   ArrayList<News> mNews = new ArrayList<>();
-  private NewsAdapter mAdapter = null;
-  private HeadlessStateFragment stateFragment;
   FloatingActionButton mFab;
-  private int mCurrentpage = 1;
   LinearLayoutManager mLayoutManager;
   int totalItemCount;
+  private NewsAdapter mAdapter = null;
+  private HeadlessStateFragment stateFragment;
+  private int mCurrentpage = 1;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -85,16 +85,6 @@ public class NewsActivity extends BaseListActivity {
     });
   }
 
-  private void onFabClick() {
-    mFab = getmFab();
-    mFab.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        Intent intentToAddNews = new Intent(NewsActivity.this, ReportActivity.class);
-        startActivity(intentToAddNews);
-      }
-    });
-  }
-
   /**
    * Implement this with the Custom Adapters of your choice.
    *
@@ -114,6 +104,17 @@ public class NewsActivity extends BaseListActivity {
    */
   @Override protected ItemDecoration getItemDecoration() {
     return new DividerDecoration(this, DividerDecoration.VERTICAL_LIST);
+  }
+
+  private void loadFromDisk() {
+    Type type = new TypeToken<List<News>>() {
+    }.getType();
+    String contactString = FileUtils.loadData(NewsActivity.this, NEWS_FILE);
+    System.out.println(contactString + "xxxxx");
+    if (contactString != null) {
+      mNews.addAll(FileUtils.convertToJava(contactString, type));
+      mAdapter.setNews(mNews);
+    }
   }
 
   private void loadData(final int current_page) {
@@ -161,6 +162,16 @@ public class NewsActivity extends BaseListActivity {
     }
   }
 
+  private void onFabClick() {
+    mFab = getmFab();
+    mFab.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        Intent intentToAddNews = new Intent(NewsActivity.this, ReportActivity.class);
+        startActivity(intentToAddNews);
+      }
+    });
+  }
+
   /**
    * Callback method to be invoked when an item in this AdapterView has
    * been clicked.
@@ -168,11 +179,11 @@ public class NewsActivity extends BaseListActivity {
    * Implementers can call getItemAtPosition(position) if they need
    * to access the data associated with the selected item.
    *
-   * @param parent The AdapterView where the click happened.
-   * @param view The view within the AdapterView that was clicked (this
-   * will be a view provided by the adapter)
+   * @param parent   The AdapterView where the click happened.
+   * @param view     The view within the AdapterView that was clicked (this
+   *                 will be a view provided by the adapter)
    * @param position The position of the view in the adapter.
-   * @param id The row id of the item that was clicked.
+   * @param id       The row id of the item that was clicked.
    */
   @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     Intent i = new Intent();
@@ -213,16 +224,5 @@ public class NewsActivity extends BaseListActivity {
     }
 
     return super.onOptionsItemSelected(item);
-  }
-
-  private void loadFromDisk() {
-    Type type = new TypeToken<List<News>>() {
-    }.getType();
-    String contactString = FileUtils.loadData(NewsActivity.this, NEWS_FILE);
-    System.out.println(contactString + "xxxxx");
-    if (contactString != null) {
-      mNews.addAll(FileUtils.convertToJava(contactString, type));
-      mAdapter.setNews(mNews);
-    }
   }
 }

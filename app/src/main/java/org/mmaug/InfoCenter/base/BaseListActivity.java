@@ -12,7 +12,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ItemDecoration;
-import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ProgressBar;
 import butterknife.Bind;
@@ -72,7 +71,7 @@ public abstract class BaseListActivity extends AppCompatActivity implements OnIt
     return mProgressBar;
   }
 
-  protected FloatingActionButton getmFab(){
+  protected FloatingActionButton getmFab() {
     return mFab;
   }
 }

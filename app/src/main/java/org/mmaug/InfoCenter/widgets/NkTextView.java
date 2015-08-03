@@ -8,31 +8,31 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 /**
- * Created by Ye Lin Aung on 15/07/31.
+ * @author SH (swanhtet1992@gmail.com)
  */
-public class ZgTextView extends TextView {
-  public ZgTextView(Context context) {
+public class NkTextView extends TextView {
+  public NkTextView(Context context) {
     super(context);
     setFont(context);
   }
 
-  public ZgTextView(Context context, AttributeSet attrs) {
+  private void setFont(Context context) {
+    setTypeface(Typeface.createFromAsset(context.getAssets(), "namkhone.ttf"));
+  }
+
+  public NkTextView(Context context, AttributeSet attrs) {
     super(context, attrs);
     setFont(context);
   }
 
-  public ZgTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+  public NkTextView(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
     setFont(context);
   }
 
   @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-  public ZgTextView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+  public NkTextView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
     super(context, attrs, defStyleAttr, defStyleRes);
     setFont(context);
-  }
-
-  private void setFont(Context context) {
-    setTypeface(Typeface.createFromAsset(context.getAssets(), "zawgyi.ttf"));
   }
 }

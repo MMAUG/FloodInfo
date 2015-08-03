@@ -15,7 +15,7 @@ import mmaug.org.yaybay.R;
 import org.mmaug.InfoCenter.adapter.ContactAdapter.ContactHolder;
 import org.mmaug.InfoCenter.base.BaseAdapter;
 import org.mmaug.InfoCenter.model.Contact;
-import org.mmaug.InfoCenter.widgets.ZgTextView;
+import org.mmaug.InfoCenter.widgets.NkTextView;
 
 /**
  * @author SH (swanhtet@nexlabs.co)
@@ -50,7 +50,7 @@ public class ContactAdapter extends BaseAdapter<ContactHolder> {
   }
 
   public static class ContactHolder extends BaseAdapter.BaseViewHolder {
-    @Bind(R.id.tv_contact_name) ZgTextView mContactName;
+    @Bind(R.id.tv_contact_name) NkTextView mContactName;
 
     public ContactHolder(View itemView, ContactAdapter adapter) {
       super(itemView);
