@@ -31,4 +31,6 @@
   <string name="river_level">ျမစ္  အေျခအေန</string>
   <string name="dam_level">ဆည္ အေျခအေန</string>
   <string name="title_activity_alert">Alert Level</string>
+
+  <string name="location_auth">%1$s:%2$s</string>
 </resources>
