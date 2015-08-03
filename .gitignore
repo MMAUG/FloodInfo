@@ -35,3 +35,6 @@ com_crashlytics_export_strings.xml
 
 #Android Gears
 Gears/
+
+#Screenshot
+*.png
