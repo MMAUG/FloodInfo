@@ -55,6 +55,9 @@ public class NewsActivity extends BaseListActivity {
           .add(stateFragment, LIST_STATE_FRAGEMENT)
           .commit();
     }
+    if(stateFragment.currentPage!=-10){
+      mCurrentPage = stateFragment.currentPage;
+    }
     mLayoutManager = new LinearLayoutManager(NewsActivity.this);
     mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
     getRecyclerView().setHasFixedSize(true);
