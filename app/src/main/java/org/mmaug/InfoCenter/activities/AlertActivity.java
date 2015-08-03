@@ -120,7 +120,7 @@ public class AlertActivity extends BaseListActivity {
                 //TODO WARNING NEED TO GET TOTAL NEWS COUNT
 
                 if (contacts == null || contacts.size() == 0) {
-                  mAdapter.hideFooter();
+                  mAdapter.hideFooter(true);
                   return;
                 }
                 Log.d("news count", mNews.size() + "");

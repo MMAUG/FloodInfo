@@ -67,6 +67,12 @@ public class NewsActivity extends BaseListActivity {
 
     getRecyclerView().addOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager) {
       @Override public void onLoadMore(int current_page) {
+        if(mCurrentPage==1){
+          mAdapter.hideFooter(true);
+          return;
+        }else{
+          mAdapter.hideFooter(false);
+        }
         Log.d("loading", current_page + "");
         loadData(current_page);
       }
@@ -116,7 +122,6 @@ public class NewsActivity extends BaseListActivity {
         Log.d("current page", current_page + "");
         if (current_page == 1) {
           getProgressBar().setVisibility(View.VISIBLE);
-          mCurrentPage++;
         }
         RESTClient.getInstance()
             .getService()
@@ -126,7 +131,7 @@ public class NewsActivity extends BaseListActivity {
                 //TODO WARNING NEED TO GET TOTAL NEWS COUNT
 
                 if (contacts == null || contacts.size() == 0) {
-                  mAdapter.hideFooter();
+                  mAdapter.hideFooter(true);
                   return;
                 }
                 Log.d("news count", mNews.size() + "");
@@ -137,6 +142,7 @@ public class NewsActivity extends BaseListActivity {
                   mNews.addAll(contacts);
                 }
                 mAdapter.setNews(mNews);
+                mCurrentPage++;
               }
 
               @Override public void failure(RetrofitError error) {

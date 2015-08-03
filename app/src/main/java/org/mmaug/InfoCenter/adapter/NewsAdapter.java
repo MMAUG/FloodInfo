@@ -32,8 +32,8 @@ public class NewsAdapter extends BaseAdapter<BaseAdapter.BaseViewHolder> {
     this.notifyDataSetChanged();
   }
 
-  public void hideFooter() {
-    hideFooter = true;
+  public void hideFooter(boolean hideFooter) {
+    this.hideFooter = hideFooter;
     notifyDataSetChanged();
   }
 
