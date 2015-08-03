@@ -31,4 +31,6 @@ public interface RESTService {
       Callback<News> callback);
 
   @GET("/newsfeeds/{id}/report_as_spam")void reportNews(@Path("id")int id,Callback<JsonObject>callback);
+
+
 }
