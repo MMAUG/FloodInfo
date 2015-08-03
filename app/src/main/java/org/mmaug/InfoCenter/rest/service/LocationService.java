@@ -1,5 +1,6 @@
 package org.mmaug.InfoCenter.rest.service;
 
+import android.util.Base64;
 import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import org.mmaug.InfoCenter.model.Contact;

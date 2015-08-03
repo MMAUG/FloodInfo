@@ -1,5 +1,6 @@
 package org.mmaug.InfoCenter.rest.client;
 
+import com.squareup.okhttp.OkHttpClient;
 import org.mmaug.InfoCenter.model.AuthUser;
 import org.mmaug.InfoCenter.rest.auth.ApiRequestInterceptor;
 import org.mmaug.InfoCenter.rest.service.LocationService;
@@ -15,15 +16,15 @@ public class LocationClient {
   private LocationService mService;
 
   public LocationClient() {
-    ApiRequestInterceptor requestInterceptor = new ApiRequestInterceptor();
 
+    ApiRequestInterceptor apiRequestInterceptor = new ApiRequestInterceptor();
     //todo replace with real endpoint
     final RestAdapter restAdapter =
         new RestAdapter.Builder()
             .setEndpoint("http://kunyi.asia/api")
-            .setRequestInterceptor(requestInterceptor)
             .setLogLevel(RestAdapter.LogLevel.FULL)
-            .setClient(new OkClient())
+            .setRequestInterceptor(apiRequestInterceptor)
+            .setClient(new OkClient(new OkHttpClient()))
             .build();
     mService = restAdapter.create(LocationService.class);
   }

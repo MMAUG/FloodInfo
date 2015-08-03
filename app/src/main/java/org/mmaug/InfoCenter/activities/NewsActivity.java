@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ItemDecoration;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -64,6 +65,7 @@ public class NewsActivity extends BaseListActivity {
     loadFromDisk();
     loadData(mCurrentpage);
     onFabClick();
+
 
     LocationClient.getInstance().getService().getLocations(new Callback<ArrayList<Location>>() {
       @Override public void success(ArrayList<Location> locations, Response response) {
