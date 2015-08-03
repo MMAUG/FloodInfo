@@ -52,7 +52,7 @@ public class ReportActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_report);
     ButterKnife.bind(this);
-    tf = Typeface.createFromAsset(this.getAssets(), "zawgyi.ttf");
+    tf = Typeface.createFromAsset(this.getAssets(), "namkhone.ttf");
     ActionBar actionBar = getSupportActionBar();
     if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
     setTypeFace();
