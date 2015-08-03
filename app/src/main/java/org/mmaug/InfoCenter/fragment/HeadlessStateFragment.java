@@ -12,6 +12,7 @@ import org.mmaug.InfoCenter.model.News;
 public class HeadlessStateFragment extends Fragment {
   public ArrayList<Contact> contacts;
   public ArrayList<News> news;
+  public int currentPage;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

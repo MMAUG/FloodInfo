@@ -21,9 +21,7 @@ import org.mmaug.InfoCenter.adapter.NewsAdapter;
 import org.mmaug.InfoCenter.base.BaseListActivity;
 import org.mmaug.InfoCenter.fragment.HeadlessStateFragment;
 import org.mmaug.InfoCenter.listener.EndlessRecyclerOnScrollListener;
-import org.mmaug.InfoCenter.model.Location;
 import org.mmaug.InfoCenter.model.News;
-import org.mmaug.InfoCenter.rest.client.LocationClient;
 import org.mmaug.InfoCenter.rest.client.RESTClient;
 import org.mmaug.InfoCenter.utils.ConnectionManager;
 import org.mmaug.InfoCenter.utils.DividerDecoration;
@@ -118,6 +116,7 @@ public class NewsActivity extends BaseListActivity {
         Log.d("current page", current_page + "");
         if (current_page == 1) {
           getProgressBar().setVisibility(View.VISIBLE);
+          mCurrentPage++;
         }
         RESTClient.getInstance()
             .getService()
@@ -188,6 +187,7 @@ public class NewsActivity extends BaseListActivity {
   @Override protected void onPause() {
     super.onPause();
     stateFragment.news = mNews;
+    stateFragment.currentPage = mCurrentPage;
   }
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {
