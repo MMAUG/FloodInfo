@@ -16,7 +16,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import mmaug.org.yaybay.R;
+import org.mmaug.InfoCenter.R;
 import org.mmaug.InfoCenter.adapter.NewsAdapter;
 import org.mmaug.InfoCenter.base.BaseListActivity;
 import org.mmaug.InfoCenter.fragment.HeadlessStateFragment;

@@ -1,7 +1,6 @@
 package org.mmaug.InfoCenter;
 
 import android.app.Application;
-import mmaug.org.yaybay.BuildConfig;
 import org.mmaug.InfoCenter.utils.AnalyticsManager;
 
 /**

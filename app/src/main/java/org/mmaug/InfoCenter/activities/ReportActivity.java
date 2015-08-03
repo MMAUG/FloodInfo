@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.soundcloud.android.crop.Crop;
 import java.io.File;
-import mmaug.org.yaybay.R;
+import org.mmaug.InfoCenter.R;
 import org.mmaug.InfoCenter.model.News;
 import org.mmaug.InfoCenter.rest.client.RESTClient;
 import retrofit.Callback;

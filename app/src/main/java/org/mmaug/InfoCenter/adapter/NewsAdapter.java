@@ -9,7 +9,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import java.util.ArrayList;
 import java.util.List;
-import mmaug.org.yaybay.R;
+import org.mmaug.InfoCenter.R;
 import org.mmaug.InfoCenter.base.BaseAdapter;
 import org.mmaug.InfoCenter.model.News;
 import org.mmaug.InfoCenter.widgets.NkTextView;

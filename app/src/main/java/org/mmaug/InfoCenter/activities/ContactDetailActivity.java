@@ -9,7 +9,7 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import java.util.regex.Pattern;
-import mmaug.org.yaybay.R;
+import org.mmaug.InfoCenter.R;
 import org.mmaug.InfoCenter.model.Contact;
 import org.mmaug.InfoCenter.widgets.NkTextView;
 

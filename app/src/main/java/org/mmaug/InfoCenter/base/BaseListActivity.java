@@ -16,7 +16,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ProgressBar;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import mmaug.org.yaybay.R;
+import org.mmaug.InfoCenter.R;
 
 /**
  * @author SH (swanhtet@nexlabs.co)

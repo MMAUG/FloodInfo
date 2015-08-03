@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import mmaug.org.yaybay.R;
+import org.mmaug.InfoCenter.R;
 import org.mmaug.InfoCenter.model.News;
 import org.mmaug.InfoCenter.rest.client.RESTClient;
 import retrofit.Callback;
