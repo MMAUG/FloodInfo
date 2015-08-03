@@ -1,6 +1,5 @@
 package org.mmaug.InfoCenter.adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,8 +53,8 @@ public class NewsAdapter extends BaseAdapter<BaseAdapter.BaseViewHolder> {
   }
 
   @Override public void onBindViewHolder(BaseAdapter.BaseViewHolder holder, int position) {
-    Log.d("adapter position", position + "");
-    Log.d("view type", holder.getClass() + "");
+    //Log.d("adapter position", position + "");
+    //Log.d("view type", holder.getClass() + "");
     if (holder instanceof NewsHolder) {
       if (mNews.size() == 0) {
         return;

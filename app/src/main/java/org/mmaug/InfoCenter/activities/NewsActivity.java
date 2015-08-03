@@ -45,7 +45,7 @@ public class NewsActivity extends BaseListActivity {
   int totalItemCount;
   private NewsAdapter mAdapter = null;
   private HeadlessStateFragment stateFragment;
-  private int mCurrentpage = 1;
+  private int mCurrentPage = 1;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -62,16 +62,17 @@ public class NewsActivity extends BaseListActivity {
     getRecyclerView().setHasFixedSize(true);
     getRecyclerView().setLayoutManager(mLayoutManager);
     loadFromDisk();
-    loadData(mCurrentpage);
+    loadData(mCurrentPage);
     onFabClick();
 
-    LocationClient.getInstance().getService().getLocations(new Callback<ArrayList<Location>>() {
+    LocationClient.getInstance(this).getService().getLocations(new Callback<ArrayList<Location>>() {
       @Override public void success(ArrayList<Location> locations, Response response) {
-        Log.e("location", locations.toString());
+        // NEVER EVER FILL UP THE LOGS WITH THE WHOLE DATA IT'S HARD TO DEBUG >_<
+        Log.i("location", "total " + locations.size());
       }
 
       @Override public void failure(RetrofitError error) {
-
+        Log.e("error ", error.getLocalizedMessage());
       }
     });
 
@@ -108,7 +109,6 @@ public class NewsActivity extends BaseListActivity {
     Type type = new TypeToken<List<News>>() {
     }.getType();
     String contactString = FileUtils.loadData(NewsActivity.this, NEWS_FILE);
-    System.out.println(contactString + "xxxxx");
     if (contactString != null) {
       mNews.addAll(FileUtils.convertToJava(contactString, type));
       mAdapter.setNews(mNews);
@@ -208,7 +208,7 @@ public class NewsActivity extends BaseListActivity {
     int id = item.getItemId();
 
     if (id == R.id.action_refresh) {
-      loadData(mCurrentpage);
+      loadData(mCurrentPage);
       getRecyclerView().addOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager) {
         @Override public void onLoadMore(int current_page) {
           Log.d("loading", current_page + "");
