@@ -1,11 +1,8 @@
 package org.mmaug.InfoCenter.rest.client;
 
-import com.squareup.okhttp.OkHttpClient;
-import org.mmaug.InfoCenter.model.AuthUser;
 import org.mmaug.InfoCenter.rest.auth.ApiRequestInterceptor;
 import org.mmaug.InfoCenter.rest.service.LocationService;
 import retrofit.RestAdapter;
-import retrofit.client.OkClient;
 
 /**
  * Created by indexer on 8/3/15.
@@ -19,12 +16,10 @@ public class LocationClient {
 
     ApiRequestInterceptor apiRequestInterceptor = new ApiRequestInterceptor();
     //todo replace with real endpoint
-    final RestAdapter restAdapter =
-        new RestAdapter.Builder()
-            .setEndpoint("http://kunyi.asia/api")
-            .setLogLevel(RestAdapter.LogLevel.FULL)
-            .setRequestInterceptor(apiRequestInterceptor)
-            .build();
+    final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint("http://kunyi.asia/api")
+        .setLogLevel(RestAdapter.LogLevel.FULL)
+        .setRequestInterceptor(apiRequestInterceptor)
+        .build();
     mService = restAdapter.create(LocationService.class);
   }
 

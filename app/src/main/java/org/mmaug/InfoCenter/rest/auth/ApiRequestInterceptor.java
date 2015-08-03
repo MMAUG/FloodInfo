@@ -13,13 +13,12 @@ import retrofit.RequestInterceptor;
 public class ApiRequestInterceptor implements RequestInterceptor {
 
   @Override public void intercept(RequestFacade requestFacade) {
-      final String authorizationValue = encodeCredentialsForBasicAuthorization();
-      requestFacade.addHeader("Authorization", authorizationValue);
+    final String authorizationValue = encodeCredentialsForBasicAuthorization();
+    requestFacade.addHeader("Authorization", authorizationValue);
   }
 
   private String encodeCredentialsForBasicAuthorization() {
-    final String userAndPassword = "bob" + ":" + "ef7db280f5" ;
+    final String userAndPassword = "bob" + ":" + "ef7db280f5";
     return "Basic" + Base64.encodeToString(userAndPassword.getBytes(), Base64.NO_WRAP);
   }
-
 }
