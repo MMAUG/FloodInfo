@@ -65,7 +65,7 @@ public class NewsActivity extends BaseListActivity {
     loadData(mCurrentpage);
     onFabClick();
 
-    LocationClient.getInstance().getService().getContacts(new Callback<ArrayList<Location>>() {
+    LocationClient.getInstance().getService().getLocations(new Callback<ArrayList<Location>>() {
       @Override public void success(ArrayList<Location> locations, Response response) {
         Log.e("location",locations.toString());
       }

@@ -15,15 +15,13 @@ public class LocationClient {
   private LocationService mService;
 
   public LocationClient() {
-    AuthUser authUser = new AuthUser();
-    authUser.setUsername("doe");
-    authUser.setPassword("eff04a96bd");
     ApiRequestInterceptor requestInterceptor = new ApiRequestInterceptor();
-    requestInterceptor.setUser(authUser);
 
     //todo replace with real endpoint
     final RestAdapter restAdapter =
-        new RestAdapter.Builder().setEndpoint("http://kunyi.asia/api")
+        new RestAdapter.Builder()
+            .setEndpoint("http://kunyi.asia/api")
+            .setRequestInterceptor(requestInterceptor)
             .setLogLevel(RestAdapter.LogLevel.FULL)
             .setClient(new OkClient())
             .build();
