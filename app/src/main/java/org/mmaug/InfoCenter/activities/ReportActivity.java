@@ -53,6 +53,7 @@ public class ReportActivity extends AppCompatActivity {
   @Bind(R.id.dam_condition) TextView txtDamCondition;
   @Bind(R.id.river_condition) TextView txtRiverCondition;
   @Bind(R.id.spinner_location)Spinner spinner_location;
+  @Bind(R.id.lbl_township)TextView townshipLable;
   Typeface tf;
   //Normal Conditon is Unknown
   Integer river_condition = 0;
@@ -85,6 +86,7 @@ public class ReportActivity extends AppCompatActivity {
   }
 
   public void setTypeFace() {
+    townshipLable.setTypeface(tf);
     rbnWaterImportant.setTypeface(tf);
     rbnWaterNormal.setTypeface(tf);
     rbnWaterFload.setTypeface(tf);
