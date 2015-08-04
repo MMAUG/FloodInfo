@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.util.Linkify;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 import butterknife.Bind;
@@ -37,7 +36,6 @@ public class ContactDetailActivity extends AppCompatActivity {
       tvFbUrl.setText(c.getFbUrl());
       tvFbUrl.setLinksClickable(true);
       tvDescription.setText(c.getDescription());
-      Log.i("contact detail", "phone " + c.getPhone());
       tvContactPhone.setText(convertToEnglishNo(c.getPhone()));
       Pattern phonePattern = Pattern.compile("\\d+");
       Linkify.addLinks(tvContactPhone, Linkify.PHONE_NUMBERS);

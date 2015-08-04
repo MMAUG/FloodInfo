@@ -41,10 +41,10 @@ public class ContactsActivity extends BaseListActivity {
   private static final String CONTACT_FILE = "contacts.dat";
   ArrayList<Contact> mContacts = new ArrayList<>();
   FloatingActionButton mFab;
-  private ContactAdapter mAdapter = null;
-  private HeadlessStateFragment stateFragment;
   LinearLayoutManager mLayoutManager;
   int totalItemCount;
+  private ContactAdapter mAdapter = null;
+  private HeadlessStateFragment stateFragment;
   private int mCurrentPage = 1;
 
   @Override public void onCreate(Bundle savedInstanceState) {
@@ -127,16 +127,20 @@ public class ContactsActivity extends BaseListActivity {
         RESTClient.getInstance().getService().getContacts(current_page, new Callback<JsonObject>() {
           @Override public void success(JsonObject jsonObject, Response response) {
             getProgressBar().setVisibility(View.GONE);
-            if(current_page == 1) {
-              totalItemCount = jsonObject.get("meta").getAsJsonObject().get("page_count").getAsInt();
+            if (current_page == 1) {
+              totalItemCount =
+                  jsonObject.get("meta").getAsJsonObject().get("page_count").getAsInt();
             }
-            if(current_page < totalItemCount + 1) {
+            if (current_page < totalItemCount + 1) {
               JsonArray jsonArray = jsonObject.get("data").getAsJsonArray();
               ArrayList<Contact> contacts = new ArrayList<Contact>();
               for (int i = 0; i < jsonArray.size(); i++) {
                 Contact singleContact = new Contact();
                 singleContact.setId(jsonArray.get(i).getAsJsonObject().get("id").getAsInt());
-                singleContact.setTitle(jsonArray.get(i).getAsJsonObject().get("title").getAsString());
+                singleContact.setTitle(
+                    jsonArray.get(i).getAsJsonObject().get("title").getAsString());
+                singleContact.setPhone(
+                    jsonArray.get(i).getAsJsonObject().get("phone_numbers").getAsString());
                 singleContact.setDescription(
                     jsonArray.get(i).getAsJsonObject().get("description").getAsString());
 
