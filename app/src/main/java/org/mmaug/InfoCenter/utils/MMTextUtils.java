@@ -57,4 +57,18 @@ public class MMTextUtils {
       }
     }
   }
+
+  public void prepareSingleView(String content, TextView textView) {
+    switch (detector(content)) {
+      case 0:
+        // We do nothing
+        break;
+      case 1:
+        mmtext.prepareView(mContext, textView, mmtext.TEXT_UNICODE, true, true);
+        break;
+      case 2:
+        mmtext.prepareView(mContext, textView, mm.technomation.tmmtextutilities.mmtext.TEXT_ZAWGYI,
+            true, true);
+    }
+  }
 }
