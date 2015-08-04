@@ -112,7 +112,7 @@ public class AlertActivity extends BaseListActivity {
         if (current_page == 1) {
           getProgressBar().setVisibility(View.VISIBLE);
         }
-        RESTClient.getInstance()
+       /* RESTClient.getInstance()
             .getService()
             .getNews(current_page, new Callback<ArrayList<News>>() {
               @Override public void success(ArrayList<News> contacts, Response response) {
@@ -136,7 +136,7 @@ public class AlertActivity extends BaseListActivity {
               @Override public void failure(RetrofitError error) {
                 loadFromDisk();
               }
-            });
+            });*/
       } else {
         loadFromDisk();
         Toast.makeText(AlertActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();

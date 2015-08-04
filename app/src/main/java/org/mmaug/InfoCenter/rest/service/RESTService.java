@@ -18,7 +18,7 @@ import retrofit.http.Query;
 public interface RESTService {
   @GET("/donation_groups") void getContacts(Callback<ArrayList<Contact>> callback);
 
-  @GET("/newsfeeds") void getNews(@Query("page") int page, Callback<ArrayList<News>> callback);
+  @GET("/v2/newsfeeds") void getNews(@Query("page") int page, Callback<JsonObject> callback);
 
   @FormUrlEncoded @POST("/newsfeeds") void submitNews(@Field("title") String title,
       @Field("description") String description, @Field("dam_condition") Integer damcondition,

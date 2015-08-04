@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -63,14 +65,12 @@ public class NewsActivity extends BaseListActivity {
     loadData(mCurrentPage);
     onFabClick();
 
-
-
     getRecyclerView().addOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager) {
       @Override public void onLoadMore(int current_page) {
-        if(mCurrentPage==1){
+        if (mCurrentPage == 1) {
           mAdapter.hideFooter(true);
           return;
-        }else{
+        } else {
           mAdapter.hideFooter(false);
         }
         Log.d("loading", current_page + "");
@@ -123,32 +123,42 @@ public class NewsActivity extends BaseListActivity {
         if (current_page == 1) {
           getProgressBar().setVisibility(View.VISIBLE);
         }
-        RESTClient.getInstance()
-            .getService()
-            .getNews(current_page, new Callback<ArrayList<News>>() {
-              @Override public void success(ArrayList<News> contacts, Response response) {
-                getProgressBar().setVisibility(View.GONE);
-                //TODO WARNING NEED TO GET TOTAL NEWS COUNT
+        RESTClient.getInstance().getService().getNews(current_page, new Callback<JsonObject>() {
+          @Override public void success(JsonObject jsonObject, Response response) {
+            getProgressBar().setVisibility(View.GONE);
+            //TODO WARNING NEED TO GET TOTAL NEWS COUNT
+            ArrayList contacts = new ArrayList();
+            //TODO total item count is total count in Load More
+            totalItemCount = jsonObject.get("meta").getAsJsonObject().get("page_count").getAsInt();
+            JsonArray jsonArray = jsonObject.get("data").getAsJsonArray();
+            for (int i = 0; i < jsonArray.size(); i++) {
+              News singleNew = new News();
+              singleNew.setId(jsonArray.get(i).getAsJsonObject().get("id").getAsInt());
+              singleNew.setTitle(jsonArray.get(i).getAsJsonObject().get("title").getAsString());
+              singleNew.setDescription(
+                  jsonArray.get(i).getAsJsonObject().get("description").getAsString());
+              contacts.add(singleNew);
 
-                if (contacts == null || contacts.size() == 0) {
-                  mAdapter.hideFooter(true);
-                  return;
-                }
-                Log.d("news count", mNews.size() + "");
-                if (current_page == 1) {
-                  mNews = contacts;
-                  FileUtils.saveData(NewsActivity.this, FileUtils.convertToJson(mNews), NEWS_FILE);
-                } else {
-                  mNews.addAll(contacts);
-                }
-                mAdapter.setNews(mNews);
-                mCurrentPage++;
-              }
+            }
+            if (contacts == null || contacts.size() == 0) {
+              mAdapter.hideFooter(true);
+              return;
+            }
+            Log.d("news count", mNews.size() + "");
+            if (current_page == 1) {
+              mNews = contacts;
+              FileUtils.saveData(NewsActivity.this, FileUtils.convertToJson(mNews), NEWS_FILE);
+            } else {
+              mNews.addAll(contacts);
+            }
+            mAdapter.setNews(mNews);
+            mCurrentPage++;
+          }
 
-              @Override public void failure(RetrofitError error) {
-                loadFromDisk();
-              }
-            });
+          @Override public void failure(RetrofitError error) {
+            loadFromDisk();
+          }
+        });
       } else {
         loadFromDisk();
         Toast.makeText(NewsActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
