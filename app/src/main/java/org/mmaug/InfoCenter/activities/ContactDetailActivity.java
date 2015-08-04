@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.util.Linkify;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 import butterknife.Bind;
@@ -36,6 +37,7 @@ public class ContactDetailActivity extends AppCompatActivity {
       tvFbUrl.setText(c.getFbUrl());
       tvFbUrl.setLinksClickable(true);
       tvDescription.setText(c.getDescription());
+      Log.i("contact detail", "phone " + c.getPhone());
       tvContactPhone.setText(convertToEnglishNo(c.getPhone()));
       Pattern phonePattern = Pattern.compile("\\d+");
       Linkify.addLinks(tvContactPhone, Linkify.PHONE_NUMBERS);
@@ -44,17 +46,20 @@ public class ContactDetailActivity extends AppCompatActivity {
   }
 
   private String convertToEnglishNo(String input) {
-    input = input.replaceAll("[\u1040]", "0");
-    input = input.replaceAll("[\u1041]", "1");
-    input = input.replaceAll("[\u1042]", "2");
-    input = input.replaceAll("[\u1043]", "3");
-    input = input.replaceAll("[\u1044]", "4");
-    input = input.replaceAll("[\u1045]", "5");
-    input = input.replaceAll("[\u1046]", "6");
-    input = input.replaceAll("[\u1047]", "7");
-    input = input.replaceAll("[\u1048]", "8");
-    input = input.replaceAll("[\u1049]", "9");
-    return input;
+    if (input != null) {
+      input = input.replaceAll("[\u1040]", "0");
+      input = input.replaceAll("[\u1041]", "1");
+      input = input.replaceAll("[\u1042]", "2");
+      input = input.replaceAll("[\u1043]", "3");
+      input = input.replaceAll("[\u1044]", "4");
+      input = input.replaceAll("[\u1045]", "5");
+      input = input.replaceAll("[\u1046]", "6");
+      input = input.replaceAll("[\u1047]", "7");
+      input = input.replaceAll("[\u1048]", "8");
+      input = input.replaceAll("[\u1049]", "9");
+      return input;
+    }
+    return "";
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {
