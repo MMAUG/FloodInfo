@@ -38,13 +38,13 @@ public class ContactDetailActivity extends AppCompatActivity {
       tvDescription.setText(c.getDescription());
       tvContactPhone.setText(convertToEnglishNo(c.getPhone()));
       Pattern phonePattern = Pattern.compile("\\d+");
+      Linkify.addLinks(tvContactPhone, phonePattern, "tel: ");
+      Linkify.addLinks(tvDescription, Linkify.ALL);
       MMTextUtils mmTextUtils = new MMTextUtils(this);
       // Hopefully, the title can be a factor to determine which encoding it's with
       // Phone number is tricky since it's combined with texts and numbers
       mmTextUtils.prepareMultipleViews(c.getTitle(), tvContactName, tvContactPhone, tvFbUrl,
           tvDescription);
-      Linkify.addLinks(tvContactPhone, Linkify.PHONE_NUMBERS);
-      Linkify.addLinks(tvContactPhone, phonePattern, "tel: ");
     }
   }
 
