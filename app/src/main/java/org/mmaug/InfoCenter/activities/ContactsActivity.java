@@ -205,14 +205,7 @@ public class ContactsActivity extends BaseListActivity {
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {
     int id = item.getItemId();
-
-    if (id == R.id.action_add) {
-      Intent i = new Intent();
-      i.setClass(this, AddContactActivity.class);
-
-      startActivity(i);
-      return true;
-    } else if (id == R.id.action_refresh) {
+    if (id == R.id.action_refresh) {
       loadData(mCurrentPage);
       getRecyclerView().addOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager) {
         @Override public void onLoadMore(int current_page) {

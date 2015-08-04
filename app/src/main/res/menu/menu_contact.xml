@@ -6,9 +6,4 @@
       android:title="Refresh"
       android:icon="@drawable/ic_refresh"
       app:showAsAction="always"/>
-  <item
-      android:id="@+id/action_add"
-      android:title="Add Contact"
-      android:icon="@drawable/ic_add"
-      app:showAsAction="always"/>
 </menu>
