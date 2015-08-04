@@ -16,7 +16,7 @@ import retrofit.http.Query;
  * Created by h3r0 on 11/25/14.
  */
 public interface RESTService {
-  @GET("/donation_groups") void getContacts(Callback<ArrayList<Contact>> callback);
+  @GET("/v2/donation_groups") void getContacts(@Query("page")int page,Callback<JsonObject> callback);
 
   @GET("/v2/newsfeeds") void getNews(@Query("page") int page, Callback<JsonObject> callback);
 

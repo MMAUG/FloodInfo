@@ -23,6 +23,7 @@ import org.mmaug.InfoCenter.widgets.NkTextView;
 public class ContactAdapter extends BaseAdapter<ContactHolder> {
 
   private List<Contact> mContacts;
+  private boolean hideFooter;
 
   public ContactAdapter() {
     mContacts = new ArrayList<>();
@@ -59,8 +60,14 @@ public class ContactAdapter extends BaseAdapter<ContactHolder> {
       mAdapter = adapter;
     }
 
+
+
     public void setContactName(String s) {
       mContactName.setText(s);
     }
+  }
+  public void hideFooter(boolean hideFooter) {
+    this.hideFooter = hideFooter;
+    notifyDataSetChanged();
   }
 }

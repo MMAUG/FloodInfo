@@ -3,13 +3,17 @@ package org.mmaug.InfoCenter.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ItemDecoration;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -18,6 +22,7 @@ import org.mmaug.InfoCenter.R;
 import org.mmaug.InfoCenter.adapter.ContactAdapter;
 import org.mmaug.InfoCenter.base.BaseListActivity;
 import org.mmaug.InfoCenter.fragment.HeadlessStateFragment;
+import org.mmaug.InfoCenter.listener.EndlessRecyclerOnScrollListener;
 import org.mmaug.InfoCenter.model.Contact;
 import org.mmaug.InfoCenter.rest.client.RESTClient;
 import org.mmaug.InfoCenter.utils.ConnectionManager;
@@ -38,6 +43,9 @@ public class ContactsActivity extends BaseListActivity {
   FloatingActionButton mFab;
   private ContactAdapter mAdapter = null;
   private HeadlessStateFragment stateFragment;
+  LinearLayoutManager mLayoutManager;
+  int totalItemCount;
+  private int mCurrentPage = 1;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -50,8 +58,29 @@ public class ContactsActivity extends BaseListActivity {
           .commit();
     }
     loadFromDisk();
-    loadData();
+    loadData(mCurrentPage);
     onFabClick();
+
+    if (stateFragment.currentPage != -10) {
+      mCurrentPage = stateFragment.currentPage;
+    }
+    mLayoutManager = new LinearLayoutManager(ContactsActivity.this);
+    mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+    getRecyclerView().setHasFixedSize(true);
+    getRecyclerView().setLayoutManager(mLayoutManager);
+
+    getRecyclerView().addOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager) {
+      @Override public void onLoadMore(int current_page) {
+        if (mCurrentPage == 1 || mCurrentPage == 10) {
+          mAdapter.hideFooter(true);
+          return;
+        } else {
+          mAdapter.hideFooter(false);
+        }
+        Log.d("loading", current_page + "");
+        loadData(current_page);
+      }
+    });
   }
 
   /**
@@ -85,7 +114,7 @@ public class ContactsActivity extends BaseListActivity {
     }
   }
 
-  private void loadData() {
+  private void loadData(final int current_page) {
     if (stateFragment != null && stateFragment.contacts != null) {
       mContacts = stateFragment.contacts;
       stateFragment.contacts =
@@ -94,13 +123,30 @@ public class ContactsActivity extends BaseListActivity {
     } else {
       if (ConnectionManager.isConnected(this)) {
         getProgressBar().setVisibility(View.VISIBLE);
-        RESTClient.getInstance().getService().getContacts(new Callback<ArrayList<Contact>>() {
-          @Override public void success(ArrayList<Contact> contacts, Response response) {
+
+        RESTClient.getInstance().getService().getContacts(current_page, new Callback<JsonObject>() {
+          @Override public void success(JsonObject jsonObject, Response response) {
             getProgressBar().setVisibility(View.GONE);
-            mContacts = contacts;
-            mAdapter.setContacts(mContacts);
-            FileUtils.saveData(ContactsActivity.this, FileUtils.convertToJson(mContacts),
-                CONTACT_FILE);
+            if(current_page == 1) {
+              totalItemCount = jsonObject.get("meta").getAsJsonObject().get("page_count").getAsInt();
+            }
+            if(current_page < totalItemCount + 1) {
+              JsonArray jsonArray = jsonObject.get("data").getAsJsonArray();
+              ArrayList<Contact> contacts = new ArrayList<Contact>();
+              for (int i = 0; i < jsonArray.size(); i++) {
+                Contact singleContact = new Contact();
+                singleContact.setId(jsonArray.get(i).getAsJsonObject().get("id").getAsInt());
+                singleContact.setTitle(jsonArray.get(i).getAsJsonObject().get("title").getAsString());
+                singleContact.setDescription(
+                    jsonArray.get(i).getAsJsonObject().get("description").getAsString());
+
+                contacts.add(singleContact);
+              }
+              mContacts = contacts;
+              mAdapter.setContacts(mContacts);
+              FileUtils.saveData(ContactsActivity.this, FileUtils.convertToJson(mContacts),
+                  CONTACT_FILE);
+            }
           }
 
           @Override public void failure(RetrofitError error) {
@@ -131,11 +177,11 @@ public class ContactsActivity extends BaseListActivity {
    * Implementers can call getItemAtPosition(position) if they need
    * to access the data associated with the selected item.
    *
-   * @param parent   The AdapterView where the click happened.
-   * @param view     The view within the AdapterView that was clicked (this
-   *                 will be a view provided by the adapter)
+   * @param parent The AdapterView where the click happened.
+   * @param view The view within the AdapterView that was clicked (this
+   * will be a view provided by the adapter)
    * @param position The position of the view in the adapter.
-   * @param id       The row id of the item that was clicked.
+   * @param id The row id of the item that was clicked.
    */
   @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     Intent i = new Intent();
@@ -163,7 +209,13 @@ public class ContactsActivity extends BaseListActivity {
       startActivity(i);
       return true;
     } else if (id == R.id.action_refresh) {
-      loadData();
+      loadData(mCurrentPage);
+      getRecyclerView().addOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager) {
+        @Override public void onLoadMore(int current_page) {
+          Log.d("loading", current_page + "");
+          loadData(current_page);
+        }
+      });
       return true;
     } else if (id == android.R.id.home) {
       onBackPressed();
