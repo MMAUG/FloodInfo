@@ -1,10 +1,12 @@
 package org.mmaug.InfoCenter.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import java.util.ArrayList;
@@ -52,7 +54,10 @@ public class LocationsAdapter extends android.widget.BaseAdapter implements Spin
       convertView = vi.inflate(android.R.layout.simple_spinner_dropdown_item, null);
     }
     TextView textView = (TextView) convertView.findViewById(android.R.id.text1);
+    textView.setTextColor(Color.BLACK);
     textView.setText(data.get(position).township);
+    LinearLayout.LayoutParams Params1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,100);
+    textView.setLayoutParams(Params1);
     return convertView;
   }
 
@@ -71,7 +76,10 @@ public class LocationsAdapter extends android.widget.BaseAdapter implements Spin
       convertView = vi.inflate(android.R.layout.simple_spinner_dropdown_item, null);
     }
     TextView textView = (TextView) convertView.findViewById(android.R.id.text1);
+    textView.setTextColor(Color.BLACK);
     textView.setText(data.get(position).township);
+    LinearLayout.LayoutParams Params1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,50);
+    textView.setLayoutParams(Params1);
     return convertView;
   }
 

@@ -1,5 +1,6 @@
 package org.mmaug.InfoCenter.model;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 /**
@@ -14,6 +15,5 @@ public class Location {
   public String description;
   public Double lat;
   public Double lon;
-  public JsonObject demographic;
-  //Server Value is json object i don't wanna a create new Model so Dap Tape
+  public JsonElement demographic;
 }
