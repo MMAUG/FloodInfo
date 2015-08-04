@@ -9,18 +9,18 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import java.util.regex.Pattern;
+import mm.technomation.tmmtextutilities.mmtext;
 import org.mmaug.InfoCenter.R;
 import org.mmaug.InfoCenter.model.Contact;
-import org.mmaug.InfoCenter.widgets.NkTextView;
 
 /**
  * @author SH (swanhtet@nexlabs.co)
  */
 public class ContactDetailActivity extends AppCompatActivity {
-  @Bind(R.id.tv_contact_name) NkTextView tvContactName;
+  @Bind(R.id.tv_contact_name) TextView tvContactName;
   @Bind(R.id.tv_fb_url) TextView tvFbUrl;
-  @Bind(R.id.tv_contact_phone) NkTextView tvContactPhone;
-  @Bind(R.id.tv_contact_description) NkTextView tvDescription;
+  @Bind(R.id.tv_contact_phone) TextView tvContactPhone;
+  @Bind(R.id.tv_contact_description) TextView tvDescription;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -40,6 +40,11 @@ public class ContactDetailActivity extends AppCompatActivity {
       Pattern phonePattern = Pattern.compile("\\d+");
       Linkify.addLinks(tvContactPhone, Linkify.PHONE_NUMBERS);
       Linkify.addLinks(tvContactPhone, phonePattern, "tel: ");
+
+      mmtext.prepareView(this, tvContactName, mmtext.TEXT_ZAWGYI, true, true);
+      mmtext.prepareView(this, tvFbUrl, mmtext.TEXT_ZAWGYI, true, true);
+      mmtext.prepareView(this, tvContactPhone, mmtext.TEXT_ZAWGYI, true, true);
+      mmtext.prepareView(this, tvDescription, mmtext.TEXT_ZAWGYI, true, true);
     }
   }
 
