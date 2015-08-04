@@ -1,34 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
 
   <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="@dimen/activity_vertical_margin">
-
-    <org.mmaug.InfoCenter.widgets.NkTextView
-      android:id="@+id/tv_news_title"
-      android:layout_width="fill_parent"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginBottom="@dimen/card_insets"
-      android:textSize="18sp" />
+      android:orientation="vertical"
+      android:padding="@dimen/activity_vertical_margin"
+      >
+
+    <TextView
+        android:id="@+id/tv_news_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/card_insets"
+        android:textSize="18sp"
+        />
 
     <View
-      android:layout_width="fill_parent"
-      android:layout_height="1dp"
-      android:layout_marginBottom="@dimen/card_insets"
-      android:background="@color/divider_color" />
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="@dimen/card_insets"
+        android:background="@color/divider_color"
+        />
 
-    <org.mmaug.InfoCenter.widgets.NkTextView
-      android:id="@+id/tv_news_description"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-      android:lineSpacingMultiplier="1.5"
-      android:textSize="16sp" />
+    <TextView
+        android:id="@+id/tv_news_description"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingMultiplier="1.5"
+        android:textSize="16sp"
+        />
   </LinearLayout>
-
 
 </ScrollView>

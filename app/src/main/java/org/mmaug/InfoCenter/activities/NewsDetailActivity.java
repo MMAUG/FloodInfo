@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -12,7 +13,7 @@ import com.google.gson.JsonObject;
 import org.mmaug.InfoCenter.R;
 import org.mmaug.InfoCenter.model.News;
 import org.mmaug.InfoCenter.rest.client.RESTClient;
-import org.mmaug.InfoCenter.widgets.NkTextView;
+import org.mmaug.InfoCenter.utils.MMTextUtils;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -21,9 +22,9 @@ import retrofit.client.Response;
  * @author SH (swanhtet@nexlabs.co)
  */
 public class NewsDetailActivity extends AppCompatActivity {
-  @Bind(R.id.tv_news_title) NkTextView tvNewsTitle;
-  @Bind(R.id.tv_news_description) NkTextView tvNewsDescription;
-  News n;
+  @Bind(R.id.tv_news_title) TextView tvNewsTitle;
+  @Bind(R.id.tv_news_description) TextView tvNewsDescription;
+  News news;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -34,9 +35,13 @@ public class NewsDetailActivity extends AppCompatActivity {
     if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
 
     if (!getIntent().getExtras().isEmpty()) {
-      n = (News) getIntent().getSerializableExtra("news");
-      tvNewsTitle.setText(n.getTitle());
-      tvNewsDescription.setText(n.getDescription());
+      news = (News) getIntent().getSerializableExtra("news");
+      tvNewsTitle.setText(news.getTitle());
+      tvNewsDescription.setText(news.getDescription());
+
+      MMTextUtils mmTextUtils = new MMTextUtils(this);
+      mmTextUtils.prepareMultipleViews(news.getTitle(), tvNewsTitle, tvNewsDescription);
+
       tvNewsTitle.setLinksClickable(true);
       tvNewsDescription.setLinksClickable(true);
     }
@@ -53,7 +58,7 @@ public class NewsDetailActivity extends AppCompatActivity {
       onBackPressed();
       return true;
     } else {
-      RESTClient.getInstance().getService().reportNews(n.getId(), new Callback<JsonObject>() {
+      RESTClient.getInstance().getService().reportNews(news.getId(), new Callback<JsonObject>() {
         @Override public void success(JsonObject jsonObject, Response response) {
           Toast.makeText(getApplicationContext(), "Successfully report", Toast.LENGTH_LONG).show();
         }
