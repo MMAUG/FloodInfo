@@ -1,48 +1,54 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:gravity="center|center_horizontal"
-  android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center|center_horizontal"
+    android:orientation="vertical"
+    >
 
   <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_centerHorizontal="true"
-    android:layout_centerVertical="true"
-    android:columnCount="3"
-    android:rowCount="2">
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerHorizontal="true"
+      android:layout_centerVertical="true"
+      android:columnCount="3"
+      android:rowCount="2"
+      >
 
-    <org.mmaug.InfoCenter.widgets.NkTextView
-      android:id="@+id/tv_latest_news"
-      style="@style/Button"
-      android:layout_column="0"
-      android:layout_row="0"
-      android:background="@drawable/blue_btn_bg"
-      android:text="@string/str_latest_news" />
+    <TextView
+        android:id="@+id/tv_latest_news"
+        style="@style/Button"
+        android:layout_column="0"
+        android:layout_row="0"
+        android:background="@drawable/blue_btn_bg"
+        android:text="@string/str_latest_news"
+        />
 
-    <org.mmaug.InfoCenter.widgets.NkTextView
-      android:id="@+id/tv_alert_level"
-      style="@style/Button"
-      android:layout_column="1"
-      android:layout_row="0"
-      android:background="@drawable/red_btn_bg"
-      android:text="@string/str_alert_level" />
+    <TextView
+        android:id="@+id/tv_alert_level"
+        style="@style/Button"
+        android:layout_column="1"
+        android:layout_row="0"
+        android:background="@drawable/red_btn_bg"
+        android:text="@string/str_alert_level"
+        />
 
-    <org.mmaug.InfoCenter.widgets.NkTextView
-      android:id="@+id/tv_report"
-      style="@style/Button"
-      android:layout_column="0"
-      android:layout_row="1"
-      android:background="@drawable/green_btn_bg"
-      android:text="@string/str_report" />
+    <TextView
+        android:id="@+id/tv_report"
+        style="@style/Button"
+        android:layout_column="0"
+        android:layout_row="1"
+        android:background="@drawable/green_btn_bg"
+        android:text="@string/str_report"
+        />
 
-    <org.mmaug.InfoCenter.widgets.NkTextView
-      android:id="@+id/tv_donation_team"
-      style="@style/Button"
-      android:layout_column="1"
-      android:layout_row="1"
-      android:background="@drawable/purple_btn_bg"
-      android:text="@string/str_donation" />
+    <TextView
+        android:id="@+id/tv_donation_team"
+        style="@style/Button"
+        android:layout_column="1"
+        android:layout_row="1"
+        android:background="@drawable/purple_btn_bg"
+        android:text="@string/str_donation"
+        />
 
   </GridLayout>
 </RelativeLayout>

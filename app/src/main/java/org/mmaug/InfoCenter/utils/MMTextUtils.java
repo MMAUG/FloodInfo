@@ -1,7 +1,7 @@
 package org.mmaug.InfoCenter.utils;
 
 import android.content.Context;
-import android.widget.TextView;
+import android.view.View;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import mm.technomation.tmmtextutilities.mmtext;
@@ -42,8 +42,8 @@ public class MMTextUtils {
     return 2;
   }
 
-  public void prepareMultipleViews(String content, TextView... textViews) {
-    for (TextView textView : textViews) {
+  public void prepareMultipleViews(String content, View... textViews) {
+    for (View textView : textViews) {
       switch (detector(content)) {
         case 0:
           // We do nothing
@@ -58,7 +58,7 @@ public class MMTextUtils {
     }
   }
 
-  public void prepareSingleView(String content, TextView textView) {
+  public void prepareSingleView(String content, View textView) {
     switch (detector(content)) {
       case 0:
         // We do nothing

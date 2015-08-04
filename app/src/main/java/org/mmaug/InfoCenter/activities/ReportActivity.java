@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.mmaug.InfoCenter.R;
 import org.mmaug.InfoCenter.adapter.LocationsAdapter;
-import org.mmaug.InfoCenter.adapter.NewsAdapter;
 import org.mmaug.InfoCenter.model.Location;
 import org.mmaug.InfoCenter.model.News;
 import org.mmaug.InfoCenter.rest.client.RESTClient;
@@ -41,6 +40,7 @@ import retrofit.client.Response;
  * @author SH (swanhtet@nexlabs.co)
  */
 public class ReportActivity extends AppCompatActivity {
+  private static final String NEWS_FILE = "location.json";
   @Bind(R.id.edt_title) EditText edtTitle;
   @Bind(R.id.resultView) ImageView resultView;
   @Bind(R.id.edt_content) EditText edtContent;
@@ -52,13 +52,12 @@ public class ReportActivity extends AppCompatActivity {
   @Bind(R.id.rbn_dam_fload) RadioButton rbnDamFload;
   @Bind(R.id.dam_condition) TextView txtDamCondition;
   @Bind(R.id.river_condition) TextView txtRiverCondition;
-  @Bind(R.id.spinner_location)Spinner spinner_location;
-  @Bind(R.id.lbl_township)TextView townshipLable;
+  @Bind(R.id.spinner_location) Spinner spinner_location;
+  @Bind(R.id.lbl_township) TextView townshipLable;
   Typeface tf;
   //Normal Conditon is Unknown
   Integer river_condition = 0;
   Integer dam_condition = 0;
-  private static final String NEWS_FILE = "location.json";
   ArrayList<Location> mLocations = new ArrayList<>();
   private LocationsAdapter mAdapter = null;
 
@@ -68,10 +67,10 @@ public class ReportActivity extends AppCompatActivity {
     ButterKnife.bind(this);
     loadFromDisk();
     spinner_location.setAdapter(mAdapter);
-    tf = Typeface.createFromAsset(this.getAssets(), "namkhone.ttf");
     ActionBar actionBar = getSupportActionBar();
     if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
-    setTypeFace();
+
+    //setTypeFace();
   }
 
   private void loadFromDisk() {
@@ -83,18 +82,6 @@ public class ReportActivity extends AppCompatActivity {
       mLocations.addAll(FileUtils.convertToJava(contactString, type));
       mAdapter.setLocations(mLocations);
     }
-  }
-
-  public void setTypeFace() {
-    townshipLable.setTypeface(tf);
-    rbnWaterImportant.setTypeface(tf);
-    rbnWaterNormal.setTypeface(tf);
-    rbnWaterFload.setTypeface(tf);
-    rbnDamFload.setTypeface(tf);
-    rbnDamImportant.setTypeface(tf);
-    rbnDamNormal.setTypeface(tf);
-    txtDamCondition.setTypeface(tf);
-    txtRiverCondition.setTypeface(tf);
   }
 
   @OnClick(R.id.rbn_dam_normal) void normalCondition() {
