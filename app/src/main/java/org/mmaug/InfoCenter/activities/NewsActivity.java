@@ -70,7 +70,7 @@ public class NewsActivity extends BaseListActivity {
 
     getRecyclerView().addOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager) {
       @Override public void onLoadMore(int current_page) {
-        if (mCurrentPage == 1) {
+        if (mCurrentPage == 1 || mCurrentPage == 10) {
           mAdapter.hideFooter(true);
           return;
         } else {
@@ -132,30 +132,33 @@ public class NewsActivity extends BaseListActivity {
             //TODO WARNING NEED TO GET TOTAL NEWS COUNT
             ArrayList contacts = new ArrayList();
             //TODO total item count is total count in Load More
-            totalItemCount = jsonObject.get("meta").getAsJsonObject().get("page_count").getAsInt();
-            JsonArray jsonArray = jsonObject.get("data").getAsJsonArray();
-            for (int i = 0; i < jsonArray.size(); i++) {
-              News singleNew = new News();
-              singleNew.setId(jsonArray.get(i).getAsJsonObject().get("id").getAsInt());
-              singleNew.setTitle(jsonArray.get(i).getAsJsonObject().get("title").getAsString());
-              singleNew.setDescription(
-                  jsonArray.get(i).getAsJsonObject().get("description").getAsString());
-              contacts.add(singleNew);
-
+            if(current_page == 1) {
+              totalItemCount = jsonObject.get("meta").getAsJsonObject().get("page_count").getAsInt();
             }
-            if (contacts == null || contacts.size() == 0) {
-              mAdapter.hideFooter(true);
-              return;
+            if(current_page < totalItemCount + 1) {
+              JsonArray jsonArray = jsonObject.get("data").getAsJsonArray();
+              for (int i = 0; i < jsonArray.size(); i++) {
+                News singleNew = new News();
+                singleNew.setId(jsonArray.get(i).getAsJsonObject().get("id").getAsInt());
+                singleNew.setTitle(jsonArray.get(i).getAsJsonObject().get("title").getAsString());
+                singleNew.setDescription(
+                    jsonArray.get(i).getAsJsonObject().get("description").getAsString());
+                contacts.add(singleNew);
+              }
+              if (contacts == null || contacts.size() == 0) {
+                mAdapter.hideFooter(true);
+                return;
+              }
+              Log.d("news count", mNews.size() + "");
+              if (current_page == 1) {
+                mNews = contacts;
+                FileUtils.saveData(NewsActivity.this, FileUtils.convertToJson(mNews), NEWS_FILE);
+              } else {
+                mNews.addAll(contacts);
+              }
+              mAdapter.setNews(mNews);
+              mCurrentPage++;
             }
-            Log.d("news count", mNews.size() + "");
-            if (current_page == 1) {
-              mNews = contacts;
-              FileUtils.saveData(NewsActivity.this, FileUtils.convertToJson(mNews), NEWS_FILE);
-            } else {
-              mNews.addAll(contacts);
-            }
-            mAdapter.setNews(mNews);
-            mCurrentPage++;
           }
 
           @Override public void failure(RetrofitError error) {
