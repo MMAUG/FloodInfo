@@ -2,7 +2,6 @@ package org.mmaug.InfoCenter.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -32,6 +31,7 @@ import org.mmaug.InfoCenter.model.Location;
 import org.mmaug.InfoCenter.model.News;
 import org.mmaug.InfoCenter.rest.client.RESTClient;
 import org.mmaug.InfoCenter.utils.FileUtils;
+import org.mmaug.InfoCenter.utils.MMTextUtils;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -54,12 +54,13 @@ public class ReportActivity extends AppCompatActivity {
   @Bind(R.id.river_condition) TextView txtRiverCondition;
   @Bind(R.id.spinner_location) Spinner spinner_location;
   @Bind(R.id.lbl_township) TextView townshipLable;
-  Typeface tf;
   //Normal Conditon is Unknown
   Integer river_condition = 0;
   Integer dam_condition = 0;
   ArrayList<Location> mLocations = new ArrayList<>();
   private LocationsAdapter mAdapter = null;
+
+  private MMTextUtils mmTextUtils;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -71,6 +72,10 @@ public class ReportActivity extends AppCompatActivity {
     if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
 
     //setTypeFace();
+    mmTextUtils = new MMTextUtils(this);
+    mmTextUtils.prepareMultipleViews(townshipLable, rbnWaterImportant, rbnWaterNormal,
+        rbnWaterFload, rbnDamFload, rbnDamImportant, rbnDamNormal, txtDamCondition,
+        txtRiverCondition);
   }
 
   private void loadFromDisk() {
@@ -114,17 +119,15 @@ public class ReportActivity extends AppCompatActivity {
 
   public void onSubmit(View view) {
     if (TextUtils.isEmpty(edtTitle.getText()) || TextUtils.isEmpty(edtContent.getText())) {
-
-      Snackbar snackbar =
-          Snackbar.make(view, "အခ်က္အလက္ကိုျပည့္စုံစြာေျဖဆိုေပးပါရန္ ေမတၲာရပ္ခံပါတယ္",
-              Snackbar.LENGTH_LONG);
+      String msg = "အခ်က္အလက္ကိုျပည့္စုံစြာေျဖဆိုေပးပါရန္ ေမတၲာရပ္ခံပါတယ္";
+      Snackbar snackbar = Snackbar.make(view, msg, Snackbar.LENGTH_LONG);
       snackbar.setActionTextColor(Color.RED);
       View snackbarView = snackbar.getView();
       snackbarView.setBackgroundColor(Color.DKGRAY);
       TextView textView =
           (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
       textView.setTextColor(Color.YELLOW);
-      textView.setTypeface(tf);
+      mmTextUtils.prepareSingleView(msg, textView);
       snackbar.show();
       /*Toast.makeText(this, "Please write something that is worth sharing...", Toast.LENGTH_LONG)
           .show();*/

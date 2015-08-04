@@ -58,6 +58,13 @@ public class MMTextUtils {
     }
   }
 
+  public void prepareMultipleViews(View... textViews) {
+    for (View textView : textViews) {
+      mmtext.prepareView(mContext, textView, mm.technomation.tmmtextutilities.mmtext.TEXT_ZAWGYI,
+          true, true);
+    }
+  }
+
   public void prepareSingleView(String content, View textView) {
     switch (detector(content)) {
       case 0:
