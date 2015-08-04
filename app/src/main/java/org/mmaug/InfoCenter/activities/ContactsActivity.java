@@ -89,7 +89,7 @@ public class ContactsActivity extends BaseListActivity {
    * @return custom RecyclerView.Adapter
    */
   @Override protected Adapter getAdapter() {
-    mAdapter = new ContactAdapter();
+    mAdapter = new ContactAdapter(ContactsActivity.this);
     mAdapter.setOnItemClickListener(this);    //This is the code to provide a sectioned grid
     return mAdapter;
   }
