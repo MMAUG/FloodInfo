@@ -2,6 +2,8 @@ package org.mmaug.InfoCenter.utils;
 
 import android.content.Context;
 import android.widget.TextView;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import mm.technomation.tmmtextutilities.mmtext;
 
 /**
@@ -14,10 +16,45 @@ public class MMTextUtils {
     this.mContext = context;
   }
 
-  private void prepareMultipleView(TextView... textViews) {
+  /**
+   * Copied From Kanaung https://github.com/MMAUG/Kanaung
+   * https://goo.gl/jjm4ct
+   *
+   * @return 0 for non - Myanmar
+   * 1 for Uni
+   * 2 for Zg
+   */
+  public int detector(String string) {
+    String isMyanmar = "[က-အ]+";
+    Pattern isMyanmarPattern = Pattern.compile(isMyanmar);
+    Matcher isMyanmarMatcher = isMyanmarPattern.matcher(string);
+    if (!isMyanmarMatcher.find()) {
+      return 0;
+    }
+
+    String uni =
+        "[ဃငဆဇဈဉညတဋဌဍဎဏဒဓနဘရဝဟဠအ]်|ျ[က-အ]ါ|ျ[ါ-း]|[^\\1031]စ် |\\u103e|\\u103f|\\u1031[^\\u1000-\\u1021\\u103b\\u1040\\u106a\\u106b\\u107e-\\u1084\\u108f\\u1090]|\\u1031$|\\u100b\\u1039|\\u1031[က-အ]\\u1032|\\u1025\\u102f|\\u103c\\u103d[\\u1000-\\u1001]";
+    Pattern pattern = Pattern.compile(uni);
+    Matcher matcher = pattern.matcher(string);
+    if (matcher.find()) {
+      return 1;
+    }
+    return 2;
+  }
+
+  public void prepareMultipleViews(String content, TextView... textViews) {
     for (TextView textView : textViews) {
-      mmtext.prepareView(mContext, textView, mm.technomation.tmmtextutilities.mmtext.TEXT_ZAWGYI,
-          true, true);
+      switch (detector(content)) {
+        case 0:
+          // We do nothing
+          break;
+        case 1:
+          mmtext.prepareView(mContext, textView, mmtext.TEXT_UNICODE, true, true);
+          break;
+        case 2:
+          mmtext.prepareView(mContext, textView,
+              mm.technomation.tmmtextutilities.mmtext.TEXT_ZAWGYI, true, true);
+      }
     }
   }
 }

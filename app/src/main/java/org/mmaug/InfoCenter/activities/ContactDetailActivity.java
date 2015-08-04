@@ -9,9 +9,9 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import java.util.regex.Pattern;
-import mm.technomation.tmmtextutilities.mmtext;
 import org.mmaug.InfoCenter.R;
 import org.mmaug.InfoCenter.model.Contact;
+import org.mmaug.InfoCenter.utils.MMTextUtils;
 
 /**
  * @author SH (swanhtet@nexlabs.co)
@@ -41,10 +41,10 @@ public class ContactDetailActivity extends AppCompatActivity {
       Linkify.addLinks(tvContactPhone, Linkify.PHONE_NUMBERS);
       Linkify.addLinks(tvContactPhone, phonePattern, "tel: ");
 
-      mmtext.prepareView(this, tvContactName, mmtext.TEXT_ZAWGYI, true, true);
-      mmtext.prepareView(this, tvFbUrl, mmtext.TEXT_ZAWGYI, true, true);
-      mmtext.prepareView(this, tvContactPhone, mmtext.TEXT_ZAWGYI, true, true);
-      mmtext.prepareView(this, tvDescription, mmtext.TEXT_ZAWGYI, true, true);
+      MMTextUtils mmTextUtils = new MMTextUtils(this);
+      // Hopefully, the title can be a factor to determine which encoding it's with
+      mmTextUtils.prepareMultipleViews(c.getTitle(), tvContactName, tvContactPhone, tvFbUrl,
+          tvDescription);
     }
   }
 
