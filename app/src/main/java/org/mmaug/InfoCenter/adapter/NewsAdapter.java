@@ -1,9 +1,11 @@
 package org.mmaug.InfoCenter.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import java.util.ArrayList;
@@ -11,7 +13,7 @@ import java.util.List;
 import org.mmaug.InfoCenter.R;
 import org.mmaug.InfoCenter.base.BaseAdapter;
 import org.mmaug.InfoCenter.model.News;
-import org.mmaug.InfoCenter.widgets.NkTextView;
+import org.mmaug.InfoCenter.utils.MMTextUtils;
 
 /**
  * @author SH (swanhtet@nexlabs.co)
@@ -19,12 +21,12 @@ import org.mmaug.InfoCenter.widgets.NkTextView;
 public class NewsAdapter extends BaseAdapter<BaseAdapter.BaseViewHolder> {
   public static final int CONTENT_VIEW_TYPE = 100;
   public static final int FOOTER_VIEW_TYPE = 101;
-  private List<News> mNews;
-  private boolean hideFooter;
+  private List<News> mNews = new ArrayList<>();
+  private boolean hideFooter = false;
+  private Context mContext;
 
-  public NewsAdapter() {
-    mNews = new ArrayList<>();
-    hideFooter = false;
+  public NewsAdapter(Context context) {
+    this.mContext = context;
   }
 
   public void setNews(ArrayList<News> News) {
@@ -59,8 +61,10 @@ public class NewsAdapter extends BaseAdapter<BaseAdapter.BaseViewHolder> {
       if (mNews.size() == 0) {
         return;
       }
-      News News = mNews.get(position);
-      ((NewsHolder) holder).setNewsName(News.getTitle());
+      News news = mNews.get(position);
+      ((NewsHolder) holder).setNewsName(news.getTitle());
+      MMTextUtils mmTextUtils = new MMTextUtils(mContext);
+      mmTextUtils.prepareSingleView(news.getTitle(), ((NewsHolder) holder).mNewsTitle);
     } else if (holder instanceof ProgressHolder) {
       if (!hideFooter) {
         ((ProgressHolder) holder).progressContainer.setVisibility(View.VISIBLE);
@@ -83,7 +87,7 @@ public class NewsAdapter extends BaseAdapter<BaseAdapter.BaseViewHolder> {
   }
 
   public static class NewsHolder extends BaseAdapter.BaseViewHolder {
-    @Bind(R.id.tv_news_title) NkTextView mNewsTitle;
+    @Bind(R.id.tv_news_title) TextView mNewsTitle;
 
     public NewsHolder(View itemView, NewsAdapter adapter) {
       super(itemView);

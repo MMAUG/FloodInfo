@@ -57,7 +57,7 @@ public class NewsActivity extends BaseListActivity {
           .add(stateFragment, LIST_STATE_FRAGEMENT)
           .commit();
     }
-    if(stateFragment.currentPage!=-10){
+    if (stateFragment.currentPage != -10) {
       mCurrentPage = stateFragment.currentPage;
     }
     mLayoutManager = new LinearLayoutManager(NewsActivity.this);
@@ -88,7 +88,7 @@ public class NewsActivity extends BaseListActivity {
    * @return custom RecyclerView.Adapter
    */
   @Override protected Adapter getAdapter() {
-    mAdapter = new NewsAdapter();
+    mAdapter = new NewsAdapter(NewsActivity.this);
     mAdapter.setOnItemClickListener(this);    //This is the code to provide a sectioned grid
     return mAdapter;
   }
@@ -132,10 +132,11 @@ public class NewsActivity extends BaseListActivity {
             //TODO WARNING NEED TO GET TOTAL NEWS COUNT
             ArrayList contacts = new ArrayList();
             //TODO total item count is total count in Load More
-            if(current_page == 1) {
-              totalItemCount = jsonObject.get("meta").getAsJsonObject().get("page_count").getAsInt();
+            if (current_page == 1) {
+              totalItemCount =
+                  jsonObject.get("meta").getAsJsonObject().get("page_count").getAsInt();
             }
-            if(current_page < totalItemCount + 1) {
+            if (current_page < totalItemCount + 1) {
               JsonArray jsonArray = jsonObject.get("data").getAsJsonArray();
               for (int i = 0; i < jsonArray.size(); i++) {
                 News singleNew = new News();

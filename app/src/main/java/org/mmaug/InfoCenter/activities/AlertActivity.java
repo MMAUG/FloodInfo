@@ -21,13 +21,9 @@ import org.mmaug.InfoCenter.base.BaseListActivity;
 import org.mmaug.InfoCenter.fragment.HeadlessStateFragment;
 import org.mmaug.InfoCenter.listener.EndlessRecyclerOnScrollListener;
 import org.mmaug.InfoCenter.model.News;
-import org.mmaug.InfoCenter.rest.client.RESTClient;
 import org.mmaug.InfoCenter.utils.ConnectionManager;
 import org.mmaug.InfoCenter.utils.DividerDecoration;
 import org.mmaug.InfoCenter.utils.FileUtils;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 public class AlertActivity extends BaseListActivity {
 
@@ -74,7 +70,7 @@ public class AlertActivity extends BaseListActivity {
    * @return custom RecyclerView.Adapter
    */
   @Override protected RecyclerView.Adapter getAdapter() {
-    mAdapter = new NewsAdapter();
+    mAdapter = new NewsAdapter(AlertActivity.this);
     mAdapter.setOnItemClickListener(this);    //This is the code to provide a sectioned grid
     return mAdapter;
   }
