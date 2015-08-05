@@ -43,6 +43,7 @@ public class ContactsActivity extends BaseListActivity {
   FloatingActionButton mFab;
   LinearLayoutManager mLayoutManager;
   int totalItemCount;
+  private static final String NEWS_FILE = "contacts.json";
   private ContactAdapter mAdapter = null;
   private HeadlessStateFragment stateFragment;
   private int mCurrentPage = 1;
@@ -57,28 +58,27 @@ public class ContactsActivity extends BaseListActivity {
           .add(stateFragment, LIST_STATE_FRAGEMENT)
           .commit();
     }
-    loadFromDisk();
-    loadData(mCurrentPage);
-    onFabClick();
-
     if (stateFragment.currentPage != -10) {
       mCurrentPage = stateFragment.currentPage;
     }
+    loadFromDisk();
+    loadData(mCurrentPage);
+    onFabClick();
     mLayoutManager = new LinearLayoutManager(ContactsActivity.this);
     mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
     getRecyclerView().setHasFixedSize(true);
     getRecyclerView().setLayoutManager(mLayoutManager);
-
     getRecyclerView().addOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager) {
       @Override public void onLoadMore(int current_page) {
-        if (mCurrentPage == 1 || mCurrentPage == 10) {
+        loadData(current_page);
+        /*if (mCurrentPage == 1 || mCurrentPage == 10) {
           mAdapter.hideFooter(true);
           return;
         } else {
           mAdapter.hideFooter(false);
         }
         Log.d("loading", current_page + "");
-        loadData(current_page);
+        loadData(current_page);*/
       }
     });
   }
@@ -115,6 +115,7 @@ public class ContactsActivity extends BaseListActivity {
   }
 
   private void loadData(final int current_page) {
+    Log.e("In the current page","page"+current_page);
     if (stateFragment != null && stateFragment.contacts != null) {
       mContacts = stateFragment.contacts;
       stateFragment.contacts =
@@ -131,7 +132,7 @@ public class ContactsActivity extends BaseListActivity {
               totalItemCount =
                   jsonObject.get("meta").getAsJsonObject().get("page_count").getAsInt();
             }
-            if (current_page < totalItemCount + 1) {
+            if (current_page < totalItemCount+1) {
               JsonArray jsonArray = jsonObject.get("data").getAsJsonArray();
               ArrayList<Contact> contacts = new ArrayList<Contact>();
               for (int i = 0; i < jsonArray.size(); i++) {
@@ -143,19 +144,28 @@ public class ContactsActivity extends BaseListActivity {
                     jsonArray.get(i).getAsJsonObject().get("phone_numbers").getAsString());
                 singleContact.setDescription(
                     jsonArray.get(i).getAsJsonObject().get("description").getAsString());
-
                 contacts.add(singleContact);
               }
-              mContacts = contacts;
+              if (contacts == null || contacts.size() == 0) {
+                mAdapter.hideFooter(true);
+                return;
+              }
+              if (current_page == 1) {
+                mContacts = contacts;
+                FileUtils.saveData(ContactsActivity.this, FileUtils.convertToJson(mContacts), NEWS_FILE);
+              } else {
+                mContacts.addAll(contacts);
+              }
               mAdapter.setContacts(mContacts);
-              FileUtils.saveData(ContactsActivity.this, FileUtils.convertToJson(mContacts),
-                  CONTACT_FILE);
+              mCurrentPage++;
             }
+
           }
 
-          @Override public void failure(RetrofitError error) {
+
+        @Override public void failure(RetrofitError error) {
             loadFromDisk();
-          }
+        }
         });
       } else {
         loadFromDisk();

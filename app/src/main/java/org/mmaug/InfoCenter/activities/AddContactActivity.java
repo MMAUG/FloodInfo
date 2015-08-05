@@ -35,8 +35,7 @@ public class AddContactActivity extends AppCompatActivity {
   }
 
   public void onSubmit(View view) {
-    if (TextUtils.isEmpty(edtTitle.getText())
-        || TextUtils.isEmpty(edtFbUrl.getText())
+    if (TextUtils.isEmpty(edtTitle.getText()) || TextUtils.isEmpty(edtFbUrl.getText())
         || TextUtils.isEmpty(edtContactNumber.getText())) {
       Toast.makeText(this, "Please write at least contact number", Toast.LENGTH_LONG).show();
     } else {
