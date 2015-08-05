@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import org.mmaug.InfoCenter.R;
+import org.mmaug.InfoCenter.adapter.FragmentAdapter;
+import org.mmaug.InfoCenter.fragment.NewsFragment;
 
 /**
  * Created by poepoe on 5/8/15.
@@ -20,7 +22,7 @@ public class MainBaseActivity extends AppCompatActivity {
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+    setContentView(R.layout.activity_base);
     ButterKnife.bind(this);
 
     initUI();
@@ -28,6 +30,15 @@ public class MainBaseActivity extends AppCompatActivity {
 
   private void initUI() {
     setSupportActionBar(mToolbar);
+    setupViewPager(mPager);
     mTabLayout.setupWithViewPager(mPager);
+  }
+
+  private void setupViewPager(ViewPager viewPager) {
+    FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
+    adapter.addFrag(new NewsFragment(), "NEWS");
+    adapter.addFrag(new NewsFragment(), "NEWS");
+    adapter.addFrag(new NewsFragment(), "NEWS");
+    viewPager.setAdapter(adapter);
   }
 }
