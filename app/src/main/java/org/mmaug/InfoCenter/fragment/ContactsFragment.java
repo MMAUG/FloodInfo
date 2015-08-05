@@ -2,7 +2,6 @@ package org.mmaug.InfoCenter.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,7 +23,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import org.mmaug.InfoCenter.R;
-import org.mmaug.InfoCenter.activities.AddContactActivity;
 import org.mmaug.InfoCenter.activities.ContactDetailActivity;
 import org.mmaug.InfoCenter.adapter.ContactAdapter;
 import org.mmaug.InfoCenter.listener.EndlessRecyclerOnScrollListener;
@@ -55,7 +53,7 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
 
   @Bind(R.id.recycler_root) RecyclerView mRecyclerView;
   @Bind(R.id.progress) ProgressBar mProgressBar;
-  @Bind(R.id.share_fab) FloatingActionButton mFab;
+  //@Bind(R.id.share_fab) FloatingActionButton mFab;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -88,22 +86,14 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
     mRecyclerView.addItemDecoration(getItemDecoration());
     mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager) {
       @Override public void onLoadMore(int current_page) {
+        Log.d("load more","load more");
         loadData(current_page);
-        /*if (mCurrentPage == 1 || mCurrentPage == 10) {
-          mAdapter.hideFooter(true);
-          return;
-        } else {
-          mAdapter.hideFooter(false);
-        }
-        Log.d("loading", current_page + "");
-        loadData(current_page);*/
       }
     });
 
     loadFromDisk();
     loadData(mCurrentPage);
-    onFabClick();
-    
+
     return view;
   }
 
@@ -147,7 +137,7 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
       mAdapter.setContacts(mContacts);
     } else {
       if (ConnectionManager.isConnected(mActivity)) {
-        mProgressBar.setVisibility(View.VISIBLE);
+        if (current_page == 1) mProgressBar.setVisibility(View.VISIBLE);
 
         RESTClient.getInstance().getService().getContacts(current_page, new Callback<JsonObject>() {
           @Override public void success(JsonObject jsonObject, Response response) {
@@ -194,15 +184,6 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
         Toast.makeText(mActivity, R.string.no_internet, Toast.LENGTH_SHORT).show();
       }
     }
-  }
-
-  private void onFabClick() {
-    mFab.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        Intent intentToAddNews = new Intent(mActivity, AddContactActivity.class);
-        startActivity(intentToAddNews);
-      }
-    });
   }
 
   /**

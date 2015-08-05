@@ -31,7 +31,7 @@ public class AddContactActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_add_contact);
     ButterKnife.bind(this);
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
   }
 
   public void onSubmit(View view) {

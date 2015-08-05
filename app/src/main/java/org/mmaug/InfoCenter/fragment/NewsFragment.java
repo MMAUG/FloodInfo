@@ -2,7 +2,6 @@ package org.mmaug.InfoCenter.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,7 +23,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import org.mmaug.InfoCenter.R;
-import org.mmaug.InfoCenter.activities.ReportActivity;
 import org.mmaug.InfoCenter.adapter.NewsAdapter;
 import org.mmaug.InfoCenter.listener.EndlessRecyclerOnScrollListener;
 import org.mmaug.InfoCenter.model.News;
@@ -52,7 +50,6 @@ public class NewsFragment extends Fragment implements AdapterView.OnItemClickLis
 
   @Bind(R.id.recycler_root) RecyclerView mRecyclerView;
   @Bind(R.id.progress) ProgressBar mProgressBar;
-  @Bind(R.id.share_fab) FloatingActionButton mFab;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -85,23 +82,14 @@ public class NewsFragment extends Fragment implements AdapterView.OnItemClickLis
     mRecyclerView.setLayoutManager(mLayoutManager);
     mRecyclerView.setAdapter(getAdapter());
     mRecyclerView.addItemDecoration(getItemDecoration());
-
-    loadFromDisk();
-    loadData(mCurrentPage);
-    onFabClick();
-
     mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager) {
       @Override public void onLoadMore(int current_page) {
-        if (mCurrentPage == 1 || mCurrentPage == 10) {
-          mAdapter.hideFooter(true);
-          return;
-        } else {
-          mAdapter.hideFooter(false);
-        }
-        Log.d("loading", current_page + "");
         loadData(current_page);
       }
     });
+
+    loadFromDisk();
+    loadData(mCurrentPage);
 
     return view;
   }
@@ -144,9 +132,7 @@ public class NewsFragment extends Fragment implements AdapterView.OnItemClickLis
           null; //To make sure multiple call of load data method will not get only the saved contacts
       mAdapter.setNews(mNews);
     } else {
-      Log.d("here", "here");
       if (ConnectionManager.isConnected(mActivity)) {
-        Log.d("current page", current_page + "");
         if (current_page == 1) {
           mProgressBar.setVisibility(View.VISIBLE);
         }
@@ -195,15 +181,6 @@ public class NewsFragment extends Fragment implements AdapterView.OnItemClickLis
         Toast.makeText(mActivity, R.string.no_internet, Toast.LENGTH_SHORT).show();
       }
     }
-  }
-
-  private void onFabClick() {
-    mFab.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        Intent intentToAddNews = new Intent(mActivity, ReportActivity.class);
-        startActivity(intentToAddNews);
-      }
-    });
   }
 
   /**
