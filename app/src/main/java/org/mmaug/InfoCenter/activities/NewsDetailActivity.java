@@ -3,6 +3,7 @@ package org.mmaug.InfoCenter.activities;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -24,6 +25,8 @@ import retrofit.client.Response;
 public class NewsDetailActivity extends AppCompatActivity {
   @Bind(R.id.tv_news_title) TextView tvNewsTitle;
   @Bind(R.id.tv_news_description) TextView tvNewsDescription;
+  @Bind(R.id.toolbar) Toolbar toolbar;
+
   News news;
 
   @Override public void onCreate(Bundle savedInstanceState) {
@@ -31,8 +34,7 @@ public class NewsDetailActivity extends AppCompatActivity {
     setContentView(R.layout.activity_news);
     ButterKnife.bind(this);
 
-    ActionBar actionBar = getSupportActionBar();
-    if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
+    initToolbar();
 
     if (!getIntent().getExtras().isEmpty()) {
       news = (News) getIntent().getSerializableExtra("news");
@@ -45,6 +47,12 @@ public class NewsDetailActivity extends AppCompatActivity {
       tvNewsTitle.setLinksClickable(true);
       tvNewsDescription.setLinksClickable(true);
     }
+  }
+
+  private void initToolbar() {
+    setSupportActionBar(toolbar);
+    ActionBar actionBar = getSupportActionBar();
+    if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
   }
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {

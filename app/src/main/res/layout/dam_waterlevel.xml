@@ -8,27 +8,31 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="@dimen/card_insets">
+    android:padding="@dimen/card_insets"
+    android:gravity="center_vertical">
 
     <RadioButton
       android:id="@+id/rbn_dam_normal"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="@string/water_level_condtion_normal"
-      android:textSize="@dimen/radio_button" />
+      android:textSize="@dimen/radio_button"
+      android:padding="4dp"/>
 
     <RadioButton
       android:id="@+id/rbn_dam_important"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="@string/water_level_condtion_warning"
-      android:textSize="@dimen/radio_button" />
+      android:textSize="@dimen/radio_button"
+      android:padding="4dp" />
 
     <RadioButton
       android:id="@+id/rbn_dam_fload"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="@string/water_level_condtion_important"
-      android:textSize="@dimen/radio_button" />
+      android:textSize="@dimen/radio_button"
+      android:padding="4dp"/>
   </RadioGroup>
 </LinearLayout>

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -54,6 +55,8 @@ public class ReportActivity extends AppCompatActivity {
   @Bind(R.id.river_condition) TextView txtRiverCondition;
   @Bind(R.id.spinner_location) Spinner spinner_location;
   @Bind(R.id.lbl_township) TextView townshipLable;
+  @Bind(R.id.toolbar) Toolbar toolbar;
+
   //Normal Conditon is Unknown
   Integer river_condition = 0;
   Integer dam_condition = 0;
@@ -68,14 +71,20 @@ public class ReportActivity extends AppCompatActivity {
     ButterKnife.bind(this);
     loadFromDisk();
     spinner_location.setAdapter(mAdapter);
-    ActionBar actionBar = getSupportActionBar();
-    if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
+
+    initToolbar();
 
     //setTypeFace();
     mmTextUtils = new MMTextUtils(this);
     mmTextUtils.prepareMultipleViews(townshipLable, rbnWaterImportant, rbnWaterNormal,
         rbnWaterFload, rbnDamFload, rbnDamImportant, rbnDamNormal, txtDamCondition,
         txtRiverCondition);
+  }
+
+  private void initToolbar() {
+    setSupportActionBar(toolbar);
+    ActionBar actionBar = getSupportActionBar();
+    if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
   }
 
   private void loadFromDisk() {

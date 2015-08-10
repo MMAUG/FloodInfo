@@ -1,7 +1,9 @@
 package org.mmaug.InfoCenter.activities;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,14 +28,20 @@ public class AddContactActivity extends AppCompatActivity {
   @Bind(R.id.edt_contact_number) EditText edtContactNumber;
   @Bind(R.id.edt_detail) EditText edtDetail;
   @Bind(R.id.edt_donation_location) EditText edtLocation;
+  @Bind(R.id.toolbar) Toolbar toolbar;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_add_contact);
     ButterKnife.bind(this);
-    if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    initToolbar();
   }
 
+  private void initToolbar() {
+    setSupportActionBar(toolbar);
+    ActionBar actionBar = getSupportActionBar();
+    if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
+  }
   public void onSubmit(View view) {
     if (TextUtils.isEmpty(edtTitle.getText()) || TextUtils.isEmpty(edtFbUrl.getText())
         || TextUtils.isEmpty(edtContactNumber.getText())) {

@@ -3,6 +3,7 @@ package org.mmaug.InfoCenter.activities;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.util.Linkify;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -21,14 +22,15 @@ public class ContactDetailActivity extends AppCompatActivity {
   @Bind(R.id.tv_fb_url) TextView tvFbUrl;
   @Bind(R.id.tv_contact_phone) TextView tvContactPhone;
   @Bind(R.id.tv_contact_description) TextView tvDescription;
+  @Bind(R.id.toolbar) Toolbar toolbar;
+
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_contact_detail);
     ButterKnife.bind(this);
 
-    ActionBar actionBar = getSupportActionBar();
-    if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
+    initToolbar();
 
     if (!getIntent().getExtras().isEmpty()) {
       Contact c = (Contact) getIntent().getSerializableExtra("contact");
@@ -46,6 +48,12 @@ public class ContactDetailActivity extends AppCompatActivity {
       mmTextUtils.prepareMultipleViews(c.getTitle(), tvContactName, tvContactPhone, tvFbUrl,
           tvDescription);
     }
+  }
+
+  private void initToolbar() {
+    setSupportActionBar(toolbar);
+    ActionBar actionBar = getSupportActionBar();
+    if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
   }
 
   private String convertToEnglishNo(String input) {

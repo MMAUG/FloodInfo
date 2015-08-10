@@ -1,38 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
-    >
+    android:layout_width="match_parent">
 
-  <LinearLayout
+  <android.support.design.widget.AppBarLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:orientation="vertical"
-      android:padding="@dimen/activity_vertical_margin"
-      >
+      android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-    <TextView
-        android:id="@+id/tv_news_title"
-        android:layout_width="fill_parent"
+    <include layout="@layout/toolbar"/>
+
+  </android.support.design.widget.AppBarLayout>
+
+  <android.support.v4.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/card_insets"
-        android:textSize="18sp"
-        />
+        android:orientation="vertical"
+        android:padding="@dimen/activity_vertical_margin"
+        >
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:layout_marginBottom="@dimen/card_insets"
-        android:background="@color/divider_color"
-        />
+      <TextView
+          android:id="@+id/tv_news_title"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="@dimen/card_insets"
+          android:textSize="18sp"
+          />
 
-    <TextView
-        android:id="@+id/tv_news_description"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:lineSpacingMultiplier="1.5"
-        android:textSize="16sp"
-        />
-  </LinearLayout>
+      <View
+          android:layout_width="fill_parent"
+          android:layout_height="1dp"
+          android:layout_marginBottom="@dimen/card_insets"
+          android:background="@color/divider_color"
+          />
 
-</ScrollView>
+      <TextView
+          android:id="@+id/tv_news_description"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:lineSpacingMultiplier="1.5"
+          android:textSize="16sp"
+          />
+    </LinearLayout>
+
+  </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>
